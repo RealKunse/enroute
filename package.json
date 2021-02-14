@@ -1,0 +1,20 @@
+{
+  "name": "EnrouteMapJS",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "npx babel --watch ./js/react --out-dir ./js/react_out --presets react-app/prod"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-react-app": "^3.1.2",
+    "leaflet": "^1.7.1",
+    "live-server": "^1.2.1"
+  },
+  "devDependencies": {},
+  "keywords": [],
+  "description": ""
+}
