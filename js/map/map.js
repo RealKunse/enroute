@@ -15,7 +15,7 @@ let center = L.latLng(36,127);
 L.tileLayer(
     'css/Layer/{z}/{x}/{y}.png', {
         center: center,
-        minZoom: 0,
+        minZoom: 4,
         maxZoom: 12,
         attribution: 'Enroute Map v0.1.1',
         id: 'mapbox/streets-v11',

@@ -1,8 +1,99 @@
+html{
+    background: #f9f8f8;
+}
 body{
     margin: 0;
+    position : relative;
+    background : transparent;
 }
 
 div#mapId {
-    height: 93vh;
-    width: 100vw;
+    position : relative;
+    height: 85vh;
+    width: 100%;
+    z-index: 1;
+}
+
+#topBar{
+    position : relative;
+    height: 60px;
+    width: 100%;
+    background-color: #536166;
+    box-shadow: 0 0 8px #000;
+    z-index: 3;
+}
+
+#topContext{
+    margin-left:30px;
+    line-height: 60px;
+    vertical-align: middle;
+    font-size: 30px;
+    color:white;
+}
+
+#bottomBar{
+    position: fixed;
+    display:flex;
+    bottom:0;
+    height: auto;
+    width:100%;
+    z-index:2;
+}
+
+button,
+button::after {
+    -webkit-transition: all 0.3s;
+    -moz-transition: all 0.3s;
+    -o-transition: all 0.3s;
+    transition: all 0.3s;
+}
+
+
+button {
+    background: none;
+    border: 3px solid rgba(0, 0, 0, 0);
+    border-radius: 5px;
+    color: #0d262b;
+    display: block;
+    font-size: 12px;
+    font-weight: bold;
+    margin: 1em auto;
+    padding: 2em 6em;
+    position: relative;
+    text-transform: uppercase;
+}
+
+button::before,
+button::after {
+    background: #12181d;
+    content: '';
+    position: absolute;
+    z-index: -1;
+}
+
+button:hover {
+
+    color: #f7fff3;
+    border-radius: 5px;
+    /*border: 3px solid #12181d;*/
+}
+
+
+/* BUTTON 3 */
+.btn-3::after {
+    height: 0;
+    left: 50%;
+    top: 50%;
+    width: 0;
+}
+
+.btn-3:hover:after {
+    height: 100%;
+    left: 0;
+    top: 0;
+    width: 100%;
+}
+
+.buttonContainer{
+    width:100vw;
 }

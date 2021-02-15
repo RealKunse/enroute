@@ -1,4 +1,6 @@
 'use strict';
+// import React, {useState} from 'react';
+// import {Button} from '@material-ui/core'
 
 class LikeButton extends React.Component {
     constructor(props) {
@@ -8,7 +10,7 @@ class LikeButton extends React.Component {
 
     render() {
         if (this.state.liked) {
-            return 'You liked this.';
+            return 'hello! react!';
         }
 
         return (
@@ -20,4 +22,4 @@ class LikeButton extends React.Component {
 }
 
 let domContainer = document.querySelector('#react_topBar');
-ReactDOM.render(<LikeButton />, domContainer);
+ReactDOM.render(<LikeButton/>, domContainer);
