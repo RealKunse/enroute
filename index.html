@@ -3,34 +3,32 @@
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="css/leaflet.css"/>
-
     <script src="js/leaflet.js"></script>
-
     <link rel="stylesheet" href="index.css"/>
-
+    <link rel="stylesheet" href="css/UI/Bottom.css"/>
+    <link rel="stylesheet" href="css/UI/Top.css"/>
+    <link rel="stylesheet" href="css/UI/FirstButton.css"/>
     <!--    <script src="js/react.development.js"></script>-->
     <!--    <script src="js/react-dom.development.js"></script>-->
     <!--    <script src="js/babel.min.js"></script>-->
 
     <title>신희상의 대환장쇼</title>
 </head>
+
 <body id="root">
 
-<div id="topBar">
-    <div id="topContext">Enroute</div>
-    </div>
-<div id="mapId"></div>
-<div id="zoomLv"></div>
+<div id="flexContainer">
 
-<!--<script src="js/react_out/topBar.js"></script>-->
-<script src="js/map/map.js"></script>
-<script src="js/map/sector.js"></script>
-<script src="js/map/site.js"></script>
-</body>
-<footer>
+
+    <div id="topBar">
+        <div id="topContext">Enroute</div>
+    </div>
+
+    <div id="mapId"></div>
+
     <div id="bottomBar">
-        <div id="bottomFirst" class="buttonContainer">
-            <a><button class="btn-3">Button 1</button></a>
+        <div id="bottomFirst" class="buttonContainer" onclick="popupFirst()">
+            <button class="btn-3">Button 1</button>
         </div>
         <div id="bottomSecond" class="buttonContainer">
             <button class="btn-3">Button 2</button>
@@ -47,5 +45,19 @@
         </div>
 
     </div>
-</footer>
+
+</div>
+
+<div class="one" id="visible-block" onclick="resetFirst()">
+    <div id="firstTopBanner">아직 뭘로할지 못정했는데 ㅠㅠ</div>
+</div>
+
+
+<script src="js/map/map.js"></script>
+<script src="js/map/sector.js"></script>
+<script src="js/map/site.js"></script>
+<script src="js/UI_scripts/PopUp.js"></script>
+
+</body>
+
 </html>
