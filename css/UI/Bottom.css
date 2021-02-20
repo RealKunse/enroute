@@ -1,9 +1,11 @@
 #bottomBar{
+    background-color: #536166;
     margin:0;
     flex: 1;
     display:flex;
     min-height: 50px;
     max-height: 6vh;
+    z-index: 6;
 
 }
 
@@ -29,6 +31,7 @@ button {
     position: relative;
     text-transform: uppercase;
     margin:0;
+    cursor:pointer;
 
 }
 
@@ -41,7 +44,7 @@ button::after {
 }
 
 button:hover {
-
+    fill:white;
     color: #f7fff3;
     border-radius: 5px;
     /*border: 3px solid #12181d;*/
@@ -54,6 +57,7 @@ button:hover {
     left: 50%;
     top: 50%;
     width: 0;
+
 }
 
 .btn-3:hover:after {
@@ -61,6 +65,7 @@ button:hover {
     left: 0;
     top: 0;
     width: 100%;
+
 }
 
 .buttonContainer{

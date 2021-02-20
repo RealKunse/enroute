@@ -4,16 +4,35 @@
     <meta charset="UTF-8">
     <link rel="stylesheet" href="css/leaflet.css"/>
     <script src="js/leaflet.js"></script>
+
     <link rel="stylesheet" href="index.css"/>
     <link rel="stylesheet" href="css/UI/Bottom.css"/>
     <link rel="stylesheet" href="css/UI/Top.css"/>
     <link rel="stylesheet" href="css/UI/FirstButton.css"/>
-    <!--    <script src="js/react.development.js"></script>-->
-    <!--    <script src="js/react-dom.development.js"></script>-->
-    <!--    <script src="js/babel.min.js"></script>-->
+    <link rel="stylesheet" href="css/UI/SecondButton.css"/>
+    <link rel="stylesheet" href="css/UI/ThirdButton.css"/>
+    <link rel="stylesheet" href="css/UI/FifthButton.css"/>
+    <link rel="stylesheet" href="css/UI/NoticeModal.css"/>
+
 
     <title>신희상의 대환장쇼</title>
 </head>
+
+<header>
+    <div id="noticeOverlay" onclick="closeModal()"></div>
+    <div id="noticeModal">
+        <div id="noticeBanner">
+            <div id="noticeBannerText">Notice</div>
+            <div id="noticeClose" onclick="closeModal()">close</div>
+        </div>
+        hello<br/>
+        오늘의 메뉴<br/>
+        우렁쌈밥<br/>
+        제육볶음<br/>
+        고추장찌개 그런데 된장을 곁들인
+
+    </div>
+</header>
 
 <body id="root">
 
@@ -24,39 +43,84 @@
         <div id="topContext">Enroute</div>
     </div>
 
-    <div id="mapId"></div>
+    <div id="mapId" onclick="resetActivatedPopup()"></div>
 
     <div id="bottomBar">
-        <div id="bottomFirst" class="buttonContainer" onclick="popupFirst()">
-            <button class="btn-3">Button 1</button>
+        <div id="bottomFirst" class="buttonContainer" onclick="displayPopup('firstPopup')">
+            <button class="btn-3">비행검사</button>
         </div>
-        <div id="bottomSecond" class="buttonContainer">
-            <button class="btn-3">Button 2</button>
+        <div id="bottomSecond" class="buttonContainer" onclick="displayPopup('secondPopup')">
+            <button class="btn-3">검색</button>
         </div>
 
-        <div id="bottomThird" class="buttonContainer">
-            <button class="btn-3">Button 3</button>
+        <div id="bottomThird" class="buttonContainer" onclick="displayPopup('thirdPopup')">
+            <button class="btn-3">핀</button>
         </div>
-        <div id="bottomFourth" class="buttonContainer">
+        <div id="bottomFourth" class="buttonContainer" onclick="openModal()">
             <button class="btn-3">Button 4</button>
         </div>
-        <div id="bottomFifth" class="buttonContainer">
-            <button class="btn-3">Button 5</button>
+        <div id="bottomFifth" class="buttonContainer" onclick="displayPopup('fifthPopup')">
+            <button class="btn-3" id="SettingButton">
+                설정
+            </button>
         </div>
+    </div>
+</div>
+
+<div class="one" id="firstPopup">
+    <div id="firstBanner">
+        <div id="firstBannerText">First Popup
+        </div>
+        <div id="firstBannerClose" onclick="resetPopup('firstPopup')">
+            close
+        </div>
+    </div>
+    <div id="firstConditions">
 
     </div>
+    <div id="firstContext">
 
+    </div>
 </div>
 
-<div class="one" id="visible-block" onclick="resetFirst()">
-    <div id="firstTopBanner">아직 뭘로할지 못정했는데 ㅠㅠ</div>
+<div class="two" id="secondPopup">
+    <div id="secondBanner">
+        <div id="secondBannerText">Second Popup
+        </div>
+        <div id="secondBannerClose" onclick="resetPopup('secondPopup')">
+            close
+        </div>
+    </div>
 </div>
 
+<div class="three" id="thirdPopup">
+    <div id="thirdBanner">
+        <div id="thirdBannerText">Third Popup
+        </div>
+        <div id="thirdBannerClose" onclick="resetPopup('ThirdPopup')">
+            close
+        </div>
+    </div>
+    <div> css 수정필요 </div>
+</div>
+
+
+<div class="five" id="fifthPopup">
+    <div id="fifthBanner">
+        <div id="fifthBannerText">Fifth Popup
+        </div>
+        <div id="fifthBannerClose" onclick="resetPopup('fifthPopup')">
+            close
+        </div>
+    </div>
+    <div> css 수정필요 </div>
+</div>
 
 <script src="js/map/map.js"></script>
 <script src="js/map/sector.js"></script>
 <script src="js/map/site.js"></script>
 <script src="js/UI_scripts/PopUp.js"></script>
+<script src="js/UI_scripts/Icons.js"></script>
 
 </body>
 

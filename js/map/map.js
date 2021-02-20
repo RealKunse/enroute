@@ -1,7 +1,6 @@
 var map = L.map('mapId',{
     maxBounds: [[29.54,120.9539],[38.78,135]],
     maxBoundsViscosity:1,
-    inertiaDeceleration : 55,
     addControl:{position:'bottomright'}
 }).setView([36,127], 12);
 

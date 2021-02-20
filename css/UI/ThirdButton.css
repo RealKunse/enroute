@@ -1,4 +1,4 @@
-.one{
+.three{
     position:fixed;
     background-color: rgba(249, 248, 248, 0.9);
     bottom: -100%;
@@ -15,7 +15,7 @@
     box-shadow: 0 0 8px #000;
 }
 
-#firstBanner{
+#thirdBanner{
     border-radius: 10px 10px 0 0;
     background-color: gray;
     display: flex;
@@ -24,7 +24,7 @@
     /*line-height: 60px;*/
 }
 
-#firstBannerText{
+#thirdBannerText{
     line-height: 60px;
     /*vertical-align: middle;*/
     font-size: 30px;
@@ -34,7 +34,7 @@
     width: 95%;
 }
 
-#firstBannerClose{
+#thirdBannerClose{
     /*position: relative;*/
     width:5%;
     top: 0;
