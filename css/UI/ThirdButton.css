@@ -1,10 +1,10 @@
-.three{
-    position:fixed;
+.three {
+    position: fixed;
     background-color: rgba(249, 248, 248, 0.9);
     bottom: -100%;
-    right:0;
+    right: 0;
     left: 0;
-    height: 99vh;
+    height: 25vh;
     width: 95vw;
     border-radius: 10px 10px 0 0;
     transition: all .2s ease-in-out;
@@ -15,7 +15,7 @@
     box-shadow: 0 0 8px #000;
 }
 
-#thirdBanner{
+#thirdBanner {
     border-radius: 10px 10px 0 0;
     background-color: gray;
     display: flex;
@@ -24,19 +24,110 @@
     /*line-height: 60px;*/
 }
 
-#thirdBannerText{
-    line-height: 60px;
+#thirdBannerText {
+    line-height: 40px;
     /*vertical-align: middle;*/
     font-size: 30px;
-    color:white;
+    color: white;
     padding-left: 30px;
     display: inline;
-    width: 95%;
+    width: 97%;
 }
 
-#thirdBannerClose{
+#thirdBannerClose {
     /*position: relative;*/
-    width:5%;
+    width: 40px;
     top: 0;
+    cursor: pointer;
     /*right:20px;*/
 }
+
+#thirdForm {
+    display: flex;
+    width: 100%;
+    justify-content: space-around;
+    flex-wrap : wrap;
+
+}
+
+#thirdButton {
+    width: 5%;
+    min-width: 50px;
+    height: 40px;
+    cursor: pointer;
+}
+
+#thirdContext {
+    margin: 10px;
+}
+
+#thirdLabel {
+    padding: 9px;
+    border: solid 1px #E5E5E5;
+    outline: 0;
+    font: normal 13px/100% Verdana, Tahoma, sans-serif;
+    width: 100px;
+    background: -webkit-gradient(linear, left top, left 25, from(#FFFFFF), color-stop(4%, #EEEEEE), to(#FFFFFF));
+    background: -moz-linear-gradient(top, #FFFFFF, #EEEEEE 1px, #FFFFFF 25px);
+    box-shadow: rgba(0, 0, 0, 0.1) 0 0 8px;
+    -moz-box-shadow: rgba(0, 0, 0, 0.1) 0 0 8px;
+    -webkit-box-shadow: rgba(0, 0, 0, 0.1) 0 0 8px;
+}
+
+.thirdSelect {
+    display: flex;
+}
+
+#thirdSiteLabel {
+    display: inline;
+    margin: 6px;
+    white-space: nowrap;
+}
+
+#clickSelect {
+    position: relative;
+    cursor: pointer;
+    height:33px;
+    /*border-color: #c9c9c9;*/
+}
+
+.option-list{
+    margin-top:0;
+    max-height: 100px;
+    -webkit-transition: height .5s ease;
+    -moz-transition: height .5s ease;
+    -o-transition: height .5s ease;
+    /*-ms-transition: height 1s ease;*/
+    transition: height .5s ease;
+
+}
+
+.select .option-list {
+    font: normal 13px/100% Verdana, Tahoma, sans-serif;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    overflow-y: scroll;
+    padding-left: 0;
+    /*max-height: 0;*/
+    list-style-type: none;
+    height:0;
+}
+
+.select.active .option-list {
+    height: 100px;
+    border: solid 1px #c9c9c9;
+    /*-webkit-box-shadow: rgba(0, 0, 0, 0.15) 0px 0px 8px;*/
+}
+
+.option {
+    padding: 10px;
+    cursor: pointer;
+}
+
+.option:hover {
+    background-color: #3a3a3a;
+    color: white;
+}
+

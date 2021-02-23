@@ -36,7 +36,8 @@
 
 #secondBannerClose{
     /*position: relative;*/
-    width:5%;
+    width:40px;
     top: 0;
+    cursor: pointer;
     /*right:20px;*/
 }

@@ -23,7 +23,7 @@
     border-radius: 8px;
     box-shadow: 0 0 8px #000;
     background-color: #f2f3ff;
-    margin:10% auto;
+    margin:7% auto;
     overflow-y:scroll;
     opacity: 1;
     transition: all .4s ease-in-out;
@@ -50,4 +50,5 @@
 
 #noticeClose{
     width:40px;
+    cursor: pointer;
 }

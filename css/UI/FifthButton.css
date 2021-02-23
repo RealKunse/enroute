@@ -36,7 +36,8 @@
 
 #fifthBannerClose{
     /*position: relative;*/
-    width:5%;
+    cursor: pointer;
+    width:40px;
     top: 0;
     /*right:20px;*/
 }

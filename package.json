@@ -4,7 +4,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "npx babel --watch ./js/react --out-dir ./js/react_out --presets react-app/prod"
+    "start": "live-server --ignore=css/Layer,node_modules .",
+    "run": "nodemon index.js --ignore css/Layer/"
   },
   "author": "",
   "license": "ISC",
@@ -13,11 +14,19 @@
     "@material-ui/icons": "^4.11.2",
     "babel-cli": "^6.26.0",
     "babel-preset-react-app": "^3.1.2",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
     "leaflet": "^1.7.1",
     "live-server": "^1.2.1",
+    "mariadb": "^2.5.3",
     "react": "^17.0.1"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "express-reload": "^1.2.0"
+  },
   "keywords": [],
-  "description": ""
+  "description": "",
+  "nodemonConfig": {
+    "ignore": ["css/*, node_modules/*"]
+  }
 }
