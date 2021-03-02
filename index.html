@@ -1,9 +1,12 @@
 <!DOCTYPE html>
+<!--suppress JSUnresolvedFunction -->
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="css/leaflet.css"/>
     <script src="js/leaflet.js"></script>
+
+
 
     <link rel="stylesheet" href="index.css"/>
     <link rel="stylesheet" href="css/UI/Bottom.css"/>
@@ -36,122 +39,169 @@
 
 <body id="root">
 
-    <div id="flexContainer">
+<div id="flexContainer">
 
 
-        <div id="topBar">
-            <div id="topContext">Enroute</div>
+    <div id="topBar" onclick="drawRoute(['AGAVO','ONATA','TAMNA'], 'red')">
+        <div id="topContext">Enroute</div>
+    </div>
+
+    <div id="mapId" onclick="resetActivatedPopup()"></div>
+
+    <div id="bottomBar">
+        <div id="bottomFirst" class="buttonContainer" onclick="displayPopup('firstPopup'),getTestList()">
+            <button class="btn-3">비행검사</button>
+        </div>
+        <div id="bottomSecond" class="buttonContainer" onclick="displayPopup('secondPopup')">
+            <button class="btn-3">검색</button>
         </div>
 
-        <div id="mapId" onclick="resetActivatedPopup()"></div>
+        <div id="bottomThird" class="buttonContainer" onclick="displayPopup('thirdPopup')">
+            <button class="btn-3">핀</button>
+        </div>
+        <div id="bottomFourth" class="buttonContainer" onclick="openModal()">
+            <button class="btn-3">공지사항</button>
+        </div>
+        <div id="bottomFifth" class="buttonContainer" onclick="displayPopup('fifthPopup')">
+            <button class="btn-3" id="SettingButton">
+                설정
+            </button>
+        </div>
+    </div>
+</div>
 
-        <div id="bottomBar">
-            <div id="bottomFirst" class="buttonContainer" onclick="displayPopup('firstPopup')">
-                <button class="btn-3">비행검사</button>
-            </div>
-            <div id="bottomSecond" class="buttonContainer" onclick="displayPopup('secondPopup')">
-                <button class="btn-3">검색</button>
-            </div>
+<div class="one" id="firstPopup">
+    <div id="firstBanner">
+        <div id="firstBannerText">First Popup
+        </div>
+        <div id="firstBannerClose" onclick="resetPopup('firstPopup')">
+            close
+        </div>
+    </div>
+    <div id="firstConditions">
 
-            <div id="bottomThird" class="buttonContainer" onclick="displayPopup('thirdPopup')">
-                <button class="btn-3">핀</button>
-            </div>
-            <div id="bottomFourth" class="buttonContainer" onclick="openModal()">
-                <button class="btn-3">공지사항</button>
-            </div>
-            <div id="bottomFifth" class="buttonContainer" onclick="displayPopup('fifthPopup')">
-                <button class="btn-3" id="SettingButton">
-                    설정
-                </button>
+    </div>
+    <div id="firstContext">
+        <table>
+            <thead>
+            <tr style="height: 45px">
+                <th onclick="onColumnClick('TestName')" class="firstColumnSet" id="TestName">점검명</th>
+                <th onclick="onColumnClick('TestDate')" class="firstColumnSet" id="TestDate">점검일자</th>
+                <th onclick="onColumnClick('TestType')" class="firstColumnSet" id="TestType">점검타입</th>
+            </tr>
+            </thead>
+            <tbody id="firstTableBody">
+
+            </tbody>
+        </table>
+        <div id="firstAddData" onclick="openFirstAddComponent()">
+            추가
+        </div>
+        <div id="firstAddComponentOverlay" onclick="closeFirstAddComponent()">
+
+        </div>
+        <div id="firstAddDataComponent">
+            dd
+        </div>
+    </div>
+</div>
+
+<div class="two" id="secondPopup">
+    <div id="secondBanner">
+        <div id="secondBannerText">Second Popup
+        </div>
+        <div id="secondBannerClose" onclick="resetPopup('secondPopup')">
+            close
+        </div>
+
+    </div>
+
+    <div id="secondContext">
+        <div class="select">
+            <div class="selectTag">표지소</div>
+            <div class="clickSelect" id="secondFreqClickSelect"> <!-- id값에 따라 onclick 이벤트 리스너 할당 -->
+                <div class="selectLabel">선택</div> <!-- 얘만 css, js 추가하면 됨 -->
+                <ul class="option-list">
+                    <li class="option">인천</li>
+                    <li class="option">안양</li>
+                    <li class="option">부안</li>
+                    <li class="option">대구</li>
+                    <li class="option">제주</li>
+                    <li class="option">모슬포</li>
+                    <li class="option">동광</li>
+                    <li class="option">대구</li>
+
+                </ul>
             </div>
         </div>
     </div>
+</div>
 
-    <div class="one" id="firstPopup">
-        <div id="firstBanner">
-            <div id="firstBannerText">First Popup
-            </div>
-            <div id="firstBannerClose" onclick="resetPopup('firstPopup')">
-                close
-            </div>
+<div class="three" id="thirdPopup">
+    <div id="thirdBanner">
+        <div id="thirdBannerText">핀
         </div>
-        <div id="firstConditions">
-
-        </div>
-        <div id="firstContext">
-
+        <div id="thirdBannerClose" onclick="resetPopup('ThirdPopup')">
+            close
         </div>
     </div>
+    <div id="thirdContext">
+        <form id="thirdForm">
+            <div class="select">
+                <div class="selectTag">표지소</div>
+                <div class="clickSelect" id="thirdClickSelect"> <!-- id값에 따라 onclick 이벤트 리스너 할당 -->
+                    <div class="selectLabel">선택</div> <!-- 얘만 css, js 추가하면 됨 -->
+                    <ul class="option-list">
+                        <li class="option">인천</li>
+                        <li class="option">안양</li>
+                        <li class="option">부안</li>
+                        <li class="option">대구</li>
+                        <li class="option">제주</li>
+                        <li class="option">모슬포</li>
+                        <li class="option">동광</li>
+                        <li class="option">대구</li>
 
-    <div class="two" id="secondPopup">
-        <div id="secondBanner">
-            <div id="secondBannerText">Second Popup
-            </div>
-            <div id="secondBannerClose" onclick="resetPopup('secondPopup')">
-                close
-            </div>
-        </div>
-    </div>
-
-    <div class="three" id="thirdPopup">
-        <div id="thirdBanner">
-            <div id="thirdBannerText">핀
-            </div>
-            <div id="thirdBannerClose" onclick="resetPopup('ThirdPopup')">
-                close
-            </div>
-        </div>
-        <div id="thirdContext">
-            <form id="thirdForm">
-                <div class="thirdSelect">
-                    <div id="thirdSiteLabel">표지소</div>
-                    <div class="select" id="clickSelect">
-                        <div id="thirdLabel">선택</div>
-                        <ul class="option-list">
-                            <li class="option">인천</li>
-                            <li class="option">안양</li>
-                            <li class="option">부안</li>
-                            <li class="option">대구</li>
-                            <li class="option">제주</li>
-                            <li class="option">모슬포</li>
-                            <li class="option">동광</li>
-                            <li class="option">대구</li>
-
-                        </ul>
-                    </div>
+                    </ul>
                 </div>
-                <span class="thirdTextInput">
-                <label for="thirdDegree">label</label>
-                    <input id="thirdDegree" type="text" placeholder="거리" form="thirdForm"/>
+            </div>
+            <span class="thirdTextInput">
+                <label for="thirdDegree">거리</label>
+                    <input id="thirdDegree" type="number" min='0' max="500" step='1' placeholder="거리" form="thirdForm"/>
                     </span>
-                <span class="thirdTextInput">
-                    <label for="thirdAngle">label</label>
-                    <input id="thirdAngle" type="text" placeholder="각도" form="thirdForm"/>
+            <span class="thirdTextInput">
+                    <label for="thirdAngle">각도</label>
+                    <input id="thirdAngle" type="number" min="0" max="359" step="0.1" placeholder="각도"
+                           form="thirdForm"/>
                 </span>
-                <button type="button" class="darkGreyButton" id="thirdButton" onclick="getTestList()">버튼</button>
-            </form>
+            <button type="button" class="darkGreyButton" id="thirdButton" onclick="getTestList()">버튼</button>
+        </form>
+    </div>
+</div>
+
+
+<div class="five" id="fifthPopup">
+    <div id="fifthBanner">
+        <div id="fifthBannerText">설정
+        </div>
+        <div id="fifthBannerClose" onclick="resetPopup('fifthPopup')">
+            close
         </div>
     </div>
+    <div> css 수정필요</div>
+</div>
 
+<script src="js/map/map.js"></script>
+<script src="js/map/sector.js"></script>
+<script src="js/map/fix_point.js"></script>
+<script>
+    window.onload = loadFixPoints()
+</script>
+<script src="js/map/site.js"></script>
+<script src="js/SQLAction/fetch.js"></script>
+<script src="js/UI_scripts/PopUp.js"></script>
+<script src="js/UI_scripts/Icons.js"></script>
+<script src="js/UI_scripts/Select.js"></script>
 
-    <div class="five" id="fifthPopup">
-        <div id="fifthBanner">
-            <div id="fifthBannerText">설정
-            </div>
-            <div id="fifthBannerClose" onclick="resetPopup('fifthPopup')">
-                close
-            </div>
-        </div>
-        <div> css 수정필요</div>
-    </div>
-
-    <script src="js/map/map.js"></script>
-    <script src="js/map/sector.js"></script>
-    <script src="js/map/site.js"></script>
-    <script src="js/SQLAction/fetch.js"></script>
-    <script src="js/UI_scripts/PopUp.js"></script>
-    <script src="js/UI_scripts/Icons.js"></script>
-    <script src="js/UI_scripts/Select.js"></script>
 
 
 </body>

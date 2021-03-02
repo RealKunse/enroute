@@ -32,7 +32,6 @@ openModal = () => {
     document.getElementById("noticeOverlay").style.visibility = 'visible'
     document.getElementById("noticeModal").style.opacity = 1;
     document.getElementById("noticeOverlay").style.opacity = .8;
-
 }
 
 closeModal = () => {
@@ -41,6 +40,18 @@ closeModal = () => {
     document.getElementById("noticeOverlay").style.opacity = 0;
     document.getElementById("noticeModal").style.visibility = "hidden";
     document.getElementById("noticeOverlay").style.visibility = "hidden";
+}
 
+openFirstAddComponent = () => {
+    document.getElementById("firstAddDataComponent").style.visibility = 'visible'
+    document.getElementById("firstAddComponentOverlay").style.visibility = 'visible'
+    document.getElementById("firstAddDataComponent").style.opacity = 1;
+    document.getElementById("firstAddComponentOverlay").style.opacity = 1;
+}
 
+closeFirstAddComponent = () => {
+    document.getElementById("firstAddDataComponent").style.opacity = 0;
+    document.getElementById("firstAddComponentOverlay").style.opacity = 0;
+    document.getElementById("firstAddDataComponent").style.visibility = "hidden";
+    document.getElementById("firstAddComponentOverlay").style.visibility = "hidden";
 }

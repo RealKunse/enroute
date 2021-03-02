@@ -1,13 +1,15 @@
 var map = L.map('mapId',{
-    maxBounds: [[29.54,120.9539],[38.78,135]],
+    maxBounds: [[29.54,120.9539],[41,135]],
     maxBoundsViscosity:1,
     addControl:{position:'bottomright'}
 }).setView([36,127], 12);
 
+const layerControl = L.control.layers().addTo(map);
+
 
 
 let p1 = L.latLng(26,120),
-    p2 = L.latLng(40,137),
+    p2 = L.latLng(50,137),
     bound = L.latLngBounds(p1, p2);
 
 let center = L.latLng(36,127);

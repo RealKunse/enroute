@@ -467,7 +467,6 @@ function onSectorClick(e, sectorBoundArea) {
 // });
 
 
-let sites = {}
 
 
 const areas = {

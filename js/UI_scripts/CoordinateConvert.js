@@ -1,0 +1,3 @@
+calculateCoordinate = (site, lat, lng) => {
+
+}

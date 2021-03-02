@@ -61,7 +61,7 @@
     margin: 10px;
 }
 
-#thirdLabel {
+.selectLabel {
     padding: 9px;
     border: solid 1px #E5E5E5;
     outline: 0;
@@ -74,17 +74,14 @@
     -webkit-box-shadow: rgba(0, 0, 0, 0.1) 0 0 8px;
 }
 
-.thirdSelect {
-    display: flex;
-}
-
-#thirdSiteLabel {
+.selectTag {
     display: inline;
     margin: 6px;
     white-space: nowrap;
 }
 
-#clickSelect {
+.select {
+    display: flex;
     position: relative;
     cursor: pointer;
     height:33px;
@@ -92,32 +89,35 @@
 }
 
 .option-list{
+
     margin-top:0;
-    max-height: 100px;
-    -webkit-transition: height .5s ease;
-    -moz-transition: height .5s ease;
-    -o-transition: height .5s ease;
+    max-height: 200px;
+    -webkit-transition: all .5s ease;
+    -moz-transition: all .5s ease;
+    -o-transition: all .5s ease;
     /*-ms-transition: height 1s ease;*/
-    transition: height .5s ease;
+    transition: all .5s ease;
+
 
 }
 
 .select .option-list {
     font: normal 13px/100% Verdana, Tahoma, sans-serif;
     position: absolute;
-    top: 100%;
+    top:0;
     left: 0;
     width: 100%;
-    overflow-y: scroll;
+    overflow-y: auto;
     padding-left: 0;
-    /*max-height: 0;*/
     list-style-type: none;
     height:0;
 }
 
 .select.active .option-list {
-    height: 100px;
+    top:-200px;
+    height: 200px;
     border: solid 1px #c9c9c9;
+    background: #eee;
     /*-webkit-box-shadow: rgba(0, 0, 0, 0.15) 0px 0px 8px;*/
 }
 

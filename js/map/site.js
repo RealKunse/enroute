@@ -14,17 +14,22 @@ let siteIcon = L.icon({
 // })})
 // zoomlevelschange
 
-
+let sites = {}
 
 for (a in markers) {
     sites[site[a]] = L.marker(markers[a], {
         icon: siteIcon,
     }).bindTooltip(site[a] + "표지소", {sticky: true}).addTo(map)
 
+    layerControl.addOverlay(sites[site[a]],site[a])
 
+
+    // L.layerGroup(fix_points).addTo(map);
 }
 
-L.control.layers(null, sites).addTo(map);
+// L.control.layers(null, sites).addTo(map);
+console.log(sites);
+// layerControl.addOverlay(sites,"사이트")
 
 // L.removeLayer(L.control.layers(null, areas))
 // L.removeLayer(L.control.layers(null, sites))
