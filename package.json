@@ -17,6 +17,7 @@
     "cors": "^2.8.5",
     "express": "^4.17.1",
     "leaflet": "^1.7.1",
+    "leaflet.control.layers.tree": "^1.0.2",
     "live-server": "^1.2.1",
     "mariadb": "^2.5.3",
     "react": "^17.0.1"
@@ -27,6 +28,8 @@
   "keywords": [],
   "description": "",
   "nodemonConfig": {
-    "ignore": ["css/*, node_modules/*"]
+    "ignore": [
+      "css/*, node_modules/*"
+    ]
   }
 }

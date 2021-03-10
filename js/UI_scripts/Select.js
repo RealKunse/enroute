@@ -1,6 +1,8 @@
 document.getElementById("thirdClickSelect").addEventListener("click", onClickSelect);
+// document.getElementById("thirdClickSelect").addEventListener("focus", onClickSelect);
+
 document.getElementById("secondFreqClickSelect").addEventListener("click", onClickSelect);
-// document.getElementById("thirdClickSelect").addEventListener("click", onClickSelect)
+
 
 var optionList = document.querySelectorAll(".option");
 for (var i = 0; i < optionList.length; i++) {
