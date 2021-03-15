@@ -1,0 +1,27 @@
+html{
+    background: #f9f8f8;
+    overflow:hidden;
+
+}
+body{
+    margin: 0;
+    /*position : relative;*/
+
+}
+
+#mapId {
+    flex: 1;
+    position : relative;
+    height: 80vh;
+    width: 100%;
+    z-index: 1;
+}
+
+
+
+#flexContainer{
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+}
+

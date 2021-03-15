@@ -1,0 +1,17 @@
+#topContext{
+    margin-left:30px;
+    line-height: 60px;
+    vertical-align: middle;
+    font-size: 30px;
+    color:white;
+}
+
+#topBar{
+    position : sticky;
+    top:0;
+    height: 60px;
+    width: 100%;
+    background-color: #536166;
+    box-shadow: 0 0 8px #000;
+    z-index: 3;
+}

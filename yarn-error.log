@@ -1,0 +1,52 @@
+Arguments: 
+  C:\Program Files\nodejs\node.exe C:\Program Files (x86)\Yarn\bin\yarn.js add cors
+
+PATH: 
+  C:\Users\Ramon Kramer Shin\anaconda3\condabin;E:\EnrouteMapJS\node_modules\.bin;C:\Program Files (x86)\Common Files\Oracle\Java\javapath;C:\Program Files\Common Files\Oracle\Java\javapath;C:\Program Files\Python38\Scripts\;C:\Program Files\Python38\;C:\Program Files (x86)\Common Files\Intel\Shared Libraries\redist\intel64\compiler;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Windows\System32\OpenSSH\;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\Program Files\NVIDIA Corporation\NVIDIA NvDLISR;C:\Program Files\Common Files\Autodesk Shared\;C:\Program Files\Microsoft SQL Server\120\Tools\Binn\;C:\Program Files\PuTTY\;C:\usr\bin\;C:\Program Files (x86)\Yarn\bin\;C:\Program Files\nodejs\;C:\Program Files\dotnet\;C:\Program Files\Java\jdk-11.0.9\bin\bin;C:\Users\Ramon Kramer Shin\anaconda3\Scripts\;C:\Users\Ramon Kramer Shin\anaconda3;C:\Users\Ramon Kramer Shin\anaconda3\Library\;C:\Users\Ramon Kramer Shin\anaconda3\Library\bin\;C:\Users\Ramon Kramer Shin\anaconda3Library\mingw-w64\bin\;C:\Program Files\Git\cmd;C:\Users\Ramon Kramer Shin\AppData\Local\Programs\Python\Python37\Scripts\;C:\Users\Ramon Kramer Shin\AppData\Local\Programs\Python\Python37\;C:\Program Files\MySQL\MySQL Shell 8.0\bin\;C:\Users\Ramon Kramer Shin\AppData\Local\Microsoft\WindowsApps;C:\Program Files\Bandizip\;C:\Program Files\JetBrains\IntelliJ IDEA Community Edition 2019.3\bin;C:\Users\Ramon Kramer Shin\AppData\Local\atom\bin;C:\Program Files\JetBrains\PyCharm Community Edition 2019.2.5\bin;C:\Users\Ramon Kramer Shin\AppData\Local\Programs\Microsoft VS Code\bin;d:\JetBrains\PyCharm 2019.3.1\bin;d:\JetBrains\IntelliJ IDEA 2019.3.1\bin;d:\JetBrains\WebStorm 2019.3.1\bin;C:\Users\Ramon Kramer Shin\AppData\Local\Yarn\bin;C:\Users\Ramon Kramer Shin\AppData\Roaming\npm
+
+Yarn version: 
+  1.21.1
+
+Node version: 
+  12.14.0
+
+Platform: 
+  win32 x64
+
+Trace: 
+  Error: EPERM: operation not permitted, unlink 'E:\EnrouteMapJS\node_modules\file-uri-to-path\test'
+
+npm manifest: 
+  {
+    "name": "EnrouteMapJS",
+    "version": "1.0.0",
+    "main": "index.js",
+    "scripts": {
+      "test": "echo \"Error: no test specified\" && exit 1",
+      "start": "npx babel --watch ./js/react --out-dir ./js/react_out --presets react-app/prod"
+    },
+    "author": "",
+    "license": "ISC",
+    "dependencies": {
+      "@material-ui/core": "^4.11.3",
+      "@material-ui/icons": "^4.11.2",
+      "babel-cli": "^6.26.0",
+      "babel-preset-react-app": "^3.1.2",
+      "express": "^4.17.1",
+      "leaflet": "^1.7.1",
+      "live-server": "^1.2.1",
+      "mariadb": "^2.5.3",
+      "react": "^17.0.1"
+    },
+    "devDependencies": {
+      "express-reload": "^1.2.0"
+    },
+    "keywords": [],
+    "description": ""
+  }
+
+yarn manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile

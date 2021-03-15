@@ -1,0 +1,5 @@
+{
+  "ignore": [
+    "/css/*, /node_modules/*"
+  ]
+}

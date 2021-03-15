@@ -1,0 +1,41 @@
+.one{
+    position:fixed;
+    background-color: rgba(249, 248, 248, 0.9);
+    bottom: -100%;
+    right:0;
+    left: 0;
+    height: 99vh;
+    width: 95vw;
+    border-radius: 10px 10px 0 0;
+    transition: all .2s ease-in-out;
+    -moz-transition: all .2s ease-in-out;
+    -webkit-transition: all .2s ease-in-out;
+    z-index: 5;
+    margin: 0 auto;
+    box-shadow: 0 0 8px #000;
+}
+
+#firstTopBanner{
+    border-radius: 10px 10px 0 0;
+    background-color: gray;
+    display: flex;
+    justify-content: space-between;
+    /*line-height: 60px;*/
+}
+
+#firstTopBannerText{
+    line-height: 60px;
+    /*vertical-align: middle;*/
+    font-size: 30px;
+    color:white;
+    padding-left: 30px;
+    display: inline;
+    width: 95%;
+}
+
+#firstTopBannerClose{
+    /*position: relative;*/
+    width:5%;
+    top: 0;
+    /*right:20px;*/
+}
