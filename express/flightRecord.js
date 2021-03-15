@@ -14,7 +14,7 @@ const pool = mariadb.createPool({
 
 router.get('/', function (req, res) {
     pool.getConnection().then(conn => {
-        conn.query("select * from flight_test_list order by testDate desc").then((response) => {
+        conn.query("select TestName, TestDate, TestType from flight_test_list order by testDate desc").then((response) => {
             res.send(response);
         }).then((res) => {
             conn.end()

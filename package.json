@@ -4,7 +4,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "live-server --ignore=css/Layer,node_modules .",
+    "start": "live-server --ignore=css/Layer,node_modules,uploadFiles .",
     "run": "nodemon index.js --ignore css/Layer/"
   },
   "author": "",
@@ -12,14 +12,19 @@
   "dependencies": {
     "@material-ui/core": "^4.11.3",
     "@material-ui/icons": "^4.11.2",
+    "axios": "^0.21.1",
     "babel-cli": "^6.26.0",
     "babel-preset-react-app": "^3.1.2",
+    "busboy": "^0.3.1",
     "cors": "^2.8.5",
+    "ejs": "^3.1.6",
     "express": "^4.17.1",
+    "form-data": "^4.0.0",
     "leaflet": "^1.7.1",
     "leaflet.control.layers.tree": "^1.0.2",
     "live-server": "^1.2.1",
     "mariadb": "^2.5.3",
+    "multer": "^1.4.2",
     "react": "^17.0.1"
   },
   "devDependencies": {

@@ -1,7 +1,7 @@
 let popedPage = 0;
 
 displayPopup = (id) => {
-    if(id == popedPage){
+    if (id == popedPage) {
         resetPopup(popedPage);
         return
     }
@@ -19,7 +19,7 @@ resetPopup = (id) => {
 }
 
 resetActivatedPopup = (id) => {
-    if(popedPage != 0) {
+    if (popedPage != 0) {
         console.log("closing all     popup")
         document.getElementById(popedPage).style.bottom = "-100%";
         popedPage = 0;
@@ -43,15 +43,32 @@ closeModal = () => {
 }
 
 openFirstAddComponent = () => {
+    document.getElementById('firstTitleInput').disabled = false;
+    document.getElementById('firstDateInput').disabled = false;
+    document.getElementById('firstRouteUpload').disabled = false;
     document.getElementById("firstAddDataComponent").style.visibility = 'visible'
     document.getElementById("firstAddComponentOverlay").style.visibility = 'visible'
     document.getElementById("firstAddDataComponent").style.opacity = 1;
     document.getElementById("firstAddComponentOverlay").style.opacity = 1;
+    // document.getElementById("firstTitleInput").focus();
+    document.getElementById('firstAddTableBody').innerHTML = ''
+    document.getElementById('firstTitleInput').value = '';
+    document.getElementById('firstDateInput').value = '';
+    document.getElementById('firstRouteUpload').value = '';
+    document.getElementById('firstAddButton').innerText = '확인';
+    document.getElementById('firstAddButton').onfocus = function(){firstAddRowConfirmOnFocus()};
+    document.getElementById('firstAddButton').visibility = 'visible';
 }
 
 closeFirstAddComponent = () => {
-    document.getElementById("firstAddDataComponent").style.opacity = 0;
-    document.getElementById("firstAddComponentOverlay").style.opacity = 0;
-    document.getElementById("firstAddDataComponent").style.visibility = "hidden";
-    document.getElementById("firstAddComponentOverlay").style.visibility = "hidden";
+
+    if (window.confirm("작성을 중단하고 나가시겠습니까?") == true) {
+
+        document.getElementById("firstAddDataComponent").style.opacity = 0;
+        document.getElementById("firstAddComponentOverlay").style.opacity = 0;
+        document.getElementById("firstAddDataComponent").style.visibility = "hidden";
+        document.getElementById("firstAddComponentOverlay").style.visibility = "hidden";
+
+
+    }
 }

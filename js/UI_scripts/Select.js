@@ -1,5 +1,4 @@
 document.getElementById("thirdClickSelect").addEventListener("click", onClickSelect);
-// document.getElementById("thirdClickSelect").addEventListener("focus", onClickSelect);
 
 document.getElementById("secondFreqClickSelect").addEventListener("click", onClickSelect);
 

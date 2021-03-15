@@ -1,5 +1,8 @@
 let loaded = false
 let clickedColumn = ['', 0];
+
+let fileNames = [];
+
 getTestList = async () => {
     if (loaded == false) {
         loaded = true

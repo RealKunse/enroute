@@ -18,7 +18,7 @@ L.tileLayer(
         center: center,
         minZoom: 4,
         maxZoom: 12,
-        attribution: 'Enroute Map v0.1.1',
+        attribution: 'Enroute Map v0.1.9',
         id: 'mapbox/streets-v11',
         tileSize: 256,
         zoomOffset: 0,
