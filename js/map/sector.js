@@ -469,21 +469,21 @@ function onSectorClick(e, sectorBoundArea) {
 
 
 
-const areas = {
-    "서해북부": westSeaNorth,
-    "서해남부": westSeaSouth,
-    "강릉": gangneung,
-    "동해": eastSea,
-    "군산동부": gunsanEast,
-    "군산서부": gunsanWest,
-    "광주서부": gwangjuWest,
-    "광주동부": gwangjuEast,
-    "제주서부": jejuWest,
-    "제주중부": jejuMiddle,
-    "제주동부": jejuEast,
-    "남해": namhae,
-    "포항": pohang,
-    "대구": daegu
-}
+// const areas = {
+//     "서해북부": westSeaNorth,
+//     "서해남부": westSeaSouth,
+//     "강릉": gangneung,
+//     "동해": eastSea,
+//     "군산동부": gunsanEast,
+//     "군산서부": gunsanWest,
+//     "광주서부": gwangjuWest,
+//     "광주동부": gwangjuEast,
+//     "제주서부": jejuWest,
+//     "제주중부": jejuMiddle,
+//     "제주동부": jejuEast,
+//     "남해": namhae,
+//     "포항": pohang,
+//     "대구": daegu
+// }
 
-L.control.layers(null, areas).addTo(map);
+// L.control.layers(null, areas).addTo(map);

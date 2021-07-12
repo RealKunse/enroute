@@ -10,7 +10,7 @@
     transition: all .2s ease-in-out;
     -moz-transition: all .2s ease-in-out;
     -webkit-transition: all .2s ease-in-out;
-    z-index: 5;
+    z-index: 3;
     margin: 0 auto;
     box-shadow: 0 0 8px #000;
 }
@@ -40,4 +40,128 @@
     width:40px;
     top: 0;
     /*right:20px;*/
+}
+
+#fifthLoginForm{
+    display:flex;
+}
+
+.fifthSettingButtonArea{
+    margin:0 auto;
+    height: 75%;
+    display:flex;
+    flex-wrap:wrap;
+    justify-content: center;
+    align-items:center;
+}
+
+.fifthSettingButton{
+    width:250px;
+    height: 250px;
+    background: darkgrey;
+    margin:15px;
+    border-radius: 10px;
+    box-shadow: 5px 5px 5px grey;
+}
+
+.fifthSettingButton:hover{
+    width:250px;
+    height: 250px;
+    background: #6f6f6f;
+    margin:15px;
+    border-radius: 10px;
+    box-shadow: 5px 5px 5px grey;
+}
+
+.fifthSettingButton:active{
+    width:250px;
+    height: 250px;
+    background: #a6a6a6;
+    margin:15px;
+    border-radius: 10px;
+    box-shadow: 5px 5px 5px grey;
+}
+#fifthFreq {
+    position: fixed;
+    background: #f7fff3;
+    width: 80%;
+    height: 50%;
+    left: 10%;
+    bottom: 25%;
+    z-index: 6;
+    visibility: hidden;
+    border-radius: 10px 10px 10px 10px;
+    transition: all ease 0.5s;
+    overflow: auto;
+}
+#fifthFreqOverlay{
+    background: rgba(0, 0, 0, 0.7);
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    bottom: 0;
+    z-index: 5;
+    visibility: hidden;
+    transition: all ease 0.5s
+}
+
+#fifthFreqAdd{
+    position: fixed;
+    display:flex;
+    background: #f7fff3;
+    width: 50%;
+    height: 40%;
+    left: 25%;
+    bottom: 25%;
+    z-index: 6;
+    visibility: hidden;
+    border-radius: 10px 10px 10px 10px;
+    transition: all ease 0.5s;
+    overflow: auto;
+    flex-direction: column;
+}
+
+#fifthFreqEdit{
+    position: fixed;
+    display:flex;
+    background: #f7fff3;
+    width: 50%;
+    height: 40%;
+    left: 25%;
+    bottom: 25%;
+    z-index: 6;
+    visibility: hidden;
+    border-radius: 10px 10px 10px 10px;
+    transition: all ease 0.5s;
+    overflow: auto;
+    flex-direction: column;
+}
+
+#fifthFreqAddOverlay{
+    background: rgba(0, 0, 0, 0.7);
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    bottom: 0;
+    z-index: 6;
+    visibility: hidden;
+    transition: all ease 0.5s
+}
+
+#fifthFreqEditOverlay{
+    background: rgba(0, 0, 0, 0.7);
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    bottom: 0;
+    z-index: 6;
+    visibility: hidden;
+    transition: all ease 0.5s
+}
+
+.fifthFreqAddInput{
+    margin: 12px auto;
 }

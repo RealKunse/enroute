@@ -4,9 +4,12 @@
     vertical-align: middle;
     font-size: 30px;
     color:white;
+    width:100%;
 }
 
 #topBar{
+    display:flex;
+    justify-content: space-around;
     position : sticky;
     top:0;
     height: 60px;
@@ -14,4 +17,10 @@
     background-color: #536166;
     box-shadow: 0 0 8px #000;
     z-index: 3;
+}
+
+#topUserStatus{
+    width:70px;
+    margin-right:30px;
+    line-height: 60px;
 }

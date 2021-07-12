@@ -34,6 +34,7 @@
     width: 95%;
 }
 
+
 #firstBannerClose {
     /*position: relative;*/
     width: 40px;
@@ -47,25 +48,22 @@
     overflow: auto;
 }
 
-#firstAddData {
-    position: absolute;
-    width: 6%;
-    height: 6%;
+.firstAddData {
+    position: sticky;
+    float:right;
+    width: 60px;
+    height: 60px;
     min-width: 30px;
     max-width: 60px;
     min-height: 30px;
     max-height: 60px;
     bottom: 10%;
-    right: 5%;
+    right: 10px;
     background: #aaa;
     cursor: pointer;
 }
 
-table {
-    width: 100%;
-    border-collapse: collapse;
-    border: 1px solid #ccc;
-}
+
 
 .firstRow {
     cursor: pointer;
@@ -77,6 +75,14 @@ table {
 }
 
 .firstRow:active {
+    background: #777;
+}
+
+.styleTableRow:hover {
+    background: #aaa;
+}
+
+.styleTableRow:active {
     background: #777;
 }
 
@@ -93,22 +99,6 @@ table {
     background: #555;
 }
 
-th, td {
-    padding: 6px 10px;
-    border-top: 1px solid #ccc;
-    border-left: 1px solid #ccc;
-    white-space: nowrap;
-}
-
-td input{
-    display: block;
-    margin: 0 auto;
-}
-
-th {
-    background: #ccc;
-    font-weight: normal;
-}
 
 #firstAddComponentOverlay {
     background: rgba(0, 0, 0, 0.7);
@@ -133,34 +123,34 @@ th {
     visibility: hidden;
     border-radius: 10px 10px 10px 10px;
     transition: all ease 0.5s;
-    overflow:auto;
+    overflow: auto;
 }
 
 .firstAddButtonForm {
     display: flex;
     justify-content: center;
-    width: 100%;
-    margin:10px;
+    width: 50%;
+    margin-left: 25%;
 }
 
 .firstAddButton {
     background: black;
-    color:white;
+    color: white;
     font-size: 16px;
     font-weight: normal;
     padding: 5px;
     border-radius: 5px;
-    margin:20px 10px 10px 10px;
+    margin: 20px 10px 10px 10px;
     display: inline;
-    width:40px;
+    width: 40px;
     text-align: center;
     white-space: nowrap;
 }
 
 .firstAddRowButton {
-    margin:5px;
+    margin: 5px;
     padding: 5px;
-    width:20px;
+    width: 20px;
     line-height: 20px;
     border-radius: 5px;
     text-align: center;
@@ -169,4 +159,82 @@ th {
     color: white;
     font-weight: bolder;
 
+}
+
+#firstReqDataOverlay {
+    background: rgba(0, 0, 0, 0.7);
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    bottom: 0;
+    z-index: 12;
+    visibility: hidden;
+    transition: all ease 0.5s
+}
+
+#firstReqData {
+    position: fixed;
+    background: #f7fff3;
+    width: 80%;
+    height: 80%;
+    left: 10%;
+    bottom: 10%;
+    z-index: 13;
+    visibility: hidden;
+    border-radius: 10px 10px 10px 10px;
+    transition: all ease 0.5s;
+    overflow: auto;
+    box-shadow: 0 0 8px #000;
+}
+
+
+.BannerDiv {
+    border-radius: 10px 10px 0 0;
+    background-color: gray;
+    display: flex;
+    position: sticky;
+    top:0;
+    justify-content: space-between;
+    box-shadow: 0 0 2px #000;
+    z-index: 1;
+}
+
+.BannerText {
+    line-height: 60px;
+    /*vertical-align: middle;*/
+    font-size: 30px;
+    color:white;
+    padding-left: 30px;
+    display: inline;
+    width: 95%;
+}
+
+.BannerClose {
+    width: 40px;
+    top: 0;
+    cursor: pointer;
+}
+
+#firstSearchButton {
+    width:80px;
+    height: 40px;
+}
+
+#firstMapButton {
+    width:80px;
+    height: 40px;
+}
+
+#firstReqForm{
+    display: flex;
+    justify-content: space-around;
+    margin: 10px 10px 10px 10px;
+}
+
+td > input.firstAddInput1{
+    width:60px;
+}
+td > input.firstAddInput2 {
+    width:90px;
 }

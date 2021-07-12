@@ -31,7 +31,7 @@
 }
 /* Safari renders non-retina tile on retina better with this, but Chrome is worse */
 .leaflet-safari .leaflet-tile {
-	image-rendering: -webkit-optimize-contrast;
+	image-rendering: auto;
 	}
 /* hack that prevents hw layers "stretching" when loading new tiles */
 .leaflet-safari .leaflet-tile-container {
@@ -209,8 +209,6 @@
 	cursor: pointer;
 	}
 .leaflet-grab {
-	cursor: -webkit-grab;
-	cursor:    -moz-grab;
 	cursor:         grab;
 	}
 .leaflet-crosshair,
@@ -225,8 +223,8 @@
 .leaflet-dragging .leaflet-grab .leaflet-interactive,
 .leaflet-dragging .leaflet-marker-draggable {
 	cursor: move;
-	cursor: -webkit-grabbing;
-	cursor:    -moz-grabbing;
+	/*cursor: -webkit-grabbing;*/
+	/*cursor:    -moz-grabbing;*/
 	cursor:         grabbing;
 	}
 
@@ -480,29 +478,29 @@ svg.leaflet-image-layer.leaflet-interactive path {
 .leaflet-popup-content p {
 	margin: 18px 0;
 	}
-.leaflet-popup-tip-container {
-	width: 40px;
-	height: 20px;
-	position: absolute;
-	left: 50%;
-	margin-left: -20px;
-	overflow: hidden;
-	pointer-events: none;
-	}
-.leaflet-popup-tip {
-	width: 17px;
-	height: 17px;
-	padding: 1px;
+/*.leaflet-popup-tip-container {*/
+/*	width: 40px;*/
+/*	height: 20px;*/
+/*	position: absolute;*/
+/*	left: 50%;*/
+/*	margin-left: -20px;*/
+/*	overflow: hidden;*/
+/*	pointer-events: none;*/
+/*	}*/
+/*.leaflet-popup-tip {*/
+/*	width: 17px;*/
+/*	height: 17px;*/
+/*	padding: 1px;*/
 
-	margin: -10px auto 0;
+/*	margin: -10px auto 0;*/
 
-	-webkit-transform: rotate(45deg);
-	   -moz-transform: rotate(45deg);
-	    -ms-transform: rotate(45deg);
-	        transform: rotate(45deg);
-	}
-.leaflet-popup-content-wrapper,
-.leaflet-popup-tip {
+/*	-webkit-transform: rotate(45deg);*/
+/*	   -moz-transform: rotate(45deg);*/
+/*	    -ms-transform: rotate(45deg);*/
+/*	        transform: rotate(45deg);*/
+/*	}*/
+.leaflet-popup-content-wrapper{
+/*.leaflet-popup-tip {*/
 	background: white;
 	color: #333;
 	box-shadow: 0 3px 14px rgba(0,0,0,0.4);
@@ -541,9 +539,13 @@ svg.leaflet-image-layer.leaflet-interactive path {
 	-ms-filter: "progid:DXImageTransform.Microsoft.Matrix(M11=0.70710678, M12=0.70710678, M21=-0.70710678, M22=0.70710678)";
 	filter: progid:DXImageTransform.Microsoft.Matrix(M11=0.70710678, M12=0.70710678, M21=-0.70710678, M22=0.70710678);
 	}
-.leaflet-oldie .leaflet-popup-tip-container {
+.leaflet-oldie  {
 	margin-top: -1px;
 	}
+
+/*.leaflet-popup-tip-container{*/
+/*	margin-top: -1px;*/
+/*}*/
 
 .leaflet-oldie .leaflet-control-zoom,
 .leaflet-oldie .leaflet-control-layers,
@@ -638,3 +640,15 @@ svg.leaflet-image-layer.leaflet-interactive path {
 	margin-left: -12px;
 	border-right-color: #fff;
 	}
+
+.contextmenu-Popup-Item {
+	height: 30px;
+	line-height: 30px;
+	text-align: center;
+	border-radius: 10px 10px 10px 10px;
+	transition: ease 0.1s;
+}
+
+.contextmenu-Popup-Item:hover{
+	background: #999;
+}
