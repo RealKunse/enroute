@@ -3,8 +3,9 @@
     margin:0;
     flex: 1;
     display:flex;
-    min-height: 50px;
-    max-height: 6vh;
+    /*min-height: 50px;*/
+    max-height: 65px;
+    /*height:65px;*/
     z-index: 6;
 
 }

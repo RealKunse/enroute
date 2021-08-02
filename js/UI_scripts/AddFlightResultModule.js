@@ -17,7 +17,7 @@ firstAddButton = () => {
 
     document.getElementById('firstAddTableBody').appendChild(tr);
 
-    for (i in document.getElementsByClassName('firstFrequncyInput')) {
+    for (let i in document.getElementsByClassName('firstFrequncyInput')) {
         if (i == document.getElementsByClassName('firstFrequncyInput').length - 1) {
             document.getElementsByClassName('firstAddTableButtonForm')[i].innerHTML = `<div style="display: flex">
                                                                                         <div class="firstAddRowButton" id="firstAddRowButton" tabindex="0" onfocus="firstAddButton()">+</div>
@@ -76,13 +76,10 @@ firstAddRowConfirmOnFocus = () => {
     document.getElementById('firstRouteUpload').disabled = true;
 };
 
-afterAddRow = () => {
-};
-
 firstDelButton = (idx) => {
     document.getElementsByClassName('firstAddTableRow')[idx].remove();
 
-    for (i in document.getElementsByClassName('firstFrequncyInput')) {
+    for (let i in document.getElementsByClassName('firstFrequncyInput')) {
         if (i == document.getElementsByClassName('firstFrequncyInput').length - 1) {
             document.getElementsByClassName('firstAddTableButtonForm')[i].innerHTML = `<div style="display: flex">
                                                                                         <div class="firstAddRowButton" id="firstAddRowButton" tabindex="0" onfocus="firstAddButton()">+</div>
@@ -95,7 +92,7 @@ firstDelButton = (idx) => {
         }
     }
 
-    for (i in document.getElementsByClassName('firstFrequncyInput')) {
+    for (let i in document.getElementsByClassName('firstFrequncyInput')) {
         document.getElementsByClassName('firstTableNumber')[i].innerText =
             parseInt(i) + 1;
     }
@@ -112,7 +109,7 @@ confirmData = async () => {
         return;
     }
     if (document.getElementsByClassName('firstFrequncyInput').length !== 0) {
-        for (i in document.getElementsByClassName('firstFrequncyInput')) {
+        for (let i in document.getElementsByClassName('firstFrequncyInput')) {
             if (
                 document.getElementsByClassName('firstFrequncyInput')[i].value == ''
             ) {
@@ -126,7 +123,7 @@ confirmData = async () => {
                 (document.getElementsByClassName('firstTXSInput')[i].value == '' || document.getElementsByClassName('firstRXSInput')[i].value == '')
             ) {
                 alert(
-                    document.getElementsByClassName('firstTableNumber')[i].innerText +'번째 열의 주파수 점검값(Main 또는 Stby)을 입력해주세요.',
+                    document.getElementsByClassName('firstTableNumber')[i].innerText + '번째 열의 주파수 점검값(Main 또는 Stby)을 입력해주세요.',
                 );
                 return;
             }
@@ -157,7 +154,7 @@ confirmData = async () => {
             switch (j) {
                 case 1:
                     result['data'][i] = {
-                        site: document.getElementsByClassName('firstAddTableRow', )[i].children[1].textContent,
+                        site: document.getElementsByClassName('firstAddTableRow',)[i].children[1].textContent,
                     };
                     break;
                 case 2:

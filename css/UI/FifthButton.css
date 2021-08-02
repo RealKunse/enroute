@@ -1,8 +1,8 @@
-.five{
-    position:fixed;
+.five {
+    position: fixed;
     background-color: rgba(249, 248, 248, 0.9);
     bottom: -100%;
-    right:0;
+    right: 0;
     left: 0;
     height: 99vh;
     width: 95vw;
@@ -15,7 +15,12 @@
     box-shadow: 0 0 8px #000;
 }
 
-#fifthBanner{
+
+.fifthInput {
+    margin: 12px auto;
+}
+
+#fifthBanner {
     border-radius: 10px 10px 0 0;
     background-color: gray;
     display: flex;
@@ -24,63 +29,64 @@
     /*line-height: 60px;*/
 }
 
-#fifthBannerText{
+#fifthBannerText {
     line-height: 60px;
     /*vertical-align: middle;*/
     font-size: 30px;
-    color:white;
+    color: white;
     padding-left: 30px;
     display: inline;
     width: 95%;
 }
 
-#fifthBannerClose{
+#fifthBannerClose {
     /*position: relative;*/
     cursor: pointer;
-    width:40px;
+    width: 40px;
     top: 0;
     /*right:20px;*/
 }
 
-#fifthLoginForm{
-    display:flex;
+#fifthLoginForm {
+    display: flex;
 }
 
-.fifthSettingButtonArea{
-    margin:0 auto;
+.fifthSettingButtonArea {
+    margin: 0 auto;
     height: 75%;
-    display:flex;
-    flex-wrap:wrap;
+    display: flex;
+    flex-wrap: wrap;
     justify-content: center;
-    align-items:center;
+    align-items: center;
 }
 
-.fifthSettingButton{
-    width:250px;
+.fifthSettingButton {
+    width: 250px;
     height: 250px;
     background: darkgrey;
-    margin:15px;
+    margin: 15px;
     border-radius: 10px;
     box-shadow: 5px 5px 5px grey;
 }
 
-.fifthSettingButton:hover{
-    width:250px;
+.fifthSettingButton:hover {
+    width: 250px;
     height: 250px;
     background: #6f6f6f;
-    margin:15px;
+    margin: 15px;
     border-radius: 10px;
     box-shadow: 5px 5px 5px grey;
 }
 
-.fifthSettingButton:active{
-    width:250px;
+.fifthSettingButton:active {
+    width: 250px;
     height: 250px;
     background: #a6a6a6;
-    margin:15px;
+    margin: 15px;
     border-radius: 10px;
     box-shadow: 5px 5px 5px grey;
 }
+
 #fifthFreq {
     position: fixed;
     background: #f7fff3;
@@ -94,7 +100,8 @@
     transition: all ease 0.5s;
     overflow: auto;
 }
-#fifthFreqOverlay{
+
+#fifthFreqOverlay {
     background: rgba(0, 0, 0, 0.7);
     position: fixed;
     width: 100%;
@@ -106,9 +113,9 @@
     transition: all ease 0.5s
 }
 
-#fifthFreqAdd{
+#fifthFreqAdd {
     position: fixed;
-    display:flex;
+    display: flex;
     background: #f7fff3;
     width: 50%;
     height: 40%;
@@ -122,9 +129,9 @@
     flex-direction: column;
 }
 
-#fifthFreqEdit{
+#fifthFreqEdit {
     position: fixed;
-    display:flex;
+    display: flex;
     background: #f7fff3;
     width: 50%;
     height: 40%;
@@ -138,7 +145,7 @@
     flex-direction: column;
 }
 
-#fifthFreqAddOverlay{
+#fifthFreqAddOverlay {
     background: rgba(0, 0, 0, 0.7);
     position: fixed;
     width: 100%;
@@ -150,7 +157,7 @@
     transition: all ease 0.5s
 }
 
-#fifthFreqEditOverlay{
+#fifthFreqEditOverlay {
     background: rgba(0, 0, 0, 0.7);
     position: fixed;
     width: 100%;
@@ -162,6 +169,406 @@
     transition: all ease 0.5s
 }
 
-.fifthFreqAddInput{
-    margin: 12px auto;
+#fifthSite {
+    position: fixed;
+    background: #f7fff3;
+    width: 80%;
+    height: 50%;
+    left: 10%;
+    bottom: 25%;
+    z-index: 5;
+    visibility: hidden;
+    border-radius: 10px 10px 10px 10px;
+    transition: all ease 0.5s;
+    overflow: auto;
+}
+
+#fifthSiteOverlay {
+    background: rgba(0, 0, 0, 0.7);
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    bottom: 0;
+    z-index: 5;
+    visibility: hidden;
+    transition: all ease 0.5s
+}
+
+#fifthSiteAdd {
+    position: fixed;
+    display: flex;
+    background: #f7fff3;
+    width: 50%;
+    height: 40%;
+    left: 25%;
+    bottom: 25%;
+    z-index: 7;
+    visibility: hidden;
+    border-radius: 10px 10px 10px 10px;
+    transition: all ease 0.5s;
+    overflow: auto;
+    flex-direction: column;
+}
+
+#fifthSiteEdit {
+    position: fixed;
+    display: flex;
+    background: #f7fff3;
+    width: 50%;
+    height: 40%;
+    left: 25%;
+    bottom: 25%;
+    z-index: 7;
+    visibility: hidden;
+    border-radius: 10px 10px 10px 10px;
+    transition: all ease 0.5s;
+    overflow: auto;
+    flex-direction: column;
+}
+
+#fifthSiteAddOverlay {
+    background: rgba(0, 0, 0, 0.7);
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    bottom: 0;
+    z-index: 6;
+    visibility: hidden;
+    transition: all ease 0.5s
+}
+
+#fifthSiteEditOverlay {
+    background: rgba(0, 0, 0, 0.7);
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    bottom: 0;
+    z-index: 6;
+    visibility: hidden;
+    transition: all ease 0.5s
+}
+
+
+/*#fifthSector {*/
+/*    position: fixed;*/
+/*    background: #f7fff3;*/
+/*    width: 80%;*/
+/*    height: 50%;*/
+/*    left: 10%;*/
+/*    bottom: 25%;*/
+/*    z-index: 5;*/
+/*    visibility: hidden;*/
+/*    border-radius: 10px 10px 10px 10px;*/
+/*    transition: all ease 0.5s;*/
+/*    overflow: auto;*/
+/*}*/
+
+#fifthSectorOverlay {
+    background: rgba(0, 0, 0, 0.7);
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    bottom: 0;
+    z-index: 5;
+    visibility: hidden;
+    transition: all ease 0.5s
+}
+
+#fifthSectorAdd {
+    position: fixed;
+    display: flex;
+    background: #f7fff3;
+    width: 50%;
+    height: 40%;
+    left: 25%;
+    bottom: 25%;
+    z-index: 7;
+    visibility: hidden;
+    border-radius: 10px 10px 10px 10px;
+    transition: all ease 0.5s;
+    overflow: auto;
+    flex-direction: column;
+}
+
+#fifthSectorEdit {
+    position: fixed;
+    display: flex;
+    background: #f7fff3;
+    width: 50%;
+    height: 40%;
+    left: 25%;
+    bottom: 25%;
+    z-index: 7;
+    visibility: hidden;
+    border-radius: 10px 10px 10px 10px;
+    transition: all ease 0.5s;
+    overflow: auto;
+    flex-direction: column;
+}
+
+#fifthSectorAddOverlay {
+    background: rgba(0, 0, 0, 0.7);
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    bottom: 0;
+    z-index: 6;
+    visibility: hidden;
+    transition: all ease 0.5s
+}
+
+#fifthSectorEditOverlay {
+    background: rgba(0, 0, 0, 0.7);
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    bottom: 0;
+    z-index: 6;
+    visibility: hidden;
+    transition: all ease 0.5s
+}
+
+#fifthSectorContext{
+    padding: 10px;
+}
+
+
+#fifthFix {
+    position: fixed;
+    background: #f7fff3;
+    width: 80%;
+    height: 50%;
+    left: 10%;
+    bottom: 25%;
+    z-index: 5;
+    visibility: hidden;
+    border-radius: 10px 10px 10px 10px;
+    transition: all ease 0.5s;
+    overflow: auto;
+}
+
+#fifthFixOverlay {
+    background: rgba(0, 0, 0, 0.7);
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    bottom: 0;
+    z-index: 5;
+    visibility: hidden;
+    transition: all ease 0.5s
+}
+
+#fifthFixAdd {
+    position: fixed;
+    display: flex;
+    background: #f7fff3;
+    width: 50%;
+    height: 40%;
+    left: 25%;
+    bottom: 25%;
+    z-index: 7;
+    visibility: hidden;
+    border-radius: 10px 10px 10px 10px;
+    transition: all ease 0.5s;
+    overflow: auto;
+    flex-direction: column;
+}
+
+#fifthFixEdit {
+    position: fixed;
+    display: flex;
+    background: #f7fff3;
+    width: 50%;
+    height: 40%;
+    left: 25%;
+    bottom: 25%;
+    z-index: 7;
+    visibility: hidden;
+    border-radius: 10px 10px 10px 10px;
+    transition: all ease 0.5s;
+    overflow: auto;
+    flex-direction: column;
+}
+
+#fifthFixAddOverlay {
+    background: rgba(0, 0, 0, 0.7);
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    bottom: 0;
+    z-index: 6;
+    visibility: hidden;
+    transition: all ease 0.5s
+}
+
+#fifthFixEditOverlay {
+    background: rgba(0, 0, 0, 0.7);
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    bottom: 0;
+    z-index: 6;
+    visibility: hidden;
+    transition: all ease 0.5s
+}
+
+#fifthNotice {
+    position: fixed;
+    background: #f7fff3;
+    width: 80%;
+    height: 50%;
+    left: 10%;
+    bottom: 25%;
+    z-index: 5;
+    visibility: hidden;
+    border-radius: 10px 10px 10px 10px;
+    transition: all ease 0.5s;
+    overflow: auto;
+}
+
+#fifthNoticeOverlay {
+    background: rgba(0, 0, 0, 0.7);
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    bottom: 0;
+    z-index: 5;
+    visibility: hidden;
+    transition: all ease 0.5s
+}
+
+
+#fifthNoticeAdd {
+    position: fixed;
+    display: flex;
+    background: #f7fff3;
+    width: 50%;
+    height: 40%;
+    left: 25%;
+    bottom: 25%;
+    z-index: 7;
+    visibility: hidden;
+    border-radius: 10px 10px 10px 10px;
+    transition: all ease 0.5s;
+    overflow: auto;
+    flex-direction: column;
+}
+
+#fifthNoticeEdit {
+    position: fixed;
+    display: flex;
+    background: #f7fff3;
+    width: 50%;
+    height: 40%;
+    left: 25%;
+    bottom: 25%;
+    z-index: 7;
+    visibility: hidden;
+    border-radius: 10px 10px 10px 10px;
+    transition: all ease 0.5s;
+    overflow: auto;
+    flex-direction: column;
+}
+
+#fifthNoticeAddOverlay {
+    background: rgba(0, 0, 0, 0.7);
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    bottom: 0;
+    z-index: 6;
+    visibility: hidden;
+    transition: all ease 0.5s
+}
+
+#fifthNoticeEditOverlay {
+    background: rgba(0, 0, 0, 0.7);
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    bottom: 0;
+    z-index: 6;
+    visibility: hidden;
+    transition: all ease 0.5s
+}
+
+
+#fifthRouteOverlay {
+    background: rgba(0, 0, 0, 0.7);
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    bottom: 0;
+    z-index: 5;
+    visibility: hidden;
+    transition: all ease 0.5s
+}
+
+#fifthRouteAdd {
+    position: fixed;
+    display: flex;
+    background: #f7fff3;
+    width: 50%;
+    height: 40%;
+    left: 25%;
+    bottom: 25%;
+    z-index: 7;
+    visibility: hidden;
+    border-radius: 10px 10px 10px 10px;
+    transition: all ease 0.5s;
+    overflow: auto;
+    flex-direction: column;
+}
+
+#fifthRouteEdit {
+    position: fixed;
+    display: flex;
+    background: #f7fff3;
+    width: 50%;
+    height: 40%;
+    left: 25%;
+    bottom: 25%;
+    z-index: 7;
+    visibility: hidden;
+    border-radius: 10px 10px 10px 10px;
+    transition: all ease 0.5s;
+    overflow: auto;
+    flex-direction: column;
+}
+
+#fifthRouteAddOverlay {
+    background: rgba(0, 0, 0, 0.7);
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    bottom: 0;
+    z-index: 6;
+    visibility: hidden;
+    transition: all ease 0.5s
+}
+
+#fifthRouteEditOverlay {
+    background: rgba(0, 0, 0, 0.7);
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    bottom: 0;
+    z-index: 6;
+    visibility: hidden;
+    transition: all ease 0.5s
 }

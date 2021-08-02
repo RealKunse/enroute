@@ -82,7 +82,7 @@ map.on('contextmenu', (e) => {
         // console.log(e.latlng);
         map.closePopup(popup);
         const maponclick = map.on('click', e => {
-                pl.disable();
+            pl.disable();
 
         })
         const pl = new L.Draw.Polyline(map, drawControl.options.polyline);
@@ -90,10 +90,6 @@ map.on('contextmenu', (e) => {
         pl.enable();
 
         pl.addVertex(e.latlng);
-
-
-
-
 
 
     }
@@ -157,7 +153,7 @@ map.on('contextmenu', (e) => {
 //
 // });
 
-map.on("layeradd",(e) => {
+map.on("layeradd", (e) => {
 
 })
 

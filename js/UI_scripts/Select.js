@@ -17,6 +17,14 @@ document
 	.getElementById('firstTypeSelect')
 	.addEventListener('click', onClickSelect);
 
+document
+	.getElementById('fifthSectorClickSelect')
+	.addEventListener('click', onClickSelect);
+
+document
+	.getElementById('fifthRouteClickSelect')
+	.addEventListener('click', onClickSelect);
+
 var optionList = document.querySelectorAll('.option');
 
 for (var i = 0; i < optionList.length; i++) {
@@ -24,12 +32,12 @@ for (var i = 0; i < optionList.length; i++) {
 	option.addEventListener('click', onClickOption);
 }
 
-function onClickSelect(e, down) {
+function onClickSelect(e) {
 	const downList = [
 		'secondSiteClickSelect',
 		'firstReqSiteSelect',
 		'firstReqFreqSelect',
-		'firstTypeSelect'
+		'firstTypeSelect',
 	];
 	if (e.currentTarget.className.indexOf('active') !== -1) {
 		e.currentTarget.className = 'select';
@@ -44,5 +52,5 @@ function onClickSelect(e, down) {
 
 function onClickOption(e) {
 	const selectedValue = e.currentTarget.innerHTML;
-	e.currentTarget.parentNode.previousSibling.previousSibling.previousSibling.previousSibling.innerHTML = selectedValue;
+	e.currentTarget.parentElement.previousElementSibling.innerHTML = selectedValue;
 }

@@ -111,7 +111,7 @@ firstOnSearchClick = () => {
 SecondOnSearchClick = () => {
     const freq = document.getElementById('secondFreqInput').value;
     const site = document.getElementById('secondSiteSelectLabel').innerText;
-    const name = document.getElementById('secondNameInput').innerText;
+    const name = document.getElementById('secondNameInput').value;
     const startDate = document.getElementById('secondStartDate').value;
     const endDate = document.getElementById('secondEndDate').value;
 
@@ -134,13 +134,12 @@ SecondOnSearchClick = () => {
     })
         .then(res => {
             res.json().then($res => {
-                console.log($res);
                 document.getElementById('secondTableBody').innerHTML =
                     $res.length !== 0 ? $res.map(t => {
                             return `<tr class="secondTableData styleTableRow">
                                     <td><input type="checkbox" class="secondCheckBox"></td>
                                     <td>${t.testname_fk}</td><td>${t.sitename_fk}</td><td>${t.frequency_fk.toFixed(3)}</td>
-                                    <td>${t.testDate.slice(0,10)}</td><td>${t.txmain}</td>
+                                    <td>${t.testDate.slice(0, 10)}</td><td>${t.txmain}</td>
                                     <td>${t.rxmain}</td><td>${t.txstby}</td><td>${t.rxstby}</td><td>${t.distance}</td>
                                     <td>${t.angle}</td><td>${t.height}</td></tr>`
                         }).join('')
@@ -155,7 +154,7 @@ checkAllBoxes = (cb, className) => {
     for (let i = 0; i < document.getElementsByClassName(className).length; i++) {
         document.getElementsByClassName(className)[i].checked = cb.checked
     }
-}
+};
 
 pinAllCheckedRow = () => {
     let result = {};
@@ -221,10 +220,14 @@ pinAllCheckedRow = () => {
             })
         }).bindTooltip(
             "<table><tr><td>표지소</td><td>주파수</td><td>검사명</td><td>TX-MAIN</td><td>RX-MAIN</td><td>TX-STBY</td><td>RX-STBY</td><td>각도</td><td>거리</td><td>고도</td></tr>" +
-            "<tr><td>" + result[i].site + "</td><td>" + result[i].freq + "</td><td>" + document.getElementById('firstReqText').innerText +"</td><td>" + result[i].txmain + "</td><td>" + result[i].rxmain + "</td><td>" +
+            "<tr><td>" + result[i].site + "</td><td>" + result[i].freq + "</td><td>" + document.getElementById('firstReqText').innerText + "</td><td>" + result[i].txmain + "</td><td>" + result[i].rxmain + "</td><td>" +
             result[i].txstby + "</td><td>" + result[i].rxstby + "</td><td>" + result[i].angle + "</td><td>" + result[i].distance + "</td><td>" + result[i].height + "</td></tr></table>",
             {sticky: true}).addTo(map)
     }
+
+    resetActivatedPopup();
+    closeFirstReqData();
+    openMapMode(1);
 
 };
 
@@ -300,11 +303,12 @@ pinAllCheckedRow_sec = () => {
             })
         }).bindTooltip(
             "<table><tr><td>표지소</td><td>주파수</td><td>검사명</td><td>TX-MAIN</td><td>RX-MAIN</td><td>TX-STBY</td><td>RX-STBY</td><td>각도</td><td>거리</td><td>고도</td></tr>" +
-            "<tr><td>" + result[i].site + "</td><td>" + result[i].freq + "</td><td>" + result[i].name +"</td><td>" + result[i].txmain + "</td><td>" + result[i].rxmain + "</td><td>" +
+            "<tr><td>" + result[i].site + "</td><td>" + result[i].freq + "</td><td>" + result[i].name + "</td><td>" + result[i].txmain + "</td><td>" + result[i].rxmain + "</td><td>" +
             result[i].txstby + "</td><td>" + result[i].rxstby + "</td><td>" + result[i].angle + "</td><td>" + result[i].distance + "</td><td>" + result[i].height + "</td></tr></table>",
             {sticky: true}).addTo(map)
     }
-
+    resetActivatedPopup();
+    openMapMode(2)
 };
 
 
@@ -363,6 +367,73 @@ onColumnClick = (column) => {
                 }).join('')
             }).catch(error => console.log(error))
         }).catch(err => console.err(err))
+};
 
+getNoticeData = () => {
+    fetch('http://localhost:3000/notice')
+        .then(res => {
+            res.json()
+                .then(_res => {
+                    document.getElementById('noticeTbody').innerHTML = _res.map((c) => {
+                        return `<tr class="noticeTableTitle"><td class="noticeTableTitle">
+${c.title}
+</td><td class="noticeTableDate">${c.date.substr(0, 10)}</td>
+${c.type == '업데이트' ? '<td>' + c.type + '</td>' + '<td>' + c.version + '</td>' : '<td>' + c.type + '</td>'}
+</tr>
+<tr class="noticeTableContext"><td class="noticeTableContext">
+${c.context}
+</td></tr>`
+                    }).join('')
+                })
+        })
+};
 
+addNoticeData = () => {
+    let result = {};
+    result['title'] = document.getElementById('fifthNoticeAddTitleInput').value;
+    result['context'] = document.getElementById('fifthNoticeAddContextInput').value;
+    result['type'] = document.getElementById('fifthNoticeAddTypeInput').value;
+    result['version'] = document.getElementById('fifthNoticeAddVersionInput').value;
+
+    fetch(`http://localhost:3000/notice/add`, {
+        method: 'post',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            result
+        })
+    })
+};
+
+delNoticeData = (elem) => {
+    let result = {};
+    result['title'] = elem.parentElement.parentElement.children[0].innerText;
+    result['context'] = elem.parentElement.parentElement.children[1].innerText;
+    fetch('http://localhost:3000/notice/del', {
+        method: 'post',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            result
+        })
+    })
+}
+
+getFifthRouteData = () => {
+    fetch('http://localhost:3000/flight/route')
+        .then(r => {
+            r.json().then(res => {
+                document.getElementById('fifthRouteList').innerHTML = '';
+                document.getElementById('fifthRouteList').innerHTML
+                    = res.map((c) => {
+                    return `
+                        <li class="option" onclick="onClickOption(event)">${c.air_route}</li>`
+                }).join('');
+            })
+                .catch(err => console.error(err))
+        })
 };

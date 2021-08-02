@@ -45,7 +45,6 @@ app.get('/hi', function (req, res) {
 });
 
 
-
 app.get('/session/', (req, res) => {
     console.log(req.session.num);
     if (!req.session.num) {
@@ -98,8 +97,8 @@ app.post('/dat', uploadWithOriginalFilename.single('dat'), (req, res) => {
     // console.log(req.file)
     const article = fs.readFileSync("uploadFiles/" + req.file.filename);
     let linearray = article.toString().split('\n');
-    let result = {}
-    let final = {data: []}
+    let result = {};
+    let final = {data: []};
 
     linearray.splice(0, 1);
 
@@ -107,7 +106,7 @@ app.post('/dat', uploadWithOriginalFilename.single('dat'), (req, res) => {
         linearray[i] = linearray[i].replace(/ +/g, " ");
         linearray[i] = linearray[i].split(' ');
 
-        linearray[i].splice(2, 5)
+        linearray[i].splice(2, 5);
         // linearray[i].splice(3, 2)
         for (let j = 0; j < 10; j++) {
             linearray[i].pop();
@@ -132,10 +131,69 @@ app.post('/dat', uploadWithOriginalFilename.single('dat'), (req, res) => {
 
 app.post('/hello', (req, res) => {
     console.log(req.body)
-})
+});
 
+app.get('/notice', (req, res) => {
+    pool.getConnection()
+        .then((conn) =>
+            conn.query(`select * from enroute.notice order by date desc`)
+                .then(response => {
+                    res.send(response);
+                    conn.end();
+                })
+                .catch(err => {
+                    console.log(err);
+                    conn.end();
+                })
+        )
+});
+
+app.get('/notice_asc', (req, res) => {
+    pool.getConnection()
+        .then((conn) =>
+            conn.query(`select * from enroute.notice order by date`)
+                .then(response => {
+                    res.send(response);
+                    conn.end();
+                })
+                .catch(err => {
+                    console.log(err);
+                    conn.end();
+                })
+        )
+});
+
+app.post('/notice/add', (req, res) => {
+    const json = req.body.result;
+    pool.getConnection()
+        .then(conn => {
+            conn.query(`insert into enroute.notice values(null,'${json.title}','${json.context}',current_timestamp(),'${json.type}','${json.version}')`)
+                .then(response => {
+                    res.send(response);
+                    conn.end();
+                }).catch(err => {
+                console.log(err);
+                conn.end();
+            })
+        })
+});
+
+app.post('/notice/del', (req, res) => {
+    const json = req.body.result;
+    pool.getConnection()
+        .then(conn => {
+            conn.query(`delete from enroute.notice where title='${json.title}' and context='${json.context}'`)
+                .then(response => {
+                    res.send(response);
+                    conn.end();
+                }).catch(err => {
+                console.log(err);
+                conn.end();
+            })
+        })
+})
 
 app.listen(port, () => {
     console.log(`Example app listening at http://localhost:${port}`)
-})
+});
 
