@@ -235,21 +235,21 @@ const gunsanWestPath = [
 
 const gunsanEastPath = [
     [37.0502, 126.5615],
-        [37.071, 127.1352],
-        [36.5816, 127.3339],
-        [36.5018, 127.2055],
-        [36.401, 127.0452],
-        [36.2311, 127.0352],
-        [36.1211, 127.3652],
-        [35.5149, 127.3652],
-        [35.4511, 127.3652],
-        [35.3104, 127.4907],
-        [35.3011, 127.4952],
-        [35.3011, 127.114],
-        [35.3011, 126.4927],
-        [36.2311, 126.5515],
-        [36.4322, 126.5429],
-        [37.0502, 126.5615]
+    [37.071, 127.1352],
+    [36.5816, 127.3339],
+    [36.5018, 127.2055],
+    [36.401, 127.0452],
+    [36.2311, 127.0352],
+    [36.1211, 127.3652],
+    [35.5149, 127.3652],
+    [35.4511, 127.3652],
+    [35.3104, 127.4907],
+    [35.3011, 127.4952],
+    [35.3011, 127.114],
+    [35.3011, 126.4927],
+    [36.2311, 126.5515],
+    [36.4322, 126.5429],
+    [37.0502, 126.5615]
 ];
 
 const gwangjuWestPath = [
@@ -363,103 +363,176 @@ const virtualJejuSouthPath = [
     [31.1151, 124.0]
 ];
 
-const orangeLine = {color: '#ff7700'}
-const redLine = {color: '#ff0000'}
-const blueLine = {color: '#0099ff'}
+const orangeLine = {color: '#ff7700', className: 'enroute_sector', pane: 'sector'};
+const redLine = {color: '#ff0000', className: 'enroute_sector', pane: 'sector'};
+const blueLine = {color: '#0099ff', className: 'enroute_sector', pane: 'sector'};
 
 //
 // const areaBoundary =
 //     L.polygon(areaBoundaryPath, orangeLine).addTo(map).bindTooltip("대한민국 FIR", {sticky: true}).on('click', (e) => {
 //         onSectorClick(e, areaBoundary.getBounds())
 //     });
-
-const westSeaNorth =
-    L.polygon(westSeaNorthPath, blueLine).addTo(map).bindTooltip("서해북", {sticky: true})
-        .on('click mouseover mouseout', (e) => {
-            sectorEventHandler(e, westSeaNorth.getBounds())
-    });
-
-const westSeaSouth =
-    L.polygon(westSeaSouthPath, blueLine).addTo(map).bindTooltip("서해남", {sticky: true})
-        .on('click mouseover mouseout', (e) => {
-            sectorEventHandler(e, westSeaSouth.getBounds())
-    });
-
-const gangneung =
-    L.polygon(gangneungPath, blueLine).addTo(map).bindTooltip("강릉", {sticky: true})
-        .on('click mouseover mouseout', (e) => {
-            sectorEventHandler(e, gangneung.getBounds())
-    });
-
-const eastSea =
-    L.polygon(eastSeaPath, blueLine).addTo(map).bindTooltip("동해", {sticky: true})
-        .on('click mouseover mouseout', (e) => {
-            sectorEventHandler(e, eastSea.getBounds())
-    });
-
-const gunsanWest =
-    L.polygon(gunsanWestPath, orangeLine).addTo(map).bindTooltip("군산서부", {sticky: true})
-        .on('click mouseover mouseout', (e) => {
-            sectorEventHandler(e, gunsanWest.getBounds())
-    });
-
-const gunsanEast =
-    L.polygon(gunsanEastPath, orangeLine).addTo(map).bindTooltip("군산동부", {sticky: true})
-        .on('click mouseover mouseout', (e) => {
-            sectorEventHandler(e, gunsanEast.getBounds())
-    });
-
-const gwangjuWest =
-    L.polygon(gwangjuWestPath, orangeLine).addTo(map).bindTooltip("광주서부", {sticky: true})
-        .on('click mouseover mouseout', (e) => {
-            sectorEventHandler(e, gwangjuWest.getBounds())
-    });
-
-const gwangjuEast =
-    L.polygon(gwangjuEastPath, orangeLine).addTo(map).bindTooltip("광주동부", {sticky: true})
-        .on('click mouseover mouseout', (e) => {
-            sectorEventHandler(e, gwangjuEast.getBounds())
-    });
-
-const jejuWest =
-    L.polygon(jejuWestPath, orangeLine).addTo(map).bindTooltip("제주서부", {sticky: true})
-        .on('click mouseover mouseout', (e) => {
-            sectorEventHandler(e, jejuWest.getBounds())
-    });
-
-const jejuEast =
-    L.polygon(jejuEastPath, orangeLine).addTo(map).bindTooltip("제주동부", {sticky: true})
-        .on('click mouseover mouseout', (e) => {
-            sectorEventHandler(e, jejuEast.getBounds())
-    });
-
-const jejuMiddle =
-    L.polygon(jejuMiddlePath, orangeLine).addTo(map).bindTooltip("제주중부", {sticky: true})
-        .on('click mouseover mouseout', (e) => {
-            sectorEventHandler(e, jejuMiddle.getBounds())
-    });
-
-const namhae =
-    L.polygon(namhaePath, orangeLine).addTo(map).bindTooltip("남해", {sticky: true})
-        .on('click mouseover mouseout', (e) => {
-            sectorEventHandler(e, namhae.getBounds())
-    });
-
-const pohang =
-    L.polygon(pohangPath, blueLine).addTo(map).bindTooltip("포항", {sticky: true})
-        .on('click mouseover mouseout', (e) => {
-            sectorEventHandler(e, pohang.getBounds())
-    });
-
-const daegu =
-    L.polygon(daeguPath, blueLine).addTo(map).bindTooltip("대구", {sticky: true})
-        .on('click mouseover mouseout', (e) => {
-        sectorEventHandler(e, daegu.getBounds())
-    });
+//
+// const westSeaNorth =
+//     L.polygon(westSeaNorthPath, blueLine).addTo(map).bindTooltip("서해북", {sticky: true})
+//         .on('click mouseover mouseout', (e) => {
+//             sectorEventHandler(e, westSeaNorth.getBounds())
+//         });
+//
+// const westSeaSouth =
+//     L.polygon(westSeaSouthPath, blueLine).addTo(map).bindTooltip("서해남", {sticky: true})
+//         .on('click mouseover mouseout', (e) => {
+//             sectorEventHandler(e, westSeaSouth.getBounds())
+//         });
+//
+// const gangneung =
+//     L.polygon(gangneungPath, blueLine).addTo(map).bindTooltip("강릉", {sticky: true})
+//         .on('click mouseover mouseout', (e) => {
+//             sectorEventHandler(e, gangneung.getBounds())
+//         });
+//
+// const eastSea =
+//     L.polygon(eastSeaPath, blueLine).addTo(map).bindTooltip("동해", {sticky: true})
+//         .on('click mouseover mouseout', (e) => {
+//             sectorEventHandler(e, eastSea.getBounds())
+//         });
+//
+// const gunsanWest =
+//     L.polygon(gunsanWestPath, orangeLine).addTo(map).bindTooltip("군산서부", {sticky: true})
+//         .on('click mouseover mouseout', (e) => {
+//             sectorEventHandler(e, gunsanWest.getBounds())
+//         });
+//
+// const gunsanEast =
+//     L.polygon(gunsanEastPath, orangeLine).addTo(map).bindTooltip("군산동부", {sticky: true})
+//         .on('click mouseover mouseout', (e) => {
+//             sectorEventHandler(e, gunsanEast.getBounds())
+//         });
+//
+// const gwangjuWest =
+//     L.polygon(gwangjuWestPath, orangeLine).addTo(map).bindTooltip("광주서부", {sticky: true})
+//         .on('click mouseover mouseout', (e) => {
+//             sectorEventHandler(e, gwangjuWest.getBounds())
+//         });
+//
+// const gwangjuEast =
+//     L.polygon(gwangjuEastPath, orangeLine).addTo(map).bindTooltip("광주동부", {sticky: true})
+//         .on('click mouseover mouseout', (e) => {
+//             sectorEventHandler(e, gwangjuEast.getBounds())
+//         });
+//
+// const jejuWest =
+//     L.polygon(jejuWestPath, orangeLine).addTo(map).bindTooltip("제주서부", {sticky: true})
+//         .on('click mouseover mouseout', (e) => {
+//             sectorEventHandler(e, jejuWest.getBounds())
+//         });
+//
+// const jejuEast =
+//     L.polygon(jejuEastPath, orangeLine).addTo(map).bindTooltip("제주동부", {sticky: true})
+//         .on('click mouseover mouseout', (e) => {
+//             sectorEventHandler(e, jejuEast.getBounds())
+//         });
+//
+// const jejuMiddle =
+//     L.polygon(jejuMiddlePath, orangeLine).addTo(map).bindTooltip("제주중부", {sticky: true})
+//         .on('click mouseover mouseout', (e) => {
+//             sectorEventHandler(e, jejuMiddle.getBounds())
+//         });
+//
+// const namhae =
+//     L.polygon(namhaePath, orangeLine).addTo(map).bindTooltip("남해", {sticky: true})
+//         .on('click mouseover mouseout', (e) => {
+//             sectorEventHandler(e, namhae.getBounds())
+//         });
+//
+// const pohang =
+//     L.polygon(pohangPath, blueLine).addTo(map).bindTooltip("포항", {sticky: true})
+//         .on('click mouseover mouseout', (e) => {
+//             sectorEventHandler(e, pohang.getBounds())
+//         });
+//
+// const daegu =
+//     L.polygon(daeguPath, blueLine).addTo(map).bindTooltip("대구", {sticky: true})
+//         .on('click mouseover mouseout', (e) => {
+//             sectorEventHandler(e, daegu.getBounds())
+//         });
 
 // const NLLDraw =
 //     L.polyline(NLL, redLine).addTo(map)
 
+
+let sectorBoundaryDict = {};
+let sectorList = [];
+
+loadSector = () => {
+
+    fetch('http://localhost:3000/flight/sector')
+        .then(res_ => {
+            res_.json()
+                .then(res => {
+                    res.map(t => {
+                        sectorList.push(t.sectorname);
+                    });
+
+                    for (let i in sectorList) {
+                        afterOnSectorLoad(sectorList[i]);
+                    }
+                })
+                .catch(err => console.log(err));
+        });
+};
+
+afterOnSectorLoad = (text) => {
+    let result = {};
+    result['sector'] = text;
+    fetch('http://localhost:3000/flight/sector/edit/open', {
+        method: 'post',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            result
+        })
+    }).then(res_ => {
+        res_.json()
+            .then(res => {
+                let reslist = [];
+                let sectorName = '';
+                let area;
+                res.map(t => {
+                    if (text == t.sectorname)
+                        reslist.push([t.sectorlat, t.sectorlng]);
+                    sectorName = t.sectorname;
+                    area = t.sectorarea;
+                });
+                sectorBoundaryDict[text] = {'coords': reslist};
+                sectorBoundaryDict[text]['area'] = area;
+
+                const areaBounds =
+                    L.polygon(sectorBoundaryDict[text]['coords'], chooseColor(sectorBoundaryDict[text]['area'])).bindTooltip(text, {sticky: true})
+                        .on('click mouseover mouseout', (e) => {
+                            sectorEventHandler(e, areaBounds.getBounds());
+                        });
+
+                baseTree['children'][0]['children'].push({
+                    label: sectorName,
+                    layer: areaBounds,
+                });
+            })
+    });
+};
+
+chooseColor = (i) => {
+    switch (i) {
+        case 1:
+            return orangeLine;
+        case 2:
+            return blueLine;
+        case 3:
+            return redLine;
+    }
+}
 
 function onSectorClick(e, sectorBoundArea) {
     // popup
@@ -471,36 +544,36 @@ function onSectorClick(e, sectorBoundArea) {
 
 }
 
-function onSectorMouseOn(e){
+function onSectorMouseOn(e) {
     const layer = e.target;
 
     layer.setStyle({
-        weight:5,
+        weight: 5,
         fillOpacity: 0.7
     });
 }
 
-function onSectorMouseout(e){
+function onSectorMouseout(e) {
     const layer = e.target;
 
     layer.setStyle({
-        weight:3,
+        weight: 3,
         fillOpacity: 0.2
     });
 }
 
 sectorEventHandler = (e, sectorBoundArea) => {
-    if(e.type == 'click'){
-        if(uiStatus.fifthSector) {
+    if (e.type == 'click') {
+        if (uiStatus.fifthSector) {
             // console.log()
             document.getElementById('fifthSectorSelectLabel').innerText = e.sourceTarget._tooltip._content;
         } else {
 
             onSectorClick(e, sectorBoundArea);
         }
-    } else if (e.type == 'mouseover'){
+    } else if (e.type == 'mouseover') {
         onSectorMouseOn(e);
-    } else if (e.type == 'mouseout'){
+    } else if (e.type == 'mouseout') {
         onSectorMouseout(e);
     }
 }
@@ -513,8 +586,6 @@ sectorEventHandler = (e, sectorBoundArea) => {
 // onSectorClick(e, areaBoundary.getBounds())
 
 // });
-
-
 
 
 // const areas = {

@@ -1,6 +1,6 @@
-#noticeOverlay{
-    position:fixed;
-    width:100%;
+#noticeOverlay {
+    position: fixed;
+    width: 100%;
     height: 100%;
     background-color: black;
     z-index: 9;
@@ -11,21 +11,22 @@
     -webkit-transition: all .4s ease-in-out;
 }
 
-#noticeModal{
+#noticeModal {
     position: fixed;
     display: block;
-    right:0;
-    left:0;
-    bottom:0;
-    top:0;
-    width:600px;
-    height:700px;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    top: 0;
+    width: 900px;
+    height: 700px;
     z-index: 10;
+    overflow-x: hidden;
     border-radius: 8px;
     box-shadow: 0 0 8px #000;
     background-color: #f2f3ff;
-    margin:7% auto;
-    overflow-y:scroll;
+    margin: 12vh auto;
+    overflow-y: scroll;
     opacity: 0;
     visibility: hidden;
     transition: all .4s ease-in-out;
@@ -34,7 +35,7 @@
 }
 
 
-#noticeBanner{
+#noticeBanner {
     border-radius: 8px 8px 0 0;
     background-color: gray;
     display: flex;
@@ -42,54 +43,119 @@
     /*line-height: 60px;*/
 }
 
-#noticeBannerText{
+#noticeBannerText {
     line-height: 40px;
     font-size: 20px;
-    color:white;
+    color: white;
     padding-left: 24px;
     display: inline;
 }
 
-#noticeClose{
-    width:40px;
+#noticeClose {
+    width: 40px;
     cursor: pointer;
 }
 
-.noticeTableTitle{
-
+#noticeTable {
+    table-layout: fixed;
 }
 
-.noticeTableContext{
-
+.noticeTableContext {
+    width: 100%;
+    word-break: break-all;
+    white-space: normal;
 }
 
-.noticeTableDate{
-
-}
-
-#mapMode{
+#mapMode {
     position: fixed;
     display: block;
     line-height: 50px;
     text-align: center;
-    right:0;
-    left:0;
-    bottom:0;
-    width:300px;
-    height:50px;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    width: 300px;
+    height: 50px;
     z-index: 10;
     border-radius: 8px 8px 0 0;
-    box-shadow: 0 -2px 8px 4px rgba(0,0,0,.3);
-    margin:65px auto 65px auto;
+    box-shadow: 0 -2px 8px 4px rgba(0, 0, 0, .3);
+    margin: 65px auto 65px auto;
     opacity: 0;
     visibility: hidden;
 
     color: rgb(255, 255, 255);
-    background: #141E30;  /* fallback for old browsers */
-    background: -webkit-linear-gradient(to top, #243B55, #141E30);  /* Chrome 10-25, Safari 5.1-6 */
+    background: #141E30; /* fallback for old browsers */
+    background: -webkit-linear-gradient(to top, #243B55, #141E30); /* Chrome 10-25, Safari 5.1-6 */
     background: linear-gradient(to top, #243B55, #141E30); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 
     transition: all .4s ease-in-out;
     -moz-transition: all .4s ease-in-out;
     -webkit-transition: all .4s ease-in-out;
+}
+
+#loginOverlay {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background-color: black;
+    z-index: 9;
+    opacity: 0;
+    visibility: hidden;
+    transition: all .4s ease-in-out;
+    -moz-transition: all .4s ease-in-out;
+    -webkit-transition: all .4s ease-in-out;
+}
+
+#loginModal {
+    position: fixed;
+    display: block;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    top: 0;
+    width: 300px;
+    height: 350px;
+    z-index: 10;
+    overflow-x: hidden;
+    border-radius: 8px;
+    box-shadow: 0 0 8px #000;
+    background-color: #f2f3ff;
+    margin: 30vh auto;
+    overflow-y: hidden;
+    opacity: 0;
+    visibility: hidden;
+    transition: all .4s ease-in-out;
+    -moz-transition: all .4s ease-in-out;
+    -webkit-transition: all .4s ease-in-out;
+}
+
+
+#loginBanner {
+    border-radius: 8px 8px 0 0;
+    background-color: gray;
+    display: flex;
+    justify-content: space-between;
+    /*line-height: 60px;*/
+}
+
+#loginBannerText {
+    line-height: 40px;
+    font-size: 20px;
+    color: white;
+    padding-left: 24px;
+    display: inline;
+}
+
+#loginContext {
+    height: 50%;
+    margin: 25% 0 25% 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+}
+
+#loginClose {
+    width: 40px;
+    cursor: pointer;
 }

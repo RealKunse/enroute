@@ -25,7 +25,7 @@ const areas = {
 
 let numeric = 1;
 let baseTree = {
-    label: '오버레이',
+    label: 'Overlays',
     selectAllCheckbox: 'select all',
     children: [
         {
@@ -33,62 +33,62 @@ let baseTree = {
             selectAllCheckbox: true,
             collapsed: true,
             children: [
-                {
-                    label: '서해북부',
-                    layer: westSeaNorth,
-                },
-                {
-                    label: '서해남부',
-                    layer: westSeaSouth,
-                },
-                {
-                    label: '강릉',
-                    layer: gangneung,
-                },
-                {
-                    label: '동해',
-                    layer: eastSea,
-                },
-                {
-                    label: '군산동부',
-                    layer: gunsanEast,
-                },
-                {
-                    label: '군산서부',
-                    layer: gunsanWest,
-                },
-                {
-                    label: '광주서부',
-                    layer: gwangjuWest,
-                },
-                {
-                    label: '광주동부',
-                    layer: gwangjuEast,
-                },
-                {
-                    label: '제주서부',
-                    layer: jejuWest,
-                },
-                {
-                    label: '제주중부',
-                    layer: jejuMiddle,
-                },
-                {
-                    label: '제주동부',
-                    layer: jejuEast,
-                },
-                {
-                    label: '남해',
-                    layer: namhae,
-                },
-                {
-                    label: '포항',
-                    layer: pohang,
-                },
-                {
-                    label: '대구',
-                    layer: daegu,
-                },
+                // {
+                //     label: '서해북부',
+                //     layer: westSeaNorth,
+                // },
+                // {
+                //     label: '서해남부',
+                //     layer: westSeaSouth,
+                // },
+                // {
+                //     label: '강릉',
+                //     layer: gangneung,
+                // },
+                // {
+                //     label: '동해',
+                //     layer: eastSea,
+                // },
+                // {
+                //     label: '군산동부',
+                //     layer: gunsanEast,
+                // },
+                // {
+                //     label: '군산서부',
+                //     layer: gunsanWest,
+                // },
+                // {
+                //     label: '광주서부',
+                //     layer: gwangjuWest,
+                // },
+                // {
+                //     label: '광주동부',
+                //     layer: gwangjuEast,
+                // },
+                // {
+                //     label: '제주서부',
+                //     layer: jejuWest,
+                // },
+                // {
+                //     label: '제주중부',
+                //     layer: jejuMiddle,
+                // },
+                // {
+                //     label: '제주동부',
+                //     layer: jejuEast,
+                // },
+                // {
+                //     label: '남해',
+                //     layer: namhae,
+                // },
+                // {
+                //     label: '포항',
+                //     layer: pohang,
+                // },
+                // {
+                //     label: '대구',
+                //     layer: daegu,
+                // },
             ],
         },
         {
@@ -101,7 +101,25 @@ let baseTree = {
             children: [],
         },
         {
-            label: 'Assets',
+            label: '저고도',
+            selectAllCheckbox: 'unselect all',
+            collapsed: true,
+            eventedClasses: {
+                selectAll: true,
+            },
+            children: [],
+        },
+        {
+            label: 'VORTAC',
+            selectAllCheckbox: 'unselect all',
+            collapsed: true,
+            eventedClasses: {
+                selectAll: true,
+            },
+            children: [],
+        },
+        {
+            label: 'Map Assets',
             collapsed: true,
             selectAllCheckbox: true,
             children: [
@@ -124,57 +142,58 @@ let accumulatePin = true;
 let fix_points = [];
 let fix_dicts = {};
 
-let fix_icon = L.icon({
-    iconUrl: 'css/images/Fix_point.png',
-    iconSize: [10, 10],
-    iconAnchor: [5, 5],
-});
 
 loadFixPoints = () => {
     fetch('http://localhost:3000/api/fix_point', {method: 'GET'})
         .then((res) => {
-            res.json().then((res) => {
-                for (let i in res) {
-                    fix_points.push(
-                        L.marker(L.latLng(res[i].PointLng, res[i].PointLat), {
-                            icon: fix_icon,
-                        }).bindTooltip(`${res[i].PointName}`),
+            res.json().then((_res) => {
+                for (let i in _res) {
+                    // fix_points.push(
+                    //     L.marker(L.latLng(res[i].PointLng, res[i].PointLat), {
+                    //         icon: fix_icon,
+                    //     }).bindTooltip(`${res[i].PointName}`),
+                    // );
+                    fix_dicts[_res[i].PointName] = L.latLng(
+                        _res[i].PointLng,
+                        _res[i].PointLat,
                     );
-                    fix_dicts[res[i].PointName] = L.latLng(
-                        res[i].PointLng,
-                        res[i].PointLat,
-                    );
-                    baseTree.children[2].children[0].children.push({
-                        label: res[i].PointName,
-                        layer: L.marker([res[i].PointLng, res[i].PointLat], {
-                            icon: fix_icon,
-                        }).bindTooltip(res[i].PointName),
-                    });
+                    // baseTree.children[4].children[0].children.push({
+                    //     label: res[i].PointName,
+                    //     layer: L.marker([res[i].PointLng, res[i].PointLat], {
+                    //         icon: fix_icon,
+                    //     }).bindTooltip(res[i].PointName),
+                    // });
                 }
-                ctl.setOverlayTree(baseTree);
-                ctl.addTo(map);
+                // ctl.setOverlayTree(baseTree);
+                // ctl.addTo(map);
             });
         })
-        .catch((err) => console.error(err));
+        .catch((err) => console.log(err));
 };
 
-drawRoutebyFix = (array, color) => {
+
+drawRoutebyFix = (array, color, bool) => {
     let latlngs = [];
-    for (i in array) {
-        latlngs.push(fix_dicts[array[i]]);
+    for (let i in array){
+        latlngs.push(fix_dicts[array[i]])
     }
+
     console.log(latlngs);
-    L.polyline(latlngs, {color: color}).addTo(map);
+    if (bool) {
+        return L.polyline(latlngs, {color: color});
+    } else {
+        return L.polyline(latlngs, {color: color}).addTo(map);
+    }
 };
 
 drawRoutebyCoordinate = (array, color) => {
     let latlngs = [];
-    for (i in array) {
+    for (let i in array) {
         latlngs.push(array[i]);
     }
     L.polyline(latlngs, {color: color}).addTo(map);
 };
-let pinMarker;
+let pinMarker = [];
 
 calculateCoordinate = () => {
     const siteSelect = document.getElementById('thirdSelectLabel').innerText;
@@ -208,11 +227,12 @@ calculateCoordinate = () => {
         markers[site.indexOf(siteSelect)][0] +
         (Math.cos((angle * Math.PI) / 180) * distance) / 60;
 
-    //## distance 에 곱할 값 구해야함,,,,
     console.log(lat, lng);
 
-    if (accumulatePin) {
-        if (typeof pinMarker != 'undefined') pinMarker.removeFrom(map);
+    if (accumulatePin && pinMarker.length >= 1) {
+        for(let i in pinMarker) {
+            map.removeLayer(pinMarker[i]);
+        }
         numeric = 1;
     }
 
@@ -231,25 +251,20 @@ calculateCoordinate = () => {
         markerColor = 'black';
     }
 
-    pinMarker = L.marker([lat, lng], {
+    const pin = L.marker([lat, lng], {
         icon: new L.AwesomeNumberMarkers({
             number: numeric,
             markerColor: markerColor,
         }),
     }).addTo(map);
 
+    pinMarker.push(pin);
+
     numeric++;
 };
 
-pickNumberedPin = () => {
-};
-
 accumulatePins = (cb) => {
-    if (cb.checked) {
-        accumulatePin = true;
-    } else {
-        accumulatePin = false;
-    }
+    accumulatePin = cb.checked;
 };
 
 remap = (value) => {

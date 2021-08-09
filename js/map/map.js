@@ -93,7 +93,7 @@ map.on('contextmenu', (e) => {
 
 
     }
-})
+});
 
 
 // map.on('draw:created', (e) => {
@@ -153,7 +153,15 @@ map.on('contextmenu', (e) => {
 //
 // });
 
-map.on("layeradd", (e) => {
+map.createPane('sector');
+map.createPane('test_result_marker');
+map.getPane('sector').style.zIndex = 300;
 
+
+
+map.on("layeradd", (e) => {
+    // console.log(e.layer.options.className);
+    // console.log(e);
 })
+
 

@@ -1,6 +1,6 @@
 let loaded = false;
 let clickedColumn = ['', 0];
-
+let mapMarker = [];
 let fileNames = [];
 
 getTestList = async () => {
@@ -51,13 +51,13 @@ onRowClick = (name) => {
                         return t.sitename_fk
                     }) : '')].sort().map(j => {
                         return `<li class="option">${j}</li>`
-                    }).join("")
+                    }).join("");
 
                     document.getElementById('firstReqFreq').innerHTML = `<li class="option">전체</li>` + [...new Set($res.length !== 0 ? $res.map(t => {
                         return t.frequency_fk.toFixed(3)
                     }) : '')].sort().map(j => {
                         return `<li class="option">${j}</li>`
-                    }).join("")
+                    }).join("");
 
 
                     var optionList = document.querySelectorAll(".option");
@@ -156,9 +156,24 @@ checkAllBoxes = (cb, className) => {
     }
 };
 
+deleteMapMarker = () => {
+    for (let i in mapMarker) {
+        map.removeLayer(mapMarker[i]);
+    }
+}
+
 pinAllCheckedRow = () => {
     let result = {};
-    //const site = ["인천", "대구", "안양", "강원", "포항", "부산", "부안", "제주", "모슬포", "동광"];
+    let checkBool = false;
+    for (let i = 0; i < document.getElementsByClassName('firstCheckBoxC').length; i++) {
+        if (document.getElementsByClassName('firstCheckBoxC')[i].checked) {
+            checkBool = true;
+        }
+    }
+    if (!checkBool) {
+        alert('지도에 표시할 결과를 선택해주세요!');
+        return;
+    }
     for (let i = 0; i < document.getElementsByClassName('firstCheckBoxC').length; i++) {
         if (document.getElementsByClassName('firstCheckBoxC')[i].checked) {
             for (let j = 0; j < document.getElementsByClassName('firstReqTableData')[i].children.length; j++) {
@@ -212,8 +227,7 @@ pinAllCheckedRow = () => {
         let lng = markers[site.indexOf(result[i].site)][1] + Math.sin((result[i].angle - 5) * Math.PI / 180) * result[i].distance / 48;
         let lat = markers[site.indexOf(result[i].site)][0] + Math.cos((result[i].angle - 5) * Math.PI / 180) * result[i].distance / 60;
         let colour = getLeastValue([result[i].txmain, result[i].rxmain, result[i].txstby, result[i].rxstby]);
-        //L.marker([lat, lng]).bindTooltip(result[i].site.concat(result[i].freq), {sticky: true}).addTo(map)
-        L.marker([lat, lng], {
+        let markerLayer = L.marker([lat, lng], {
             icon: new L.AwesomeNumberMarkers({
                 // number: i,
                 markerColor: colour,
@@ -222,7 +236,9 @@ pinAllCheckedRow = () => {
             "<table><tr><td>표지소</td><td>주파수</td><td>검사명</td><td>TX-MAIN</td><td>RX-MAIN</td><td>TX-STBY</td><td>RX-STBY</td><td>각도</td><td>거리</td><td>고도</td></tr>" +
             "<tr><td>" + result[i].site + "</td><td>" + result[i].freq + "</td><td>" + document.getElementById('firstReqText').innerText + "</td><td>" + result[i].txmain + "</td><td>" + result[i].rxmain + "</td><td>" +
             result[i].txstby + "</td><td>" + result[i].rxstby + "</td><td>" + result[i].angle + "</td><td>" + result[i].distance + "</td><td>" + result[i].height + "</td></tr></table>",
-            {sticky: true}).addTo(map)
+            {sticky: true, pane: 'test_result_marker'}).addTo(map)
+
+        mapMarker.push(markerLayer)
     }
 
     resetActivatedPopup();
@@ -233,7 +249,16 @@ pinAllCheckedRow = () => {
 
 pinAllCheckedRow_sec = () => {
     let result = {};
-    //const site = ["인천", "대구", "안양", "강원", "포항", "부산", "부안", "제주", "모슬포", "동광"];
+    let checkBool = false;
+    for (let i = 0; i < document.getElementsByClassName('secondCheckBox').length; i++) {
+        if (document.getElementsByClassName('secondCheckBox')[i].checked) {
+            checkBool = true;
+        }
+    }
+    if (!checkBool) {
+        alert('지도에 표시할 결과를 선택해주세요!');
+        return;
+    }
     for (let i = 0; i < document.getElementsByClassName('secondCheckBox').length; i++) {
         if (document.getElementsByClassName('secondCheckBox')[i].checked) {
             for (let j = 0; j < document.getElementsByClassName('secondTableData')[i].children.length; j++) {
@@ -296,7 +321,7 @@ pinAllCheckedRow_sec = () => {
         let lng = markers[site.indexOf(result[i].site)][1] + Math.sin((result[i].angle - 5) * Math.PI / 180) * result[i].distance / 48;
         let lat = markers[site.indexOf(result[i].site)][0] + Math.cos((result[i].angle - 5) * Math.PI / 180) * result[i].distance / 60;
         let colour = getLeastValue([result[i].txmain, result[i].rxmain, result[i].txstby, result[i].rxstby]);
-        L.marker([lat, lng], {
+        const markerLayer = L.marker([lat, lng], {
             icon: new L.AwesomeNumberMarkers({
                 // number: i,
                 markerColor: colour,
@@ -306,7 +331,12 @@ pinAllCheckedRow_sec = () => {
             "<tr><td>" + result[i].site + "</td><td>" + result[i].freq + "</td><td>" + result[i].name + "</td><td>" + result[i].txmain + "</td><td>" + result[i].rxmain + "</td><td>" +
             result[i].txstby + "</td><td>" + result[i].rxstby + "</td><td>" + result[i].angle + "</td><td>" + result[i].distance + "</td><td>" + result[i].height + "</td></tr></table>",
             {sticky: true}).addTo(map)
+
+        mapMarker.push(markerLayer);
     }
+
+
+
     resetActivatedPopup();
     openMapMode(2)
 };
@@ -375,12 +405,11 @@ getNoticeData = () => {
             res.json()
                 .then(_res => {
                     document.getElementById('noticeTbody').innerHTML = _res.map((c) => {
-                        return `<tr class="noticeTableTitle"><td class="noticeTableTitle">
-${c.title}
-</td><td class="noticeTableDate">${c.date.substr(0, 10)}</td>
-${c.type == '업데이트' ? '<td>' + c.type + '</td>' + '<td>' + c.version + '</td>' : '<td>' + c.type + '</td>'}
+                        return `<tr class="noticeTableTitle"><td class="noticeTableTitle">${c.title}</td>
+<td class="noticeTableDate">${c.date.substr(0, 10)}</td>
+<td>${c.type}</td><td>${c.version}</td>
 </tr>
-<tr class="noticeTableContext"><td class="noticeTableContext">
+<tr class="noticeTableContext"><td colspan="4" class="noticeTableContext">
 ${c.context}
 </td></tr>`
                     }).join('')

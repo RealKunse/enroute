@@ -1,17 +1,20 @@
-class loginModule{
+class loginModule {
     #islogin = false;
     #id = '';
 
-    setLoginStatus(value){
+    setLoginStatus(value) {
         this.#islogin = value;
     }
-    getLoginStatus(){
+
+    getLoginStatus() {
         return this.#islogin;
     }
-    setID(value){
+
+    setID(value) {
         this.#id = value;
     }
-    getID(){
+
+    getID() {
         return this.#id;
     }
 }
@@ -20,11 +23,11 @@ const loginItem = new loginModule();
 // 추후에 세션으로 교체
 
 account_login = () => {
-    const id = document.getElementById("fifthLoginID").value;
-    const pw = document.getElementById("fifthLoginPW").value;
+    const id = document.getElementById("fifthLoginID");
+    const pw = document.getElementById("fifthLoginPW");
     let result = {};
-    result['id'] = id;
-    result['pw'] = pw;
+    result['id'] = id.value;
+    result['pw'] = pw.value;
 
     fetch('http://localhost:3000/user/login',
         {
@@ -38,9 +41,16 @@ account_login = () => {
         if (res.status == 200) {
             console.log(id, 'login Success');
             loginItem.setLoginStatus(true);
-            loginItem.setID(id);
+            loginItem.setID(id.value);
+            alert('ID :' + id.value + ' 로그인에 성공하였습니다.');
+            document.getElementById('topUserStatus').innerText ='로그아웃';
+            document.getElementById('topUserStatus').onclick = userLogout;
+            closeLoginModal();
+            id.value = '';
+            pw.value = '';
             // 추후에 세션으로 교체
         } else {
+            alert('로그인 할 수 없습니다.\nID와 비밀번호를 확인해주세요.');
             console.log(id, 'login failed');
         }
     }).catch(err => {
@@ -74,3 +84,13 @@ create_account = (id, pw) => {
     })
 
 };
+
+
+userLogout = () => {
+    const context = document.getElementById('topUserStatus');
+    context.innerText = '로그인';
+    context.onclick = openLoginModal;
+    loginItem.setLoginStatus(false);
+    loginItem.setID(null);
+
+}

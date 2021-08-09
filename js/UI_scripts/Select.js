@@ -27,8 +27,8 @@ document
 
 var optionList = document.querySelectorAll('.option');
 
-for (var i = 0; i < optionList.length; i++) {
-	var option = optionList[i];
+for (let i = 0; i < optionList.length; i++) {
+	const option = optionList[i];
 	option.addEventListener('click', onClickOption);
 }
 
@@ -49,6 +49,12 @@ function onClickSelect(e) {
 		e.currentTarget.className = 'select active';
 	}
 }
+
+onFirstReqSectionClose = () => {
+	document.getElementById('firstReqSiteSelect').className = 'select';
+	document.getElementById('firstReqFreqSelect').className = 'select';
+
+};
 
 function onClickOption(e) {
 	const selectedValue = e.currentTarget.innerHTML;

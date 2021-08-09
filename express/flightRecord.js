@@ -37,8 +37,6 @@ router.get('/list/:column/:desc', function (req, res) {
                 .then((response) => {
                     console.log(req.params.column, req.params.desc);
                     res.send(response);
-                })
-                .then((res) => {
                     conn.end();
                 })
                 .catch((err) => {
@@ -59,6 +57,7 @@ router.get('/testRes/:testname', (req, res) => {
                     conn.end();
                 })
                 .catch((err) => {
+                    console.log(err);
                     conn.end();
                 });
         })
@@ -95,6 +94,7 @@ router.post('/testRes/search', (req, res) => {
                     conn.end();
                 })
                 .catch((err) => {
+                    console.log(err);
                     conn.end();
                 });
         })
@@ -131,6 +131,7 @@ router.post('/testRes/search', (req, res) => {
                     conn.end();
                 })
                 .catch((err) => {
+                    console.log(err);
                     conn.end();
                 });
         })
@@ -205,7 +206,6 @@ router.post('/list/add', (req, res) => {
         })
         .catch((err) => {
             console.log(err);
-            conn.end();
         });
 
     // SQL 문 작성 필요ㅕ
@@ -219,11 +219,10 @@ router.get('/freq', function (req, res) {
             )
                 .then((response) => {
                     res.send(response);
-                })
-                .then((res) => {
                     conn.end();
                 })
                 .catch((err) => {
+                    console.log(err);
                     conn.end();
                 });
         })
@@ -337,7 +336,7 @@ router.post('/site/add', function (req, res) {
             )
                 .then((response) => {
                     // res.send(response);
-                    conn.end()
+                    conn.end();
                     console.log(site, lat, lng, req.body.result.type, "site has been created.")
                 })
                 .catch((err) => {
@@ -495,8 +494,6 @@ router.get('/sector', function (req, res) {
             )
                 .then((response) => {
                     res.send(response);
-                })
-                .then((res) => {
                     conn.end();
                 })
                 .catch((err) => {
@@ -553,11 +550,10 @@ router.post('/sector/edit', (req, res) => {
                 .catch(err => {
                     console.log(err);
                     conn.end();
-                })
+                });
             for (let i in body.data) {
                 conn.query(`insert into enroute.sector values('${body.sectorName}',${parseInt(i) + 1},${body.data[i].sectorLat},${body.data[i].sectorLng});`)
                     .then((response) => {
-                        res.send(response);
                         conn.end();
                     })
                     .catch(err => {
@@ -572,11 +568,12 @@ router.post('/sector/edit/open', (req, res) => {
     const sector = req.body.result.sector;
     pool.getConnection()
         .then((conn) => {
-            conn.query(`select sectorlat, sectorlng from enroute.sector where sectorname = '${sector}';`)
+            conn.query(`select  sectorname, sectorlat, sectorlng, sectorarea, entry from enroute.sector, sector_att where sectorname=sectorname_fk and sectorname = '${sector}';`)
                 .then(response => {
-                    res.send(response)
+                    res.send(response);
+                    conn.end();
                 })
-                .catch(err => console.log(err))
+                .catch(err => {console.log(err); conn.end();})
         })
 })
 
@@ -595,6 +592,7 @@ router.post('/sector/delete', (req, res) => {
                 })
         })
 });
+
 
 router.get('/route', (req, res) => {
     pool.getConnection()
@@ -615,7 +613,8 @@ router.post('/route/edit/open', (req, res) => {
     const result = req.body.result;
     pool.getConnection()
         .then((conn) =>{
-            conn.query(`select fixpoint name, low_height low, high_height high from enroute.route where air_route='${result.name}'`)
+            conn.query(`select air_route, fixpoint name, pointlat lat, pointlng lng, low_height low, high_height high, entry, fir, type from
+             enroute.route, enroute.fix_points where route.fixpoint = fix_points.pointname and air_route='${result.name}' order by entry`)
                 .then(resp => {
                     res.send(resp);
                     conn.end();

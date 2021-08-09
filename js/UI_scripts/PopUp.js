@@ -2,6 +2,7 @@ let popedPage = '0';
 
 class UIStatus {
     fifthSector = false;
+    fifthRoute = false;
     mapMode = '0';
     searchTime = '0';
 }
@@ -27,9 +28,14 @@ displayPopup = (id) => {
         return;
     }
 
+    if(id == 'fifthPopup' && !loginItem.getLoginStatus()){
+        window.alert("권한이 없습니다. \n관리자라면 로그인을 해주세요.");
+        openLoginModal();
+        return;
+    }
 
     closeFifthSectorData();
-
+    closeFifthRouteData();
     resetActivatedPopup(id);
     popedPage = id;
     console.log('Popping up     ', popedPage);
@@ -47,7 +53,7 @@ resetPopup = (id) => {
     document.getElementById(id).style.bottom = '-100%';
 };
 
-resetActivatedPopup = (id) => {
+resetActivatedPopup = () => {
     if (popedPage != 0) {
         console.log('closing all     popup');
         document.getElementById(popedPage).style.bottom = '-100%';
@@ -55,7 +61,24 @@ resetActivatedPopup = (id) => {
     }
 };
 
-openModal = () => {
+openLoginModal = () => {
+    console.log('opening login modal');
+    document.getElementById('loginModal').style.visibility = 'visible';
+    document.getElementById('loginOverlay').style.visibility = 'visible';
+    document.getElementById('loginModal').style.opacity = '1';
+    document.getElementById('loginOverlay').style.opacity = '0.8';
+    setTimeout(() => { document.getElementById('fifthLoginID').focus();}, 500)
+};
+
+closeLoginModal = () => {
+    console.log('closing login modal');
+    document.getElementById('loginModal').style.opacity = '0';
+    document.getElementById('loginOverlay').style.opacity = '0';
+    document.getElementById('loginModal').style.visibility = 'hidden';
+    document.getElementById('loginOverlay').style.visibility = 'hidden';
+};
+
+openNotice = () => {
     getNoticeData();
     console.log('opening notice modal');
     document.getElementById('noticeModal').style.visibility = 'visible';
@@ -64,7 +87,7 @@ openModal = () => {
     document.getElementById('noticeOverlay').style.opacity = '0.8';
 };
 
-closeModal = () => {
+closeNotice = () => {
     console.log('closing notice modal');
     document.getElementById('noticeModal').style.opacity = '0';
     document.getElementById('noticeOverlay').style.opacity = '0';
@@ -74,7 +97,8 @@ closeModal = () => {
 
 openFirstAddComponent = () => {
     if(!loginItem.getLoginStatus()){
-        alert("로그인이 필요합니다.");
+        openLoginModal();
+        window.alert("권한이 없습니다. \n관리자라면 로그인을 해주세요.");
         return;
     }
     document.getElementById('firstTitleInput').disabled = false;
@@ -110,6 +134,7 @@ closeFirstAddComponent = () => {
 };
 
 openFirstReqData = () => {
+
     document.getElementById('firstReqData').style.visibility = 'visible';
     document.getElementById('firstReqDataOverlay').style.visibility = 'visible';
     document.getElementById('firstReqData').style.opacity = '1';
@@ -118,7 +143,7 @@ openFirstReqData = () => {
 
 closeFirstReqData = () => {
     // if (window.confirm("작성을 중단하고 나가시겠습니까?") == true) {
-
+    onFirstReqSectionClose();
     document.getElementById('firstReqData').style.opacity = '0';
     document.getElementById('firstReqDataOverlay').style.opacity = '0';
     document.getElementById('firstReqData').style.visibility = 'hidden';
@@ -467,6 +492,8 @@ closeMapMode = () => {
 };
 
 document.getElementById('mapMode').addEventListener('click',() => {
+    console.log(mapMarker);
+    deleteMapMarker();
     closeMapMode();
 });
 
@@ -494,21 +521,21 @@ closeFifthNoticeAdd = (bool) => {
 
 
 openFifthRouteData = () => {
-    if(!uiStatus.fifthSector) {
+    if(!uiStatus.fifthRoute) {
         resetActivatedPopup();
         document.getElementById('fifthRoute').style.visibility = 'visible';
         document.getElementById('fifthRoute').style.bottom = '0';
         // document.getElementById('fifthSectorOverlay').style.visibility = 'visible';
         document.getElementById('fifthRoute').style.opacity = '1';
         // document.getElementById('fifthSectorOverlay').style.opacity = '0.8';
-        uiStatus.fifthSector = true;
+        uiStatus.fifthRoute = true;
     }
 };
 
 closeFifthRouteData = () => {
-    if(uiStatus.fifthSector){
+    if(uiStatus.fifthRoute){
         // if (window.confirm("작성을 중단하고 나가시겠습니까?") == true) {
-        uiStatus.fifthSector = false;
+        uiStatus.fifthRoute = false;
         document.getElementById('fifthRoute').style.opacity = '0';
         document.getElementById('fifthRouteOverlay').style.opacity = '0';
         document.getElementById('fifthRoute').style.bottom = '-100%';

@@ -44,10 +44,6 @@ getFreqList = async () => {
 };
 
 fifthFreqDelete = (obj) => {
-    if (!loginItem.getLoginStatus()) {
-        window.alert("권한이 없습니다. \n관리자라면 로그인을 해주세요.");
-        return;
-    }
     let result = {};
     result['freq'] = obj.parentElement.parentElement.children[0].innerText;
     result['site'] = obj.parentElement.parentElement.children[1].innerText;
@@ -72,10 +68,6 @@ fifthFreqDelete = (obj) => {
 };
 
 fifthFreqAddConfirm = async () => {
-    if (!loginItem.getLoginStatus()) {
-        window.alert("권한이 없습니다. \n관리자라면 로그인을 해주세요.");
-        return;
-    }
     const [site, freq, sector] = [document.getElementById("fifthFreqAddSiteInput").value,
         document.getElementById("fifthFreqAddFreqInput").value,
         document.getElementById("fifthFreqAddSectorInput").value];
@@ -112,10 +104,6 @@ fifthFreqAddConfirm = async () => {
 };
 
 fifthFreqEditConfirm = async () => {
-    if (!loginItem.getLoginStatus()) {
-        window.alert("권한이 없습니다. \n관리자라면 로그인을 해주세요.");
-        return;
-    }
     const [site, freq, sector] = [document.getElementById("fifthFreqEditSiteInput").value,
         document.getElementById("fifthFreqEditFreqInput").value,
         document.getElementById("fifthFreqEditSectorInput").value];
@@ -173,10 +161,7 @@ getSiteList = async () => {
 };
 
 fifthSiteAddConfirm = async () => {
-    if (!loginItem.getLoginStatus()) {
-        window.alert("권한이 없습니다. \n관리자라면 로그인을 해주세요.");
-        return;
-    }
+
     const [site, lat, lng, type] = [document.getElementById("fifthSiteAddSiteInput").value,
         document.getElementById("fifthSiteAddLatInput").value,
         document.getElementById("fifthSiteAddLngInput").value,
@@ -216,10 +201,6 @@ fifthSiteAddConfirm = async () => {
 };
 
 fifthSiteEditConfirm = async () => {
-    if (!loginItem.getLoginStatus()) {
-        window.alert("권한이 없습니다. \n관리자라면 로그인을 해주세요.");
-        return;
-    }
     const [site, lat, lng] = [document.getElementById("fifthSiteEditSiteInput").value,
         document.getElementById("fifthSiteEditLatInput").value,
         document.getElementById("fifthSiteEditLngInput").value];
@@ -253,10 +234,6 @@ fifthSiteEditConfirm = async () => {
 };
 
 fifthSiteDelete = (obj) => {
-    if (!loginItem.getLoginStatus()) {
-        window.alert("권한이 없습니다. \n관리자라면 로그인을 해주세요.");
-        return;
-    }
     let result = {};
     result['site'] = obj.parentElement.parentElement.children[0].innerText;
     if (window.confirm(result['site'] + " 표지소를 삭제할까요?") == true) {
@@ -301,10 +278,6 @@ getFixList = async () => {
 };
 
 fifthFixAddConfirm = async () => {
-    if (!loginItem.getLoginStatus()) {
-        window.alert("권한이 없습니다. \n관리자라면 로그인을 해주세요.");
-        return;
-    }
     const [name, lat, lng] = [document.getElementById("fifthFixAddNameInput").value,
         document.getElementById("fifthFixAddLatInput").value,
         document.getElementById("fifthFixAddLngInput").value];
@@ -342,10 +315,6 @@ fifthFixAddConfirm = async () => {
 };
 
 fifthFixEditConfirm = async () => {
-    if (!loginItem.getLoginStatus()) {
-        window.alert("권한이 없습니다. \n관리자라면 로그인을 해주세요.");
-        return;
-    }
     const [name, lat, lng] = [document.getElementById("fifthFixEditNameInput").value,
         document.getElementById("fifthFixEditLatInput").value,
         document.getElementById("fifthFixEditLngInput").value];
@@ -379,10 +348,6 @@ fifthFixEditConfirm = async () => {
 };
 
 fifthFixDelete = (obj) => {
-    if (!loginItem.getLoginStatus()) {
-        window.alert("권한이 없습니다. \n관리자라면 로그인을 해주세요.");
-        return;
-    }
     let result = {};
     result['name'] = obj.parentElement.parentElement.children[0].innerText;
     if (window.confirm(result['name'] + " 픽스점을 삭제할까요?") == true) {
@@ -607,11 +572,11 @@ fifthSectorEditOpenFetch = async () => {
         .then(res => {
             res.json()
                 .then(_res => {
+                    document.getElementById('fifthSectorEditTbody').innerHTML='';
                     // console.log(_res);
                     for (let i = 0; i < _res.length - 1; i++) {
                         fifthSectorEditFocus();
                     }
-                    console.log(_res[1]);
                     for (let i in _res) {
                         document.getElementsByClassName('fifthSectorEditLat')[i].value = _res[i].sectorlat;
                         document.getElementsByClassName('fifthSectorEditLng')[i].value = _res[i].sectorlng;

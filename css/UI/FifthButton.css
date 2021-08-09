@@ -49,15 +49,19 @@
 
 #fifthLoginForm {
     display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-items: center;
 }
-
-.fifthSettingButtonArea {
+#fifthSettingButtonArea {
     margin: 0 auto;
-    height: 75%;
+    padding: 10px 10px 10px 10px;
+    height: 80%;
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
     align-items: center;
+    overflow-y: scroll;
 }
 
 .fifthSettingButton {
@@ -521,9 +525,9 @@
     position: fixed;
     display: flex;
     background: #f7fff3;
-    width: 50%;
-    height: 40%;
-    left: 25%;
+    width: 75%;
+    height: 50%;
+    left: 12.5%;
     bottom: 25%;
     z-index: 7;
     visibility: hidden;
@@ -537,9 +541,9 @@
     position: fixed;
     display: flex;
     background: #f7fff3;
-    width: 50%;
-    height: 40%;
-    left: 25%;
+    width: 75%;
+    height: 50%;
+    left: 12.5%;
     bottom: 25%;
     z-index: 7;
     visibility: hidden;
@@ -571,4 +575,8 @@
     z-index: 6;
     visibility: hidden;
     transition: all ease 0.5s
+}
+
+#fifthNoticeAddContextInput{
+    width:200px;
 }

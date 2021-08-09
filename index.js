@@ -57,7 +57,7 @@ app.get('/session/', (req, res) => {
 
 app.get('/api/fix_point', function (req, res) {
     pool.getConnection().then(conn => {
-        conn.query(`select * from fix_points`).then((response) => {
+        conn.query(`select PointName, PointLat, PointLng from fix_points where isusing = 1`).then((response) => {
             res.send(response);
         }).then((res) => {
             conn.end()
@@ -65,12 +65,12 @@ app.get('/api/fix_point', function (req, res) {
             conn.end()
         })
     }).catch(err => console.log("not connected"))
-
 });
+
 
 app.get('/api/sites', function (req, res) {
     pool.getConnection().then(conn => {
-        conn.query(`select SiteName, SiteLat, SiteLng from site where isSite=1`).then((response) => {
+        conn.query(`select * from site`).then((response) => {
             res.send(response);
         }).then((res) => {
             conn.end()
