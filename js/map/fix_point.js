@@ -32,64 +32,7 @@ let baseTree = {
             label: '섹터',
             selectAllCheckbox: true,
             collapsed: true,
-            children: [
-                // {
-                //     label: '서해북부',
-                //     layer: westSeaNorth,
-                // },
-                // {
-                //     label: '서해남부',
-                //     layer: westSeaSouth,
-                // },
-                // {
-                //     label: '강릉',
-                //     layer: gangneung,
-                // },
-                // {
-                //     label: '동해',
-                //     layer: eastSea,
-                // },
-                // {
-                //     label: '군산동부',
-                //     layer: gunsanEast,
-                // },
-                // {
-                //     label: '군산서부',
-                //     layer: gunsanWest,
-                // },
-                // {
-                //     label: '광주서부',
-                //     layer: gwangjuWest,
-                // },
-                // {
-                //     label: '광주동부',
-                //     layer: gwangjuEast,
-                // },
-                // {
-                //     label: '제주서부',
-                //     layer: jejuWest,
-                // },
-                // {
-                //     label: '제주중부',
-                //     layer: jejuMiddle,
-                // },
-                // {
-                //     label: '제주동부',
-                //     layer: jejuEast,
-                // },
-                // {
-                //     label: '남해',
-                //     layer: namhae,
-                // },
-                // {
-                //     label: '포항',
-                //     layer: pohang,
-                // },
-                // {
-                //     label: '대구',
-                //     layer: daegu,
-                // },
-            ],
+            children: [],
         },
         {
             label: '표지소',
@@ -143,29 +86,33 @@ let fix_points = [];
 let fix_dicts = {};
 
 
+toWGS = (coordinates) => {
+    if (isNaN(coordinates)) {
+        coordinates = parseFloat(coordinates);
+        coordinates = coordinates * 10000
+    } else {
+        coordinates *= 10000;
+    }
+
+    let coords = Math.round(coordinates);
+
+    const deg = parseInt(coords / 10000);
+    const min = parseInt(coords / 100 - deg * 100);
+    const sec = parseInt(coords - deg * 10000 - min * 100);
+
+    return parseFloat((sec / 60 + min) / 60 + deg).toFixed(4);
+};
+
 loadFixPoints = () => {
-    fetch('http://localhost:3000/api/fix_point', {method: 'GET'})
+    fetch(`http://${server_add}:3000/api/fix_point`, {method: 'GET'})
         .then((res) => {
             res.json().then((_res) => {
                 for (let i in _res) {
-                    // fix_points.push(
-                    //     L.marker(L.latLng(res[i].PointLng, res[i].PointLat), {
-                    //         icon: fix_icon,
-                    //     }).bindTooltip(`${res[i].PointName}`),
-                    // );
                     fix_dicts[_res[i].PointName] = L.latLng(
                         _res[i].PointLng,
                         _res[i].PointLat,
                     );
-                    // baseTree.children[4].children[0].children.push({
-                    //     label: res[i].PointName,
-                    //     layer: L.marker([res[i].PointLng, res[i].PointLat], {
-                    //         icon: fix_icon,
-                    //     }).bindTooltip(res[i].PointName),
-                    // });
                 }
-                // ctl.setOverlayTree(baseTree);
-                // ctl.addTo(map);
             });
         })
         .catch((err) => console.log(err));
@@ -174,7 +121,7 @@ loadFixPoints = () => {
 
 drawRoutebyFix = (array, color, bool) => {
     let latlngs = [];
-    for (let i in array){
+    for (let i in array) {
         latlngs.push(fix_dicts[array[i]])
     }
 
@@ -200,7 +147,6 @@ calculateCoordinate = () => {
     const distance = document.getElementById('thirdDistance').value;
     const angle = parseInt(document.getElementById('thirdAngle').value) - 9;
 
-    // console.log(site)
     if (siteSelect == '선택') {
         alert('기준이 될 표지소를 선택해 주세요!');
         return;
@@ -221,16 +167,14 @@ calculateCoordinate = () => {
 
 
     let lng =
-        markers[site.indexOf(siteSelect)][1] +
+        parseFloat(markers[site.indexOf(siteSelect)][1]) +
         (Math.sin((angle * Math.PI) / 180) * distance) / 48;
     let lat =
-        markers[site.indexOf(siteSelect)][0] +
+        parseFloat(markers[site.indexOf(siteSelect)][0]) +
         (Math.cos((angle * Math.PI) / 180) * distance) / 60;
 
-    console.log(lat, lng);
-
     if (accumulatePin && pinMarker.length >= 1) {
-        for(let i in pinMarker) {
+        for (let i in pinMarker) {
             map.removeLayer(pinMarker[i]);
         }
         numeric = 1;
@@ -289,73 +233,64 @@ onRouteUpload = (e) => {
     const file = document.getElementById('firstRouteUpload').files[0];
     const fileData = new FormData();
 
-    if (!file) return;
-    fileData.append('dat', file);
-
     let route = [];
 
-    // .addTo(map).bindTooltip("route",{sticky:true});
-    $.ajax({
-        type: 'POST',
-        url: 'http://localhost:3000/dat',
-        processData: false,
-        contentType: false,
-        data: fileData,
-        timeout: 3000,
-        cache: false,
-        encode: true,
-    }).then((res) => {
-        console.log(res);
-        res.data.map((t) => {
-            route.push([t.lat, t.lng]);
+    if (!file) return;
+    fileData.append('dat', file);
+    const type = file.name.toString().slice(file.name.indexOf(".") + 1).toLowerCase();
+    if(type == 'txt'){
+
+        $.ajax({
+            type: 'POST',
+            url: `http://${server_add}:3000/dat/txt`,
+            processData: false,
+            contentType: false,
+            data: fileData,
+            timeout: 3000,
+            cache: false,
+            encode: true,
+        }).then((res) => {
+            console.log(res);
+            res.data.map((t) => {
+                route.push([t.lat, t.lng]);
+            });
+            L.polyline(route, {color: 'blue'})
+                .on('mouseover', (e) => {
+                    e.target.setStyle({
+                        color: 'red',
+                    });
+                })
+                .on('mouseout', (e) => {
+                    e.target.setStyle({
+                        color: 'blue',
+                    });
+                })
+                // .on('click', (e) => {
+                //     polylineRoute.removeFrom(map)
+                // })
+                .addTo(map)
+                .bindTooltip('route', {sticky: true});
         });
-        L.polyline(route, {color: 'blue'})
-            .on('mouseover', (e) => {
-                e.target.setStyle({
-                    color: 'red',
-                });
-            })
-            .on('mouseout', (e) => {
-                e.target.setStyle({
-                    color: 'blue',
-                });
-            })
-            // .on('click', (e) => {
-            //     polylineRoute.removeFrom(map)
-            // })
-            .addTo(map)
-            .bindTooltip('route', {sticky: true});
-    });
+    } else if (type == 'xlsx' || type == 'xls' || type == 'xlsm'){
+        alert('엑셀 미구현되어있음')
+    } else {
+        alert('잘못된 파일입니다.')
+    }
+
+
 };
-//
-// $(document).ready(() => {
-//     try {
-//         $(() => {
-//             console.log('ajax');
-//             $('#firstUploadForm').on('submit',(event) => {
-//                 event.preventDefault();
-//
-//                 const file = document.getElementById('firstRouteUpload').files[0]
-//                 const fileData = new FormData(event.target);
-//                 console.log(file)
-//                 console.log(fileData)
-//                 console.log(event.target)
-//                 if (!file) return;
-//                 fileData.append('dat', document.getElementById('firstRouteUpload').files[0]);
-//
-//                 $.ajax({
-//                     type: 'POST',
-//                     url: 'http://localhost:3000/dat2',
-//                     processData: false,
-//                     contentType: false,
-//                     data: fileData,
-//                     timeout: 3000,
-//                     cache: false,
-//                     encode: true,
-//                 });
-//             })
-//         })
-//     } catch (error) {
-//         console.log(error)
-//     }
-// })
+
+
+fixPointEventHandler = (e) => {
+    if (e.type == 'mouseover') {
+        e.target.setStyle({
+            radius: 6,
+            weight: 4
+        })
+    } else if (e.type == 'mouseout') {
+        e.target.setStyle({
+            radius: 4,
+            weight: 3
+        })
+    }
+};

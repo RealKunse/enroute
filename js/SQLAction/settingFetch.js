@@ -23,7 +23,7 @@ renderSiteType = (event) => {
 }
 
 getFreqList = async () => {
-    fetch("http://localhost:3000/flight/freq", {method: "GET"})
+    fetch(`http://${server_add}:3000/flight/freq`, {method: "GET"})
         .then(res => {
             res.json().then(response => {
                 document.getElementById('fifthFreqTablebody').innerHTML = '';
@@ -50,7 +50,7 @@ fifthFreqDelete = (obj) => {
     if (window.confirm(result['freq'] + " 주파수를 삭제할까요?") == true) {
 
 
-        fetch(`http://localhost:3000/flight/freq/delete/`, {
+        fetch(`http://${server_add}:3000/flight/freq/delete/`, {
             method: 'post',
             headers: {
                 'Accept': 'application/json',
@@ -59,10 +59,14 @@ fifthFreqDelete = (obj) => {
             body: JSON.stringify({
                 result
             })
-        }).then(() => {
-            console.log(result, "deleted")
+        }).then((res) => {
+            if (res.status == 200) {
+                window.alert('주파수 삭제에 성공하였습니다.');
+                getFreqList();
+            }
         }).catch((err) => {
             console.error(err);
+            window.alert('에러가 발생하였습니다.\n관리자에게 문의하세요.');
         })
     }
 };
@@ -76,7 +80,7 @@ fifthFreqAddConfirm = async () => {
     result['freq'] = freq;
     result['site'] = site;
     result['sector'] = sector;
-    fetch(`http://localhost:3000/flight/freq/add/`, {
+    fetch(`http://${server_add}:3000/flight/freq/add/`, {
         method: 'post',
         headers: {
             'Accept': 'application/json',
@@ -88,14 +92,21 @@ fifthFreqAddConfirm = async () => {
     })
         .then(res => {
             console.log(res);
+
             res.json().then($res => {
-                console.log($res);
-                if ($res.freq) {
-                    closeFifthFreqAdd(true);
+                if ($res.errno == 1062) {
+                    window.alert('중복된 주파수입니다.\n주파수 목록에 이미 있는지 확인해주세요.')
+                    throw new Error('중복 주파수');
                 }
+
+                console.log($res);
+                window.alert('주파수 추가에 성공하였습니다.');
+                closeFifthFreqAdd(true);
                 getFreqList();
+
             })
                 .catch(err => {
+                    window.alert('에러가 발생하였습니다.\n관리자에게 문의하세요.');
                     console.log(err)
                 })
         }).catch(err => {
@@ -115,7 +126,7 @@ fifthFreqEditConfirm = async () => {
     result['_site'] = _fifthEditStie;
     result['_sector'] = _fifthEditSector;
 
-    fetch(`http://localhost:3000/flight/freq/edit/`, {
+    fetch(`http://${server_add}:3000/flight/freq/edit/`, {
         method: 'post',
         headers: {
             'Accept': 'application/json',
@@ -126,9 +137,12 @@ fifthFreqEditConfirm = async () => {
         })
     })
         .then(res => {
+            console.log(res);
             res.json().then($res => {
                 console.log($res);
                 getFreqList();
+                window.alert('주파수 수정에 성공하였습니다.');
+                closeFifthFreqEdit(true);
             })
                 .catch(err => {
                     console.log(err)
@@ -139,7 +153,7 @@ fifthFreqEditConfirm = async () => {
 };
 
 getSiteList = async () => {
-    fetch("http://localhost:3000/flight/site", {method: "GET"})
+    fetch("http://${server_add}:3000/flight/site", {method: "GET"})
         .then(res => {
             res.json().then(response => {
                 document.getElementById('fifthSiteTablebody').innerHTML = '';
@@ -173,7 +187,7 @@ fifthSiteAddConfirm = async () => {
     result['lng'] = lng;
     result['type'] = type;
     console.log(result);
-    fetch(`http://localhost:3000/flight/site/add/`, {
+    fetch(`http://${server_add}:3000/flight/site/add/`, {
         method: 'post',
         headers: {
             'Accept': 'application/json',
@@ -186,17 +200,23 @@ fifthSiteAddConfirm = async () => {
         .then(res => {
             console.log(res);
             res.json().then($res => {
+
                 console.log($res);
-                // if ($res.freq) {
-                //     closeFifthSiteAdd(true);
-                // }
-                getSiteList();
+                if ($res.errno == 1062) {
+                    window.alert('이미 추가되어있는 표지소입니다.\n목록을 확인해주세요.')
+                } else {
+                    window.alert('표지소 추가에 성공하였습니다.');
+                    closeFifthSiteAdd(true);
+                    getSiteList();
+                }
             })
                 .catch(err => {
                     console.log(err)
+                    window.alert('에러가 발생했습니다.')
                 })
         }).catch(err => {
         console.log(err)
+        window.alert('에러가 발생했습니다.\n관리자에게 문의하십시오.')
     })
 };
 
@@ -210,7 +230,7 @@ fifthSiteEditConfirm = async () => {
     result['lng'] = lng;
     result['_site'] = editvault.sitename;
 
-    fetch(`http://localhost:3000/flight/site/edit/`, {
+    fetch(`http://${server_add}:3000/flight/site/edit/`, {
         method: 'post',
         headers: {
             'Accept': 'application/json',
@@ -222,14 +242,21 @@ fifthSiteEditConfirm = async () => {
     })
         .then(res => {
             res.json().then($res => {
-                console.log($res);
-                getSiteList();
+                if ($res.errno == 1062) {
+                    window.alert('이미 등록되어있는 표지소입니다.\n목록을 확인해주세요.')
+                } else {
+                    window.alert('표지소 수정을 성공하였습니다.');
+                    closeFifthSiteEdit(true);
+                    getSiteList();
+                }
             })
                 .catch(err => {
-                    console.log(err)
+                    console.log(err);
+                    window.alert('에러가 발생했습니다.\n관리자에게 문의하십시오.')
                 })
         }).catch(err => {
-        console.log(err)
+        console.log(err);
+        window.alert('에러가 발생했습니다.\n관리자에게 문의하십시오.')
     })
 };
 
@@ -239,7 +266,7 @@ fifthSiteDelete = (obj) => {
     if (window.confirm(result['site'] + " 표지소를 삭제할까요?") == true) {
 
 
-        fetch(`http://localhost:3000/flight/site/delete/`, {
+        fetch(`http://${server_add}:3000/flight/site/delete/`, {
             method: 'post',
             headers: {
                 'Accept': 'application/json',
@@ -249,15 +276,18 @@ fifthSiteDelete = (obj) => {
                 result
             })
         }).then(() => {
-            console.log(result, "deleted")
+            console.log(result, "deleted");
+            window.alert('표지소를 성공적으로 삭제하였습니다.');
+            getSiteList();
         }).catch((err) => {
             console.error(err);
+            window.alert('에러가 발생했습니다.\n관리자에게 문의하십시오.');
         })
     }
 };
 
 getFixList = async () => {
-    fetch("http://localhost:3000/flight/fix", {method: "GET"})
+    fetch(`http://${server_add}:3000/flight/fix`, {method: "GET"})
         .then(res => {
             res.json().then(response => {
                 document.getElementById('fifthFixTablebody').innerHTML = '';
@@ -287,7 +317,7 @@ fifthFixAddConfirm = async () => {
     result['lat'] = lat;
     result['lng'] = lng;
     console.log(result);
-    fetch(`http://localhost:3000/flight/fix/add/`, {
+    fetch(`http://${server_add}:3000/flight/fix/add/`, {
         method: 'post',
         headers: {
             'Accept': 'application/json',
@@ -300,16 +330,20 @@ fifthFixAddConfirm = async () => {
         .then(res => {
             console.log(res);
             res.json().then($res => {
-                console.log($res);
-                // if ($res.freq) {
-                //     closeFifthSiteAdd(true);
-                // }
-                getFixList();
+                if ($res.errno == 1062) {
+                    window.alert('이미 등록되어있는 표지소입니다.\n목록을 확인해주세요.')
+                } else {
+                    window.alert('픽스점 추가에 성공하였습니다.');
+                    closeFifthFixAdd(true);
+                    getFixList();
+                }
             })
                 .catch(err => {
+                    window.alert('에러가 발생하였습니다.\n관리자에게 문의하세요.');
                     console.log(err)
                 })
         }).catch(err => {
+        window.alert('에러가 발생하였습니다.\n관리자에게 문의하세요.');
         console.log(err)
     })
 };
@@ -324,7 +358,7 @@ fifthFixEditConfirm = async () => {
     result['lng'] = lng;
     result['_name'] = editvault.fixname;
 
-    fetch(`http://localhost:3000/flight/fix/edit/`, {
+    fetch(`http://${server_add}:3000/flight/fix/edit/`, {
         method: 'post',
         headers: {
             'Accept': 'application/json',
@@ -337,7 +371,13 @@ fifthFixEditConfirm = async () => {
         .then(res => {
             res.json().then($res => {
                 console.log($res);
-                getSiteList();
+                if ($res.errno == 1062) {
+                    window.alert('이미 등록되어있는 표지소입니다.\n목록을 확인해주세요.')
+                } else {
+                    window.alert('픽스점을 성공적으로 수정하였습니다.');
+                    closeFifthFixEdit(true);
+                    getFixList();
+                }
             })
                 .catch(err => {
                     console.log(err)
@@ -351,7 +391,7 @@ fifthFixDelete = (obj) => {
     let result = {};
     result['name'] = obj.parentElement.parentElement.children[0].innerText;
     if (window.confirm(result['name'] + " 픽스점을 삭제할까요?") == true) {
-        fetch(`http://localhost:3000/flight/fix/delete/`, {
+        fetch(`http://${server_add}:3000/flight/fix/delete/`, {
             method: 'post',
             headers: {
                 'Accept': 'application/json',
@@ -361,7 +401,9 @@ fifthFixDelete = (obj) => {
                 result
             })
         }).then((res) => {
-            console.log(result, "deleted")
+            window.alert('픽스점을 성공적으로 삭제했습니다.');
+            console.log(result, "deleted");
+            getFixList();
         }).catch((err) => {
             console.error(err);
         })
@@ -370,10 +412,10 @@ fifthFixDelete = (obj) => {
 
 
 let isSectorNameDuplicate = true;
-let isRouteNameDuplicate
+let isRouteNameDuplicate;
 
 getSectorList = () => {
-    fetch("http://localhost:3000/flight/sector", {method: "GET"})
+    fetch(`http://${server_add}:3000/flight/sector`, {method: "GET"})
         .then(res => {
             res.json().then(response => {
                 document.getElementById('fifthSectorList').innerHTML = '';
@@ -479,7 +521,7 @@ fifthSectorAddConfirmData = async () => {
         }
     }
 
-    fetch('http://localhost:3000/flight/sector/add', {
+    fetch(`http://${server_add}:3000/flight/sector/add`, {
         method: 'post',
         headers: {
             Accept: 'application/json',
@@ -489,7 +531,7 @@ fifthSectorAddConfirmData = async () => {
             result,
         }),
     }).then((res) => {
-        alert("섹터 추가의 적용을 위해 페이지를 새로고침합니다.");
+        alert("섹터가 성공적으로 추가되었습니다.\n페이지의 적용을 위해 페이지를 새로고침합니다.");
         refresh();
         console.log(res.json())
     });
@@ -506,7 +548,7 @@ fifthSectorNameCheckAdd = (event) => {
         return;
     }
 
-    fetch('http://localhost:3000/flight/sector/name/' + new_name)
+    fetch(`http://${server_add}:3000/flight/sector/name/${new_name}`)
         .then((res) => {
             res.json().then(_res => {
                 console.log(_res[0]);
@@ -539,7 +581,7 @@ fifthSectorNameCheckEdit = (event) => {
         isSectorNameDuplicate = false;
         return;
     }
-    fetch('http://localhost:3000/flight/sector/name/' + new_name)
+    fetch(`http://${server_add}:3000/flight/sector/name/${new_name}`)
         .then((res) => {
             res.json().then(_res => {
                 console.log(_res[0]);
@@ -559,7 +601,7 @@ fifthSectorNameCheckEdit = (event) => {
 fifthSectorEditOpenFetch = async () => {
     let result = {};
     result['sector'] = document.getElementById('fifthSectorSelectLabel').innerText;
-    fetch('http://localhost:3000/flight/sector/edit/open', {
+    fetch(`http://${server_add}:3000/flight/sector/edit/open`, {
         method: 'post',
         headers: {
             Accept: 'application/json',
@@ -572,9 +614,9 @@ fifthSectorEditOpenFetch = async () => {
         .then(res => {
             res.json()
                 .then(_res => {
-                    document.getElementById('fifthSectorEditTbody').innerHTML='';
+                    document.getElementById('fifthSectorEditTbody').innerHTML = '';
                     // console.log(_res);
-                    for (let i = 0; i < _res.length - 1; i++) {
+                    for (let i = 0; i < _res.length; i++) {
                         fifthSectorEditFocus();
                     }
                     for (let i in _res) {
@@ -620,8 +662,6 @@ fifthSectorEditDelButton = (event) => {
     } else {
         event.currentTarget.parentElement.parentElement.remove();
     }
-
-
     for (let i in document.getElementsByClassName('fifthSectorEditLat')) {
         if (i == document.getElementsByClassName('fifthSectorEditLat').length - 1 && document.getElementsByClassName('fifthSectorEditLat').length != 1) {
             document.getElementsByClassName('fifthSectorEditRowTD')[i].innerHTML = `<div style="display: flex">
@@ -678,7 +718,7 @@ fifthSectorEditConfirmData = () => {
         }
     }
 
-    fetch('http://localhost:3000/flight/sector/edit', {
+    fetch(`http://${server_add}:3000/flight/sector/edit`, {
         method: 'post',
         headers: {
             Accept: 'application/json',
@@ -688,8 +728,7 @@ fifthSectorEditConfirmData = () => {
             result,
         }),
     }).then((res) => {
-        console.log(res.json());
-        alert("적용을 위해 페이지를 새로고침합니다.");
+        alert("섹터를 성공적으로 변경하였습니다.\n페이지를 새로고침합니다.");
         refresh();
     });
 };
@@ -706,7 +745,7 @@ fifthSectorDeleteData = () => {
     };
 
     if (confirm(del_data + " 섹터를 정말 삭제할까요?")) {
-        fetch('http://localhost:3000/flight/sector/delete', {
+        fetch(`http://${server_add}:3000/flight/sector/delete`, {
             method: 'post',
             headers: {
                 Accept: 'application/json',
@@ -718,7 +757,7 @@ fifthSectorDeleteData = () => {
         }).then((res) => {
             res.json().then((_res) => {
                 alert(_res.affectedRows + "개의 " + del_data + " 섹터 좌표 정보가 삭제되었습니다.");
-                alert("적용을 위해 페이지를 새로고침합니다.");
+                alert("섹터 삭제 정보의 적용을 위해 페이지를 새로고침합니다.");
                 refresh();
             }).catch(err => console.log(err))
         });
@@ -726,7 +765,7 @@ fifthSectorDeleteData = () => {
 };
 
 getFifthNoticeData = () => {
-    fetch('http://localhost:3000/notice_asc/')
+    fetch(`http://${server_add}:3000/notice_asc/`)
         .then((res) => {
             res.json()
                 .then(_res => {
@@ -840,7 +879,7 @@ fifthRouteEditFocus = (event) => {
 fifthRouteEditOpenFetch = async () => {
     let result = {};
     result['name'] = document.getElementById('fifthRouteSelectLabel').innerText;
-    fetch('http://localhost:3000/flight/route/edit/open', {
+    fetch(`http://${server_add}:3000/flight/route/edit/open`, {
         method: 'post',
         headers: {
             Accept: 'application/json',
@@ -902,14 +941,13 @@ fifthRouteNameCheckAdd = (event) => {
         return;
     }
 
-    fetch('http://localhost:3000/flight/route/name/' + new_name)
+    fetch(`http://${server_add}:3000/flight/route/name/${new_name}`)
         .then((res) => {
             res.json().then(_res => {
                 console.log(_res[0]);
                 if (_res[0].count == 0) {  // 중복 없음
-
                     // document.getElementById('fifthSectorAddSectorName').disabled = true;
-                    isSectorNameDuplicate = false;
+                    isRouteNameDuplicate = false;
                     node.innerText = '중복체크 완료'
                     // document.getElementById('fifthSectorAddNameContext').innerText = '중복체크 완료'
                 } else {
@@ -934,7 +972,7 @@ fifthRouteNameCheckEdit = (event) => {
         isRouteNameDuplicate = false;
         return;
     }
-    fetch('http://localhost:3000/flight/route/name/' + new_name)
+    fetch(`http://${server_add}:3000/flight/route/name/${new_name}`)
         .then((res) => {
             res.json().then(_res => {
                 console.log(_res[0]);
@@ -995,20 +1033,19 @@ fifthRouteAddConfirmData = async () => {
             }
         }
     }
-    // fetch('http://localhost:3000/flight/route/add', {
-    //     method: 'post',
-    //     headers: {
-    //         Accept: 'application/json',
-    //         'Content-Type': 'application/json',
-    //     },
-    //     body: JSON.stringify({
-    //         result,
-    //     }),
-    // }).then((res) => {
-    //     alert("항로 추가의 적용을 위해 페이지를 새로고침합니다.");
-    //     refresh();
-    //     console.log(res.json())
-    // });
+    fetch(`http://${server_add}:3000/flight/route/add`, {
+        method: 'post',
+        headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            result,
+        }),
+    }).then((res) => {
+        alert(`항로 ${result.routeName}가 성공적으로 추가되었습니다.\n적용을 위해 페이지를 새로고침합니다.`);
+        refresh();
+    });
 };
 
 fifthRouteEditConfirmData = () => {
@@ -1032,7 +1069,7 @@ fifthRouteEditConfirmData = () => {
     }
     let result = {
         beforeName: document.getElementById('fifthRouteSelectLabel').innerText,
-        sectorName: $('#fifthRouteEditName').val(),
+        routeName: $('#fifthRouteEditName').val(),
         data: {},
     };
 
@@ -1057,18 +1094,50 @@ fifthRouteEditConfirmData = () => {
         }
     }
     console.log(result);
-    // fetch('http://localhost:3000/flight/route/edit', {
-    //     method: 'post',
-    //     headers: {
-    //         Accept: 'application/json',
-    //         'Content-Type': 'application/json',
-    //     },
-    //     body: JSON.stringify({
-    //         result,
-    //     }),
-    // }).then((res) => {
-    //     console.log(res.json());
-    //     alert("적용을 위해 페이지를 새로고침합니다.");
-    //     refresh();
-    // });
+    fetch(`http://${server_add}:3000/flight/route/edit`, {
+        method: 'post',
+        headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            result,
+        }),
+    }).then((res) => {
+        console.log(res.json());
+        alert("적용을 위해 페이지를 새로고침합니다.");
+        refresh();
+    });
 };
+
+
+fifthRouteDeleteData = () => {
+    const del_data = document.getElementById('fifthRouteSelectLabel').innerText;
+    if (del_data == '선택') {
+        alert('삭제할 항로를 선택해주세요.');
+        return;
+    }
+
+    let result = {
+        routeName: del_data,
+    };
+
+    if (confirm(del_data + " 항로를 정말 삭제할까요?")) {
+        fetch(`http://${server_add}:3000/flight/route/delete`, {
+            method: 'post',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                result,
+            }),
+        }).then((res) => {
+            res.json().then((_res) => {
+                alert(_res.affectedRows + "개의 " + del_data + " 항로 정보가 삭제되었습니다.");
+                alert("항로 삭제 정보의 적용을 위해 페이지를 새로고침합니다.");
+                refresh();
+            }).catch(err => console.log(err))
+        });
+    }
+}

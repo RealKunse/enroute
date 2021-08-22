@@ -7,7 +7,7 @@ let fix_icon = L.icon({
 let routeDict = {};
 
 loadRoutes = async () => {
-    const response = await fetch('http://localhost:3000/flight/route');
+    const response = await fetch(`http://${server_add}:3000/flight/route`);
     let routeList = [];
 
     let result = {};
@@ -30,7 +30,7 @@ loadRoutes = async () => {
 
     for (let i in routeList) {
         result['name'] = routeList[i];
-        const response_ = await fetch('http://localhost:3000/flight/route/edit/open', {
+        const response_ = await fetch(`http://${server_add}:3000/flight/route/edit/open`, {
             method: 'post',
             headers: {
                 'Accept': 'application/json',
@@ -46,17 +46,18 @@ loadRoutes = async () => {
                 res.map(t => {
                     for (let i in routeList) {
                         if (t.air_route == routeList[i]) {
-                            routeDict[routeList[i]].push({name: t.name, lat: t.lat, lng: t.lng});
-                            let fix_node = L.circleMarker(L.latLng(t.lat, t.lng), {
-                                // icon: fix_icon,
+                            routeDict[routeList[i]].push({name: t.name, lat: toWGS(t.lat), lng: toWGS(t.lng)});
+                            let fix_node = L.circleMarker(L.latLng(toWGS(t.lat), toWGS(t.lng)), {
                                 radius: 4
-                            }).bindTooltip(t.name, {sticky: true});
+                            }).bindTooltip(t.name, {sticky: true})
+                                .on("mouseover mouseout", (e) => {
+                                    fixPointEventHandler(e)
+                                });
 
                             baseTree['children'][4]['children'][0]['children'][i]['children'].push({
                                 'label': t.name,
                                 collapsed: true,
                                 layer: fix_node,
-                                // selectAllCheckbox: 'unselect all',
                             })
                         }
                     }
@@ -85,6 +86,28 @@ drawRoutebyRoute = (routeName, dict) => {
     for (let i in dict[routeName]) {
         latlng.push([dict[routeName][i]['lat'], dict[routeName][i]['lng']]);
     }
-    const color = '#' + Math.round(0xCCCCCC + (Math.random() * 0x333333)).toString(16);
-    return L.polyline(latlng, {color: color, className: 'enroute_stroke_route'}).bindTooltip(routeName, {sticky: true});
+    const [r, g, b] = [Math.round(0x77 + (Math.random() * 0x77)).toString(16), Math.round(0x77 + (Math.random() * 0x77)).toString(16), Math.round(0x77 + (Math.random() * 0x77)).toString(16)];
+    const color = '#' + r + g + b;
+    return L.polyline(latlng, {color: color, className: 'enroute_stroke_route'}).bindTooltip(routeName, {sticky: true})
+        .on("click mouseover mouseout", (e) => {
+            routeEventHandler(e)
+        });
+};
+
+
+routeEventHandler = (e) => {
+    if (e.type == 'click') {
+        if (uiStatus.fifthRoute) {
+            // console.log()
+            document.getElementById('fifthRouteSelectLabel').innerText = e.sourceTarget._tooltip._content;
+        }
+    } else if (e.type == 'mouseover') {
+        e.target.setStyle({
+            weight: 6
+        })
+    } else if (e.type == 'mouseout') {
+        e.target.setStyle({
+            weight: 3
+        })
+    }
 };

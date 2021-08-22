@@ -1,7 +1,19 @@
+::-webkit-scrollbar {
+    width: 5px;
+}
+
+::-webkit-scrollbar-track {
+    background-color: grey;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: #575757;
+    border-radius: 4px;
+}
+
 html {
     background: #f9f8f8;
     overflow: hidden;
-
 }
 
 body {
@@ -54,7 +66,7 @@ table {
 .tablehead {
     position: sticky;
 
-    top:0;
+    top: 0;
 }
 
 th, td {
@@ -70,7 +82,7 @@ td input {
 }
 
 th {
-    background: #ccc;
+    background: #ddd;
     font-weight: normal;
 }
 
@@ -81,11 +93,11 @@ input:focus, textarea:focus {
     -webkit-box-shadow: rgba(0, 0, 0, 0.15) 0 0 8px;
 }
 
-.leaflet-control-layers-expanded{
-    width:150px;
+.leaflet-control-layers-expanded {
+    width: 150px;
 }
 
-#trackerDiv{
+#trackerDiv {
     /*position: absolute;*/
     background: #000;
     width: 30px;
@@ -122,7 +134,7 @@ input:focus, textarea:focus {
 /*    background-color: #f2f2f2;*/
 /*}*/
 
-select:hover, select:focus{
+select:hover, select:focus {
     border-color: #C9C9C9;
     -webkit-box-shadow: rgba(0, 0, 0, 0.15) 0 0 8px;
 }
@@ -131,13 +143,13 @@ select::-ms-expand {
     display: none;
 }
 
-option{
+option {
     height: 45px;
 }
 
 .darkGreyButton {
-    width:80px;
-    height:35px;
+    width: 80px;
+    height: 35px;
     color: #bbb;
     margin: 10px auto;
     text-shadow: 0 0 2px rgba(0, 0, 0, .7);
@@ -150,9 +162,8 @@ option{
 }
 
 .darkGreyButton:hover {
-    width:80px;
-    height:35px;
-    margin: 10px auto;
+    width: 80px;
+    height: 35px;
     background-color: #363636;
     border-color: #2b2b2b #343434 #343434;
     background-image: -webkit-linear-gradient(top, #404040, #2a2a2a);
@@ -161,24 +172,25 @@ option{
     background-image: linear-gradient(to bottom, #404040, #2a2a2a);
 }
 
-.editButton{
-    width:80px;
-    height:35px;
+.editButton {
+    width: 80px;
+    height: 35px;
     color: #bbb;
     text-shadow: 0 0 2px rgba(0, 0, 0, .7);
     background-color: #3d3d3d;
 }
-.editButton:hover{
-    width:80px;
-    height:35px;
+
+.editButton:hover {
+    width: 80px;
+    height: 35px;
     color: #bbb;
     text-shadow: 0 0 2px rgba(0, 0, 0, .7);
     background-color: #575757;
 }
 
-.deleteButton{
-    width:80px;
-    height:35px;
+.deleteButton {
+    width: 80px;
+    height: 35px;
     color: #ffffff;
     text-shadow: 0 0 3px rgba(0, 0, 0, .7);
     background-color: #be444a;
@@ -188,9 +200,10 @@ option{
     /*background-image: -o-linear-gradient(top, #2a2a2a, #1b1b1b);*/
     /*background-image: linear-gradient(to bottom, #be444a, #be6266);*/
 }
-.deleteButton:hover{
-    width:80px;
-    height:35px;
+
+.deleteButton:hover {
+    width: 80px;
+    height: 35px;
     color: #ffffff;
     text-shadow: 0 0 3px rgba(0, 0, 0, .7);
     background-color: #f32f38;
@@ -199,4 +212,34 @@ option{
     /*background-image: -moz-linear-gradient(top, #2a2a2a, #1b1b1b);*/
     /*background-image: -o-linear-gradient(top, #2a2a2a, #1b1b1b);*/
     /*background-image: linear-gradient(to bottom, #F32F38, #be6266);*/
+}
+
+.offMarginButton {
+    margin: 15px 25px 0 25px;
+}
+
+
+@media (min-width: 1350px) {
+    #WidthShort {
+        visibility: hidden;
+    }
+}
+
+@media print {
+    .Error,
+    .leaflet-control-layers-toggle,
+    .leaflet-top,
+    .leaflet-control-attribution,
+    #topBar > * ,
+    #bottomBar > *{
+        display: none
+    }
+
+    div > #topBar, div > #bottomBar {
+        height: 0
+    }
+    #flexContainer{display: block};
+    #mapId {
+        height: 100vh
+    }
 }

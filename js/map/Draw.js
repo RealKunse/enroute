@@ -3,7 +3,7 @@ var editableLayers = new L.FeatureGroup();
 map.addLayer(editableLayers);
 
 var options = {
-    position: 'bottomleft',
+    position: 'topleft',
     draw: {
         // circle : {
         //     metric: false,
@@ -31,10 +31,10 @@ var options = {
         polyline: {
             metric: false
         },
-        circle: false, // Turns off this drawing tool
-        polygon: false,
-        marker: false,
-        rectangle: false,
+        circle: true, // Turns off this drawing tool
+        polygon: true,
+        marker: true,
+        rectangle: true,
     },
     edit: {
         featureGroup: editableLayers, //REQUIRED!!

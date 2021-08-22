@@ -10,7 +10,7 @@ let markers = [
     // [33.3847629, 126.624867],
     // [33.315988, 126.347387],
     // [33.3305, 126.5027]
-    ];
+];
 
 let siteIcon = L.icon({
     iconUrl: 'css/images/site.png',
@@ -32,36 +32,39 @@ let vortacIcon = L.icon({
 
 
 loadSites = () => {
-    fetch('http://localhost:3000/api/sites')
+    fetch(`http://${server_add}:3000/api/sites`)
         .then(res => {
             res.json().then(res => {
                 res.map(t => {
                     if (t.isSite == 1) {
-                        let siteNode = L.marker(L.latLng(t.SiteLat, t.SiteLng), {
+                        let siteNode = L.marker(L.latLng(toWGS(t.SiteLat), toWGS(t.SiteLng)), {
                             icon: siteIcon,
+                            pane: 'sitePane'
                         }).bindTooltip(t.SiteName, {sticky: true});
                         site.push(t.SiteName);
-                        markers.push([t.SiteLat, t.SiteLng]);
+                        markers.push([toWGS(t.SiteLat), toWGS(t.SiteLng)]);
                         baseTree['children'][1]['children'].push({
                             'label': t.SiteName,
                             'layer': siteNode
                         })
                     } else if (t.isLowSite == 1) {
-                        let siteNode = L.marker(L.latLng(t.SiteLat, t.SiteLng), {
+                        let siteNode = L.marker(L.latLng(toWGS(t.SiteLat), toWGS(t.SiteLng)), {
                             icon: lowSiteIcon,
+                            pane: 'sitePane'
                         }).bindTooltip(t.SiteName.concat(" 저고도"), {sticky: true});
                         site.push(t.SiteName);
-                        markers.push([t.SiteLat, t.SiteLng]);
+                        markers.push([toWGS(t.SiteLat), toWGS(t.SiteLng)]);
                         baseTree['children'][2]['children'].push({
                             'label': t.SiteName,
                             'layer': siteNode
                         })
                     } else if (t.isVortac == 1) {
-                        let siteNode = L.marker(L.latLng(t.SiteLat, t.SiteLng), {
+                        let siteNode = L.marker(L.latLng(toWGS(t.SiteLat), toWGS(t.SiteLng)), {
                             icon: vortacIcon,
+                            pane: 'sitePane'
                         }).bindTooltip(t.SiteName, {sticky: true});
                         // site.push(t.SiteName);
-                        // markers.push([t.SiteLat, t.SiteLng]);
+                        // markers.push([toWGS(t.SiteLat), toWGS(t.SiteLng)]);
                         baseTree['children'][3]['children'].push({
                             'label': t.SiteName,
                             'layer': siteNode
@@ -73,4 +76,5 @@ loadSites = () => {
 
             })
         })
-}
+};
+

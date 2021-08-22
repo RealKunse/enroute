@@ -10,7 +10,7 @@
     <script src="js/L.Control.Layers.Tree.js"></script>
     <script src="js/jquery-latest.js"></script>
     <script src="js/leaflet.awesome-markers.js"></script>
-
+    <script src="js/Util/leaflet.browser.print.min.js"></script>
     <!--    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/0.4.2/leaflet.draw.css"/>-->
     <!--    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/0.4.2/leaflet.draw.js"></script>-->
 
@@ -64,7 +64,7 @@
     <div id="noticeModal" class="modalDiv">
         <div id="noticeBanner" class="modalBanner">
             <div id="noticeBannerText" class="modalBannerText">Notice</div>
-            <div id="noticeClose" class="modalClose" onclick="closeNotice()">close</div>
+            <div id="noticeClose" class="BannerClose" onclick="closeNotice()"></div>
         </div>
         <div id="noticeContext" class="modalContext">
             <table id="noticeTable">
@@ -79,14 +79,28 @@
     <div id="loginModal" class="modalDiv">
         <div id="loginBanner" class="modalBanner">
             <div id="loginBannerText" class="modalBannerText">Login</div>
-            <div id="loginClose" class="modalClose" onclick="closeLoginModal()">close</div>
+            <div id="loginClose" class="BannerClose" onclick="closeLoginModal()"></div>
         </div>
         <div id="loginContext" class="modalContext">
-            <label>ID <input type="text" name="id" id="fifthLoginID"/> </label>
-            <label>PW <input type="text" name="pw" id="fifthLoginPW"/> </label>
+            <table class="firstReqDataEditTable">
+                <tr>
+                    <td>ID</td>
+                    <td><input type="text" name="id" id="fifthLoginID"/></td>
+                </tr>
+                <tr>
+                    <td>PW</td>
+                    <td><input type="text" name="pw" id="fifthLoginPW"/></td>
+                </tr>
+            </table>
             <button style="margin:10px 50px 10px 50px;" class="darkGreyButton" onclick="account_login()">Login</button>
         </div>
 
+    </div>
+    <div class="Error" id="BrowserCheckDiv">
+        이 브라우저에서는 지원하지 않습니다. <br/>크롬으로 접속해 주세요.
+    </div>
+    <div class="Error" id="WidthShort">
+        지원하지 않는 창의 크기입니다.
     </div>
 </header>
 
@@ -95,7 +109,8 @@
 <div id="flexContainer">
     <div id="topBar">
         <div id="topContext">Enroute</div>
-        <div id="topUserStatus" onclick="openLoginModal();">로그인</div>
+        <div class="topText" id="topUserStatus" onclick="openLoginModal();">로그인</div>
+
     </div>
 
     <div id="mapId" onclick="resetActivatedPopup()"></div>
@@ -123,11 +138,10 @@
 </div>
 
 <div class="one" id="firstPopup">
-    <div id="firstBanner">
-        <div id="firstBannerText">비행검사 목록
+    <div class="BannerDiv">
+        <div id="firstBannerText" class="BannerText">비행검사 목록
         </div>
-        <div id="firstBannerClose" onclick="resetPopup('firstPopup')">
-            close
+        <div id="firstBannerClose" onclick="resetPopup('firstPopup')" class="BannerClose">
         </div>
     </div>
     <div id="firstConditions">
@@ -149,7 +163,7 @@
         <div id="firstReqData">
             <div class="BannerDiv">
                 <div id="firstReqText" class="BannerText"></div>
-                <div class="BannerClose" onclick="closeFirstReqData()">close</div>
+                <div class="BannerClose" onclick="closeFirstReqData()"></div>
             </div>
             <div id="firstReqForm">
                 <!--                    <input type="text" id="firstReqSite"/>-->
@@ -177,7 +191,9 @@
                 </div>
                 <!--                    <input type="text" id="firstReqFreq"/>-->
                 <button class="darkGreyButton" id="firstSearchButton" onclick="firstOnSearchClick()">Search</button>
-                <button class="darkGreyButton" id="firstMapButton" onclick="pinAllCheckedRow()">MAP</button>
+                <button class="darkGreyButton" id="firstMapButton"
+                        onclick="pinAllCheckedRow('firstCheckBoxC','firstReqTableData')">MAP
+                </button>
             </div>
             <table class="innerTable">
                 <thead>
@@ -203,6 +219,196 @@
 
                 </tbody>
             </table>
+        </div>
+        <div id="firstReqDataEditOverlay" onclick="closeFirstReqEditData()"></div>
+        <div id="firstReqDataEdit">
+            <div class="BannerDiv">
+                <div class="BannerText">검사 기록 수정</div>
+                <div class="BannerClose" onclick="closeFirstReqEditData()"></div>
+            </div>
+            <div id="firstReqDataEditContext">
+                <table class="firstReqDataEditTable">
+                    <tr>
+                        <td>표지소</td>
+                        <td><input class="firstReqDataEditInput"/></td>
+                    </tr>
+                    <tr>
+                        <td>주파수</td>
+                        <td><input class="firstReqDataEditInput"/></td>
+                    </tr>
+                    <tr>
+                        <td>TX-M</td>
+                        <td><input class="firstReqDataEditInput"/></td>
+                    </tr>
+                    <tr>
+                        <td>RX-M</td>
+                        <td><input class="firstReqDataEditInput"/></td>
+                    </tr>
+                    <tr>
+                        <td>TX-S</td>
+                        <td><input class="firstReqDataEditInput"/></td>
+                    </tr>
+                    <tr>
+                        <td>RX-S</td>
+                        <td><input class="firstReqDataEditInput"/></td>
+                    </tr>
+                    <tr>
+                        <td>방위</td>
+                        <td><input class="firstReqDataEditInput"/></td>
+                    </tr>
+                    <tr>
+                        <td>거리</td>
+                        <td><input class="firstReqDataEditInput"/></td>
+                    </tr>
+                    <tr>
+                        <td>고도</td>
+                        <td><input class="firstReqDataEditInput"/></td>
+                    </tr>
+                </table>
+            </div>
+            <div style="display:flex; flex-direction: row">
+                <button class="darkGreyButton" onclick="firstReqDataEditConfirm()">확인</button>
+                <button class="darkGreyButton" onclick="closeFirstReqEditData(false)">취소</button>
+            </div>
+        </div>
+        <div id="MinwonOverlay" onclick="closeMinwon()"></div>
+        <div id="Minwon">
+            <div class="BannerDiv">
+                <div class="BannerText">민원</div>
+                <div class="BannerClose" onclick="closeMinwon()"></div>
+            </div>
+            <div id="MinwonForm">
+                <!--                    <input type="text" id="firstReqSite"/>-->
+                <div class="select">
+                    <div class="selectTag">표지소</div>
+                    <div class="clickSelect" id="MinwonSiteSelect"> <!-- id값에 따라 onclick 이벤트 리스너 할당 -->
+                        <div class="selectLabel" id="MinwonSiteSelectLabel">전체</div> <!-- 얘만 css, js 추가하면 됨 -->
+                        <ul class="option-list" id="MinwonSite" tabindex="0">
+                            <li class="option">전체</li>
+                            <!--                                <li class="option">인천</li>-->
+
+                        </ul>
+                    </div>
+                </div>
+                <div class="select">
+                    <div class="selectTag">표지소</div>
+                    <div class="clickSelect" id="MinwonFreqSelect"> <!-- id값에 따라 onclick 이벤트 리스너 할당 -->
+                        <div class="selectLabel" id="MinwonFreqSelectLabel">전체</div> <!-- 얘만 css, js 추가하면 됨 -->
+                        <ul class="option-list" id="MinwonFreq" tabindex="0">
+                            <li class="option">전체</li>
+                            <!--                                <li class="option">인천</li>-->
+
+                        </ul>
+                    </div>
+                </div>
+                <!--                    <input type="text" id="firstReqFreq"/>-->
+                <button class="darkGreyButton" id="MinwonSearchButton" onclick="MinwonSearchClick()">Search</button>
+                <button class="darkGreyButton" id="MinwonMapButton"
+                        onclick="MinwonPinCheckedRow('MinwonCheckBoxC','MinwonTableData')">MAP
+                </button>
+            </div>
+            <table>
+                <thead class="tablehead">
+                <tr>
+                    <th>
+                        <label>
+                            <input type="checkbox" class="MinwonCheckBoxP"
+                                   onchange="checkAllBoxes(this, 'MinwonCheckBoxC')"/>
+                        </label>
+                    </th>
+                    <th>표지소명</th>
+                    <th>주파수</th>
+                    <th>증상</th>
+                    <th>방위각</th>
+                    <th>거리</th>
+                    <th>고도</th>
+                </tr>
+                </thead>
+                <tbody id="MinwonTbody">
+
+                </tbody>
+            </table>
+            <div class="firstAddData" onclick="openMinwonAddData();"></div>
+        </div>
+
+        <div id="MinwonAddOverlay" onclick="closeMinwonAddData()"></div>
+        <div id="MinwonDataAdd">
+            <div class="BannerDiv">
+                <div class="BannerText">민원 추가</div>
+                <div class="BannerClose" onclick="closeMinwonAddData()"></div>
+            </div>
+            <div id="MinwonDataAddContext">
+                <table class="MinwonDataAddTable">
+                    <tr>
+                        <td>표지소</td>
+                        <td><input class="MinwonDataAddInput"/></td>
+                    </tr>
+                    <tr>
+                        <td>주파수</td>
+                        <td><input class="MinwonDataAddInput"/></td>
+                    </tr>
+                    <tr>
+                        <td>증상</td>
+                        <td><input class="MinwonDataAddInput"/></td>
+                    </tr>
+                    <tr>
+                        <td>방위</td>
+                        <td><input class="MinwonDataAddInput"/></td>
+                    </tr>
+                    <tr>
+                        <td>거리</td>
+                        <td><input class="MinwonDataAddInput"/></td>
+                    </tr>
+                    <tr>
+                        <td>고도</td>
+                        <td><input class="MinwonDataAddInput"/></td>
+                    </tr>
+                </table>
+            </div>
+            <div style="display:flex; flex-direction: row">
+                <button class="darkGreyButton" onclick="MinwonDataAddConfirm()">확인</button>
+                <button class="darkGreyButton" onclick="closeMinwonAddData(false)">취소</button>
+            </div>
+        </div>
+
+        <div id="MinwonEditOverlay" onclick="closeMinwonEditData()"></div>
+        <div id="MinwonDataEdit">
+            <div class="BannerDiv">
+                <div class="BannerText">민원 수정</div>
+                <div class="BannerClose" onclick="closeMinwonEditData()"></div>
+            </div>
+            <div id="MinwonDataEditContext">
+                <table class="MinwonDataEditTable">
+                    <tr>
+                        <td>표지소</td>
+                        <td><input class="MinwonDataEditInput"/></td>
+                    </tr>
+                    <tr>
+                        <td>주파수</td>
+                        <td><input class="MinwonDataEditInput"/></td>
+                    </tr>
+                    <tr>
+                        <td>증상</td>
+                        <td><input class="MinwonDataEditInput"/></td>
+                    </tr>
+                    <tr>
+                        <td>방위</td>
+                        <td><input class="MinwonDataEditInput"/></td>
+                    </tr>
+                    <tr>
+                        <td>거리</td>
+                        <td><input class="MinwonDataEditInput"/></td>
+                    </tr>
+                    <tr>
+                        <td>고도</td>
+                        <td><input class="MinwonDataEditInput"/></td>
+                    </tr>
+                </table>
+            </div>
+            <div style="display:flex; flex-direction: row">
+                <button class="darkGreyButton" onclick="MinwonDataEditConfirm()">확인</button>
+                <button class="darkGreyButton" onclick="closeMinwonEditData(false)">취소</button>
+            </div>
         </div>
 
 
@@ -233,7 +439,7 @@
                         </div>
                     </div>
                     <label> 경로
-                        <input type="file" name="dat" id="firstRouteUpload"/>
+                        <input type="file" name="dat" id="firstRouteUpload" accept=".txt, .xls, .xlsx, .xlsm"/>
                     </label>
                     <span style="background: black; color:white" class="firstAddButton" id="firstAddButton" tabindex="0"
                           onfocus="firstAddRowConfirmOnFocus()">확인</span>
@@ -270,16 +476,16 @@
                 </div>
             </div>
         </div>
-        <div class="firstAddData" onclick="openFirstAddComponent();">추가</div>
+        <div title="비행검사 자료 추가" class="firstAddData" onclick="openFirstAddComponent();"></div>
+        <div title="민원" class="MinwonButton" onclick="openMinwon();getMinwonData();"></div>
     </div>
 </div>
 
 <div class="two" id="secondPopup">
-    <div id="secondBanner">
-        <div id="secondBannerText">검색
+    <div id="secondBanner" class="BannerDiv">
+        <div id="secondBannerText" class="BannerText">검색
         </div>
-        <div id="secondBannerClose" onclick="resetPopup('secondPopup')">
-            close
+        <div id="secondBannerClose" class="BannerClose" onclick="resetPopup('secondPopup')">
         </div>
 
     </div>
@@ -290,22 +496,14 @@
             <div class="clickSelect" id="secondSiteClickSelect"> <!-- id값에 따라 onclick 이벤트 리스너 할당 -->
                 <div class="selectLabel" id="secondSiteSelectLabel">전체</div> <!-- 얘만 css, js 추가하면 됨 -->
                 <ul class="option-list" tabindex="0">
-                    <!-- 추후에 옵션 리스트 DB동기화 필요 -->
-                    <li class="option">전체</li>
-                    <li class="option">인천</li>
-                    <li class="option">안양</li>
-                    <li class="option">부안</li>
-                    <li class="option">대구</li>
-                    <li class="option">제주</li>
-                    <li class="option">모슬포</li>
-                    <li class="option">동광</li>
                 </ul>
             </div>
         </div>
         <label>
             점검일
             <input id="secondStartDate" type="date" placeholder="시작일"/>
-            ~
+        </label>
+        <label>~
             <input id="secondEndDate" type="date" placeholder="종료일"/>
         </label>
         <label>점검명
@@ -314,8 +512,32 @@
         <label>주파수
             <input id="secondFreqInput" type="number" placeholder="주파수">
         </label>
-        <button class="darkGreyButton" id="secondSearchButton" onclick="SecondOnSearchClick()">Search</button>
+        <div class="select">
+            <div class="selectTag"></div>
+            <div class="clickSelect" id="secondLimitClickSelect"> <!-- id값에 따라 onclick 이벤트 리스너 할당 -->
+                <div class="selectLabel" id="secondLimitSelectLabel">30</div> <!-- 얘만 css, js 추가하면 됨 -->
+                <ul class="option-list" tabindex="0">
+                    <!-- 추후에 옵션 리스트 DB동기화 필요 -->
+                    <li class="option">10</li>
+                    <li class="option">20</li>
+                    <li class="option">30</li>
+                    <li class="option">50</li>
+                    <li class="option">100</li>
+                    <li class="option">200</li>
+                    <li class="option">500</li>
+                    <li class="option">1000</li>
+                    <li class="option">전체</li>
+                </ul>
+            </div>
+        </div>
+        <button class="darkGreyButton" id="secondSearchButton" onclick="SecondOnSearchClick(true)">Search</button>
         <button class="darkGreyButton" id="secondMapButton" onclick="pinAllCheckedRow_sec()">MAP</button>
+    </div>
+    <div id="secondPaginationDiv">
+        <div class="secondPaginationArrow" id="secondPaginationLeftDiv" onclick="SecondClickPrevPage()"><-</div>
+        <div id="secondPaginationContext">
+        </div>
+        <div class="secondPaginationArrow" id="secondPaginationRightDiv" onclick="SecondClickNextPage()">-></div>
     </div>
     <div id="secondTableContext">
         <br/>
@@ -351,11 +573,10 @@
 </div>
 
 <div class="three" id="thirdPopup">
-    <div id="thirdBanner">
-        <div id="thirdBannerText">마킹
+    <div class="BannerDiv">
+        <div id="thirdBannerText" class="BannerText">마킹
         </div>
-        <div id="thirdBannerClose" onclick="resetPopup('thirdPopup')">
-            close
+        <div id="thirdBannerClose" class="BannerClose" onclick="resetPopup('thirdPopup')">
         </div>
     </div>
     <div id="thirdContext">
@@ -365,15 +586,6 @@
                 <div class="clickSelect" id="thirdClickSelect" tabindex="0"> <!-- id값에 따라 onclick 이벤트 리스너 할당 -->
                     <div class="selectLabel" id="thirdSelectLabel">선택</div> <!-- 얘만 css, js 추가하면 됨 -->
                     <ul class="option-list" tabindex="0">
-                        <li class="option">인천</li>
-                        <li class="option">안양</li>
-                        <li class="option">부안</li>
-                        <li class="option">대구</li>
-                        <li class="option">제주</li>
-                        <li class="option">모슬포</li>
-                        <li class="option">동광</li>
-                        <li class="option">대구</li>
-
                     </ul>
                 </div>
             </div>
@@ -392,30 +604,46 @@
                 <label for="thirdLevel">색상</label>
                 <input id="thirdLevel" type="number" min="0" max="5" step="1" placeholder="상태" form="thirdForm"/>
             </span>
-            <button style="margin: 0 200px 0 200px" type="button" class="darkGreyButton" id="thirdButton" onclick="calculateCoordinate()">추가</button>
+            <button type="button" class="darkGreyButton" id="thirdButton"
+                    onclick="calculateCoordinate()">추가
+            </button>
         </form>
         <label for="thirdAccumulatePin"><input type="checkbox" checked id="thirdAccumulatePin"
                                                onclick="accumulatePins(this)"/>추가시 기존 마커 삭제</label>
         <br/>
-        &nbsp;&nbsp;&nbsp;&nbsp; ※ 색상 | 5 : 하늘, 4 : 연두, 3 : 주황, 2 : 빨강, 1 : 진홍, 0: 검정
+        <div style="display: flex; margin: -16px 0 0 30px;">
+            <p>※ 색상 &nbsp;</p>
+            <p>5 :</p>
+            <div style="background: #38a9dc; margin: 20px 5px 0 5px; border-radius: 7.5px; width:15px; height: 15px;"></div>
+            <p>, 4 :</p>
+            <div style="background: #6da824; margin: 20px 5px 0 5px; border-radius: 7.5px; width:15px; height: 15px;"></div>
+            <p>, 3 :</p>
+            <div style="background: #f69730; margin: 20px 5px 0 5px; border-radius: 7.5px; width:15px; height: 15px;"></div>
+            <p>, 2 :</p>
+            <div style="background: #d33d2a; margin: 20px 5px 0 5px; border-radius: 7.5px; width:15px; height: 15px;"></div>
+            <p>, 1 :</p>
+            <div style="background: #a13336; margin: 20px 5px 0 5px; border-radius: 7.5px; width:15px; height: 15px;"></div>
+            <p>, 0:</p>
+            <div style="background: #303030; margin: 20px 5px 0 5px; border-radius: 7.5px; width:15px; height: 15px;"></div>
+
+        </div>
     </div>
 
 </div>
 
 
 <div class="five" id="fifthPopup">
-    <div id="fifthBanner">
-        <div id="fifthBannerText">설정
+    <div class="BannerDiv">
+        <div id="fifthBannerText" class="BannerText">설정
         </div>
-        <div id="fifthBannerClose" onclick="resetPopup('fifthPopup')">
-            close
+        <div id="fifthBannerClose" class="BannerClose" onclick="resetPopup('fifthPopup')">
         </div>
     </div>
-<!--    <div id="fifthLoginForm">-->
-<!--        <label>ID <input type="text" name="id" id="fifthLoginID"/> </label>-->
-<!--        <label>PW <input type="text" name="pw" id="fifthLoginPW"/> </label>-->
-<!--        <button style="margin:10px 50px 10px 50px;" class="darkGreyButton" onclick="account_login()">Login</button>-->
-<!--    </div>-->
+    <!--    <div id="fifthLoginForm">-->
+    <!--        <label>ID <input type="text" name="id" id="fifthLoginID"/> </label>-->
+    <!--        <label>PW <input type="text" name="pw" id="fifthLoginPW"/> </label>-->
+    <!--        <button style="margin:10px 50px 10px 50px;" class="darkGreyButton" onclick="account_login()">Login</button>-->
+    <!--    </div>-->
 
     <div id="fifthFreqOverlay" onclick="closeFifthFreqData()"></div>
     <div id="fifthSettingButtonArea">
@@ -425,7 +653,6 @@
                 <div class="BannerText">주파수 목록
                 </div>
                 <div class="BannerClose" onclick="closeFifthFreqData()">
-                    close
                 </div>
             </div>
             <table class="innerTable">
@@ -442,7 +669,7 @@
 
                 </tbody>
             </table>
-            <div class="firstAddData" onclick="openFifthFreqAdd();">추가</div>
+            <div class="firstAddData" onclick="openFifthFreqAdd();"></div>
         </div>
 
         <div id="fifthFreqAddOverlay" onclick="closeFifthFreqAdd(false)"></div>
@@ -451,7 +678,6 @@
                 <div class="BannerText">주파수 추가
                 </div>
                 <div class="BannerClose" onclick="closeFifthFreqAdd(false)">
-                    close
                 </div>
             </div>
             <label class="fifthInput">표지소
@@ -475,7 +701,6 @@
                 <div class="BannerText">주파수 수정
                 </div>
                 <div class="BannerClose" onclick="closeFifthFreqEdit()">
-                    close
                 </div>
             </div>
             <label class="fifthInput">표지소
@@ -498,517 +723,525 @@
         <div id="fifthSiteOverlay" onclick="closeFifthSiteData()"></div>
 
 
-            <div id="fifthSite">
-                <div class="BannerDiv">
-                    <div class="BannerText">표지소 목록
-                    </div>
-                    <div class="BannerClose" onclick="closeFifthSiteData()">
-                        close
-                    </div>
+        <div id="fifthSite">
+            <div class="BannerDiv">
+                <div class="BannerText">표지소 목록
                 </div>
-                <table class="innerTable">
-                    <thead>
-                    <tr>
-                        <th>표지소</th>
-                        <th>위도</th>
-                        <th>경도</th>
-                        <th>타입</th>
-                        <th>수정</th>
-                        <th>삭제</th>
-                    </tr>
-                    </thead>
-                    <tbody id="fifthSiteTablebody">
-
-                    </tbody>
-                </table>
-                <div class="firstAddData" onclick="openFifthSiteAdd();">추가</div>
-            </div>
-
-            <div id="fifthSiteAddOverlay" onclick="closeFifthSiteAdd(false)"></div>
-            <div id="fifthSiteAdd">
-                <div class="BannerDiv">
-                    <div class="BannerText">표지소 추가
-                    </div>
-                    <div class="BannerClose" onclick="closeFifthSiteAdd(false)">
-                        close
-                    </div>
-                </div>
-                <label class="fifthInput">표지소
-                    <input type="text" id="fifthSiteAddSiteInput" placeholder="표지소"/>
-                </label>
-                <label class="fifthInput">위도
-                    <input type="number" id="fifthSiteAddLatInput" placeholder="00.0000"/>
-                </label>
-                <label class="fifthInput">경도
-                    <input type="number" id="fifthSiteAddLngInput" placeholder="000.0000"/>
-                </label>
-
-                <label class="fifthInput">타입
-                    <!--                    <input type="text" id="fifthSiteAddSectorInput" placeholder="운용섹터"/>-->
-                    <input type="radio" name="siteInfoAdd" id="fifthSiteAddIsSite" value="1"
-                           onclick="renderSiteType(event)">일반
-                    <input type="radio" name="siteinfoAdd" id="fifthSiteAddIsLowSite" value="2"
-                           onclick="renderSiteType(event)">저고도
-                    <input type="radio" name="siteinfoAdd" id="fifthSiteAddIsVortac" value="3"
-                           onclick="renderSiteType(event)">VORTAC
-
-                </label>
-                <div style="text-align: center">여러개가 해당 될 경우 가능하다면 일반 > 저고도 > VORTAC 우선순위로 입력</div>
-
-                <div style="display:flex; flex-direction: row">
-                    <button class="darkGreyButton" onclick="fifthSiteAddConfirm()">확인</button>
-                    <button class="darkGreyButton" onclick="closeFifthSiteAdd(false)">취소</button>
-                </div>
-                <div id="fifthSiteTypeRenderer" style="visibility: hidden"></div>
-            </div>
-
-            <div id="fifthSiteEditOverlay" onclick="closeFifthSiteEdit()"></div>
-            <div id="fifthSiteEdit">
-                <div class="BannerDiv">
-                    <div class="BannerText">표지소 수정
-                    </div>
-                    <div class="BannerClose" onclick="closeFifthSiteEdit()">
-                        close
-                    </div>
-                </div>
-                <label class="fifthInput">표지소
-                    <input type="text" id="fifthSiteEditSiteInput" placeholder="표지소"/>
-                </label>
-                <label class="fifthInput">위도
-                    <input type="number" id="fifthSiteEditLatInput" placeholder="00.0000"/>
-                </label>
-                <label class="fifthInput">경도
-                    <input type="number" id="fifthSiteEditLngInput" placeholder="000.0000"/>
-                </label>
-
-                <label class="fifthInput">타입
-                    <!--                    <input type="text" id="fifthSiteEditSectorInput" placeholder="운용섹터"/>-->
-                    <input type="radio" name="siteInfoEdit" id="fifthSiteEditIsSite" value="1"
-                           onclick="renderSiteType(event)">일반
-                    <input type="radio" name="siteInfoEdit" id="fifthSiteEditIsLowSite" value="2"
-                           onclick="renderSiteType(event)">저고도
-                    <input type="radio" name="siteInfoEdit" id="fifthSiteEditIsVortac" value="3"
-                           onclick="renderSiteType(event)">VORTAC
-
-                </label>
-                <div style="text-align: center">여러개가 해당 될 경우 가능하다면 일반 > 저고도 > VORTAC 우선순위로 입력</div>
-                <div style="display:flex; flex-direction: row">
-                    <button class="darkGreyButton" onclick="fifthSiteEditConfirm()">확인</button>
-                    <button class="darkGreyButton" onclick="closeFifthSiteEdit()">취소</button>
+                <div class="BannerClose" onclick="closeFifthSiteData()">
                 </div>
             </div>
-            <div class="fifthSettingButton" onclick="getFreqList();openFifthFreqData();">주파수</div>
-            <div class="fifthSettingButton" onclick="getSiteList();openFifthSiteData();">표지소</div>
+            <table class="innerTable">
+                <thead>
+                <tr>
+                    <th>표지소</th>
+                    <th>위도</th>
+                    <th>경도</th>
+                    <th>타입</th>
+                    <th>수정</th>
+                    <th>삭제</th>
+                </tr>
+                </thead>
+                <tbody id="fifthSiteTablebody">
 
-            <div class="fifthSettingButton" onclick="getSectorList();openFifthSectorData();">섹터</div>
-            <div class="fifthSettingButton" onclick="displayPopup('firstPopup');getTestList();">비행검사결과</div>
-            <div id="fifthSectorOverlay" onclick="closeFifthSectorData()"></div>
-            <div id="fifthSector" class="three">
-                <div class="BannerDiv">
-                    <div class="BannerText">섹터 목록
-                    </div>
-                    <div class="BannerClose" onclick="closeFifthSectorData()">
-                        close
+                </tbody>
+            </table>
+            <div class="firstAddData" onclick="openFifthSiteAdd();"></div>
+        </div>
+
+        <div id="fifthSiteAddOverlay" onclick="closeFifthSiteAdd(false)"></div>
+        <div id="fifthSiteAdd">
+            <div class="BannerDiv">
+                <div class="BannerText">표지소 추가
+                </div>
+                <div class="BannerClose" onclick="closeFifthSiteAdd(false)">
+                </div>
+            </div>
+            <label class="fifthInput">표지소
+                <input type="text" id="fifthSiteAddSiteInput" placeholder="표지소"/>
+            </label>
+            <label class="fifthInput">위도
+                <input type="number" id="fifthSiteAddLatInput" placeholder="00.0000"/>
+            </label>
+            <label class="fifthInput">경도
+                <input type="number" id="fifthSiteAddLngInput" placeholder="000.0000"/>
+            </label>
+
+            <label class="fifthInput">타입
+                <!--                    <input type="text" id="fifthSiteAddSectorInput" placeholder="운용섹터"/>-->
+                <input type="radio" name="siteInfoAdd" id="fifthSiteAddIsSite" value="1"
+                       onclick="renderSiteType(event)">일반
+                <input type="radio" name="siteinfoAdd" id="fifthSiteAddIsLowSite" value="2"
+                       onclick="renderSiteType(event)">저고도
+                <input type="radio" name="siteinfoAdd" id="fifthSiteAddIsVortac" value="3"
+                       onclick="renderSiteType(event)">VORTAC
+
+            </label>
+            <div style="text-align: center">여러개가 해당 될 경우 가능하다면 일반 > 저고도 > VORTAC 우선순위로 입력</div>
+
+            <div style="display:flex; flex-direction: row">
+                <button class="darkGreyButton" onclick="fifthSiteAddConfirm()">확인</button>
+                <button class="darkGreyButton" onclick="closeFifthSiteAdd(false)">취소</button>
+            </div>
+            <div id="fifthSiteTypeRenderer" style="visibility: hidden"></div>
+        </div>
+
+        <div id="fifthSiteEditOverlay" onclick="closeFifthSiteEdit()"></div>
+        <div id="fifthSiteEdit">
+            <div class="BannerDiv">
+                <div class="BannerText">표지소 수정
+                </div>
+                <div class="BannerClose" onclick="closeFifthSiteEdit()">
+                </div>
+            </div>
+            <label class="fifthInput">표지소
+                <input type="text" id="fifthSiteEditSiteInput" placeholder="표지소"/>
+            </label>
+            <label class="fifthInput">위도
+                <input type="number" id="fifthSiteEditLatInput" placeholder="00.0000"/>
+            </label>
+            <label class="fifthInput">경도
+                <input type="number" id="fifthSiteEditLngInput" placeholder="000.0000"/>
+            </label>
+
+            <label class="fifthInput">타입
+                <!--                    <input type="text" id="fifthSiteEditSectorInput" placeholder="운용섹터"/>-->
+                <input type="radio" name="siteInfoEdit" id="fifthSiteEditIsSite" value="1"
+                       onclick="renderSiteType(event)">일반
+                <input type="radio" name="siteInfoEdit" id="fifthSiteEditIsLowSite" value="2"
+                       onclick="renderSiteType(event)">저고도
+                <input type="radio" name="siteInfoEdit" id="fifthSiteEditIsVortac" value="3"
+                       onclick="renderSiteType(event)">VORTAC
+
+            </label>
+            <div style="text-align: center">여러개가 해당 될 경우 가능하다면 일반 > 저고도 > VORTAC 우선순위로 입력</div>
+            <div style="display:flex; flex-direction: row">
+                <button class="darkGreyButton" onclick="fifthSiteEditConfirm()">확인</button>
+                <button class="darkGreyButton" onclick="closeFifthSiteEdit()">취소</button>
+            </div>
+        </div>
+        <div id="fifthSectorOverlay" onclick="closeFifthSectorData()"></div>
+        <div id="fifthSector" class="three">
+            <div class="BannerDiv">
+                <div class="BannerText">섹터 목록
+                </div>
+                <div class="BannerClose" onclick="closeFifthSectorData()">
+                </div>
+            </div>
+            <div id="fifthSectorContext">
+                <div class="select">
+                    <div class="selectTag">섹터</div>
+                    <div class="clickSelect" id="fifthSectorClickSelect" tabindex="0">
+                        <!-- id값에 따라 onclick 이벤트 리스너 할당 -->
+                        <div class="selectLabel" id="fifthSectorSelectLabel">선택</div> <!-- 얘만 css, js 추가하면 됨 -->
+                        <ul class="option-list" id="fifthSectorList">
+                        </ul>
                     </div>
                 </div>
-                <div id="fifthSectorContext">
-                    <div style="display:flex; flex-direction: row">
-                        <div class="select">
-                            <div class="selectTag">섹터</div>
-                            <div class="clickSelect" id="fifthSectorClickSelect" tabindex="0">
-                                <!-- id값에 따라 onclick 이벤트 리스너 할당 -->
-                                <div class="selectLabel" id="fifthSectorSelectLabel">선택</div> <!-- 얘만 css, js 추가하면 됨 -->
-                                <ul class="option-list" id="fifthSectorList">
-                                </ul>
+
+                <button class="darkGreyButton offMarginButton" onclick="openFifthSectorEdit()">수정</button>
+                <button class="deleteButton offMarginButton" onclick="fifthSectorDeleteData()">삭제</button>
+            </div>
+            <p style="margin-left: 18px;">지도에서 클릭하여 선택할 수 있습니다.</p>
+            <div class="firstAddData" onclick="openFifthSectorAdd();"></div>
+        </div>
+        <div id="fifthSectorAddOverlay" onclick="closeFifthSectorAdd(false)"></div>
+        <div id="fifthSectorAdd">
+            <div class="BannerDiv">
+                <div class="BannerText">섹터 추가
+                </div>
+                <div class="BannerClose" onclick="closeFifthSectorAdd(false)">
+                </div>
+            </div>
+            <div style="display: flex; margin:5px">
+                <label> 섹터명
+                    <input id="fifthSectorAddSectorName">
+                </label>
+                <button class="darkGreyButton" onclick="fifthSectorNameCheckAdd(event)">중복확인</button>
+                <div id="fifthSectorAddNameContext"></div>
+            </div>
+            <table>
+                <thead>
+                <tr>
+                    <th>위도(Lat)</th>
+                    <th>경도(Lng)</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody id="fifthSectorAddTbody">
+                <tr class="fifthSectorAddAddTableRow">
+                    <td class="fifthSectorAddFocusTD">
+                        <label>
+                            <input type="number" class="fifthSectorAddLat"/>
+                        </label>
+                    </td>
+                    <td>
+                        <label>
+                            <input type="number" class="fifthSectorAddLng"/>
+                        </label>
+                    </td>
+                    <td class="fifthSectorAddRowTD">
+                        <div style="display: flex">
+                            <div class="firstAddRowButton fifthSectorAddRowButton" tabindex="0"
+                                 onfocus="fifthSectorAddFocus()">+
                             </div>
                         </div>
-
-                        <button class="darkGreyButton" onclick="openFifthSectorEdit()">수정</button>
-                        <button class="deleteButton" onclick="fifthSectorDeleteData()">삭제</button>
-                    </div>
-                </div>
-                <div class="firstAddData" onclick="openFifthSectorAdd();">추가</div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            <div style="display:flex; flex-direction: row">
+                <button class="darkGreyButton" onclick="fifthSectorAddConfirmData()">확인</button>
+                <button class="darkGreyButton" onclick="closeFifthSectorAdd(false)">취소</button>
             </div>
-            <div id="fifthSectorAddOverlay" onclick="closeFifthSectorAdd(false)"></div>
-            <div id="fifthSectorAdd">
-                <div class="BannerDiv">
-                    <div class="BannerText">섹터 추가
-                    </div>
-                    <div class="BannerClose" onclick="closeFifthSectorAdd(false)">
-                        close
-                    </div>
+        </div>
+        <div id="fifthSectorEditOverlay" onclick="closeFifthSectorEdit(false)"></div>
+        <div id="fifthSectorEdit">
+            <div class="BannerDiv">
+                <div class="BannerText">섹터 수정
                 </div>
-                <div style="display: flex; margin:5px">
-                    <label> 섹터명
-                        <input id="fifthSectorAddSectorName">
-                    </label>
-                    <button class="darkGreyButton" onclick="fifthSectorNameCheckAdd(event)">중복확인</button>
-                    <div id="fifthSectorAddNameContext"></div>
-                </div>
-                <table>
-                    <thead>
-                    <tr>
-                        <th>위도(Lat)</th>
-                        <th>경도(Lng)</th>
-                        <th></th>
-                    </tr>
-                    </thead>
-                    <tbody id="fifthSectorAddTbody">
-                    <tr class="fifthSectorAddAddTableRow">
-                        <td class="fifthSectorAddFocusTD">
-                            <label>
-                                <input type="number" class="fifthSectorAddLat"/>
-                            </label>
-                        </td>
-                        <td>
-                            <label>
-                                <input type="number" class="fifthSectorAddLng"/>
-                            </label>
-                        </td>
-                        <td class="fifthSectorAddRowTD">
-                            <div style="display: flex">
-                                <div class="firstAddRowButton fifthSectorAddRowButton" tabindex="0"
-                                     onfocus="fifthSectorAddFocus()">+
-                                </div>
-                            </div>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
-                <div style="display:flex; flex-direction: row">
-                    <button class="darkGreyButton" onclick="fifthSectorAddConfirmData()">확인</button>
-                    <button class="darkGreyButton" onclick="closeFifthSectorAdd(false)">취소</button>
+                <div class="BannerClose" onclick="closeFifthSectorEdit(false)">
                 </div>
             </div>
-            <div id="fifthSectorEditOverlay" onclick="closeFifthSectorEdit(false)"></div>
-            <div id="fifthSectorEdit">
-                <div class="BannerDiv">
-                    <div class="BannerText">섹터 수정
-                    </div>
-                    <div class="BannerClose" onclick="closeFifthSectorEdit(false)">
-                        close
-                    </div>
-                </div>
-                <div style="display: flex; margin:5px">
-                    <label> 섹터명
-                        <input id="fifthSectorEditSectorName">
-                    </label>
-                    <button class="darkGreyButton" onclick="fifthSectorNameCheckEdit(event)">중복확인</button>
-                    <div id="fifthSectorEditNameContext"></div>
-                </div>
-                <table>
-                    <thead>
-                    <tr>
-                        <th>위도(Lat)</th>
-                        <th>경도(Lng)</th>
-                        <th></th>
-                    </tr>
-                    </thead>
-                    <tbody id="fifthSectorEditTbody">
-                    <tr class="fifthSectorEditAddTableRow">
-                        <td class="fifthSectorEditFocusTD">
-                            <label>
-                                <input type="number" class="fifthSectorEditLat"/>
-                            </label>
-                        </td>
-                        <td>
-                            <label>
-                                <input type="number" class="fifthSectorEditLng"/>
-                            </label>
-                        </td>
-                        <td class="fifthSectorEditRowTD">
-                            <div style="display: flex">
-                                <div class="firstAddRowButton fifthSectorEditRowButton" tabindex="0"
-                                     onfocus="fifthSectorEditFocus()">+
-                                </div>
-                            </div>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
-                <div style="display:flex; flex-direction: row">
-                    <button class="darkGreyButton" onclick="fifthSectorEditConfirmData()">확인</button>
-                    <button class="darkGreyButton" onclick="closeFifthSectorEdit(false)">취소</button>
-                </div>
+            <div style="display: flex; margin:5px">
+                <label> 섹터명
+                    <input id="fifthSectorEditSectorName">
+                </label>
+                <button class="darkGreyButton" onclick="fifthSectorNameCheckEdit(event)">중복확인</button>
+                <div id="fifthSectorEditNameContext"></div>
             </div>
-
-            <div class="fifthSettingButton" onclick="openFifthFixData();getFixList();">픽스점</div>
-            <div id="fifthFixOverlay" onclick="closeFifthFixData()"></div>
-
-
-            <div id="fifthFix">
-                <div class="BannerDiv">
-                    <div class="BannerText">픽스점 목록
-                    </div>
-                    <div class="BannerClose" onclick="closeFifthFixData()">
-                        close
-                    </div>
-                </div>
-                <table class="innerTable">
-                    <thead>
-                    <tr>
-                        <th>이름</th>
-                        <th>위도</th>
-                        <th>경도</th>
-                        <th>수정</th>
-                        <th>삭제</th>
-                    </tr>
-                    </thead>
-                    <tbody id="fifthFixTablebody">
-
-                    </tbody>
-                </table>
-                <div class="firstAddData" onclick="openFifthFixAdd();">추가</div>
-            </div>
-            <div id="fifthFixAddOverlay" onclick="closeFifthFixAdd(false)"></div>
-            <div id="fifthFixAdd">
-                <div class="BannerDiv">
-                    <div class="BannerText">픽스점 추가
-                    </div>
-                    <div class="BannerClose" onclick="closeFifthFixAdd(false)">
-                        close
-                    </div>
-                </div>
-                <label class="fifthInput">픽스점
-                    <input type="text" id="fifthFixAddNameInput" placeholder="픽스점"/>
-                </label>
-                <label class="fifthInput">위도
-                    <input type="number" id="fifthFixAddLatInput" placeholder="00.0000"/>
-                </label>
-                <label class="fifthInput">경도
-                    <input type="number" id="fifthFixAddLngInput" placeholder="000.0000"/>
-                </label>
-
-                <div style="display:flex; flex-direction: row">
-                    <button class="darkGreyButton" onclick="fifthFixAddConfirm()">확인</button>
-                    <button class="darkGreyButton" onclick="closeFifthFixAdd(false)">취소</button>
-                </div>
-                <div id="fifthFixTypeRenderer" style="visibility: hidden"></div>
-            </div>
-
-            <div id="fifthFixEditOverlay" onclick="closeFifthFixEdit()"></div>
-            <div id="fifthFixEdit">
-                <div class="BannerDiv">
-                    <div class="BannerText">픽스점 수정
-                    </div>
-                    <div class="BannerClose" onclick="closeFifthFixEdit()">
-                        close
-                    </div>
-                </div>
-                <label class="fifthInput">픽스점
-                    <input type="text" id="fifthFixEditNameInput" placeholder="픽스점"/>
-                </label>
-                <label class="fifthInput">위도
-                    <input type="number" id="fifthFixEditLatInput" placeholder="00.0000"/>
-                </label>
-                <label class="fifthInput">경도
-                    <input type="number" id="fifthFixEditLngInput" placeholder="000.0000"/>
-                </label>
-                <div style="display:flex; flex-direction: row">
-                    <button class="darkGreyButton" onclick="fifthFixEditConfirm()">확인</button>
-                    <button class="darkGreyButton" onclick="closeFifthFixEdit()">취소</button>
-                </div>
-            </div>
-            <div id="fifthNoticeOverlay" onclick="closeFifthNotice()"></div>
-            <div id="fifthNotice">
-                <div class="BannerDiv">
-                    <div class="BannerText">공지사항
-                    </div>
-                    <div class="BannerClose" onclick="closeFifthNotice()">
-                        close
-                    </div>
-                </div>
-                <table>
-                    <thead>
-                    <tr>
-                        <th>제목</th>
-                        <th>내용</th>
-                        <th>날짜</th>
-                        <th>타입</th>
-                        <th>버전</th>
-                        <th>삭제</th>
-                    </tr>
-                    </thead>
-                    <tbody id="fifthNoticeTBody">
-
-                    </tbody>
-                </table>
-                <div class="firstAddData" onclick="openFifthNoticeAdd();">추가</div>
-            </div>
-            <div id="fifthNoticeAddOverlay" onclick="closeFifthNoticeAdd(false)"></div>
-            <div id="fifthNoticeAdd">
-                <div class="BannerDiv">
-                    <div class="BannerText">공지사항 등록
-                    </div>
-                    <div class="BannerClose" onclick="closeFifthNoticeAdd(false)">
-                        close
-                    </div>
-                </div>
-                <label class="fifthInput">제목
-                    <input type="text" id="fifthNoticeAddTitleInput" placeholder="제목"/>
-                </label>
-                <label class="fifthInput">내용
-                    <textarea id="fifthNoticeAddContextInput" placeholder="내용"></textarea>
-                </label>
-                <label class="fifthInput">타입
-                    <input type="text" id="fifthNoticeAddTypeInput"/>
-                </label>
-                <label class="fifthInput">버전
-                    <input type="text" id="fifthNoticeAddVersionInput"/>
-                </label>
-                <div style="text-align:center">
-                    날짜는 확인버튼을 누른 날짜 기준으로 등록됩니다.
-                </div>
-                <div style="display:flex; flex-direction: row">
-                    <button class="darkGreyButton" onclick="addNoticeData()">확인</button>
-                    <button class="darkGreyButton" onclick="closeFifthNoticeAdd(false)">취소</button>
-                </div>
-
-            </div>
-            <div id="fifthRouteOverlay" onclick="closeFifthRouteData()"></div>
-            <div id="fifthRoute" class="three">
-                <div class="BannerDiv">
-                    <div class="BannerText">항로 목록
-                    </div>
-                    <div class="BannerClose" onclick="closeFifthRouteData()">
-                        close
-                    </div>
-                </div>
-                <div id="fifthRouteContext">
-                    <div style="display:flex; flex-direction: row">
-                        <div class="select">
-                            <div class="selectTag">항로명</div>
-                            <div class="clickSelect" id="fifthRouteClickSelect" tabindex="0">
-                                <!-- id값에 따라 onclick 이벤트 리스너 할당 -->
-                                <div class="selectLabel" id="fifthRouteSelectLabel">선택</div> <!-- 얘만 css, js 추가하면 됨 -->
-                                <ul class="option-list" id="fifthRouteList">
-                                </ul>
+            <table>
+                <thead>
+                <tr>
+                    <th>위도(Lat)</th>
+                    <th>경도(Lng)</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody id="fifthSectorEditTbody">
+                <tr class="fifthSectorEditAddTableRow">
+                    <td class="fifthSectorEditFocusTD">
+                        <label>
+                            <input type="number" class="fifthSectorEditLat"/>
+                        </label>
+                    </td>
+                    <td>
+                        <label>
+                            <input type="number" class="fifthSectorEditLng"/>
+                        </label>
+                    </td>
+                    <td class="fifthSectorEditRowTD">
+                        <div style="display: flex">
+                            <div class="firstAddRowButton fifthSectorEditRowButton" tabindex="0"
+                                 onfocus="fifthSectorEditFocus()">+
                             </div>
                         </div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            <div style="display:flex; flex-direction: row">
+                <button class="darkGreyButton" onclick="fifthSectorEditConfirmData()">확인</button>
+                <button class="darkGreyButton" onclick="closeFifthSectorEdit(false)">취소</button>
+            </div>
+        </div>
 
-                        <button class="darkGreyButton" onclick="openFifthRouteEdit()">수정</button>
-                        <button class="deleteButton" onclick="fifthRouteDeleteData()">삭제</button>
-                    </div>
+
+        <div id="fifthFixOverlay" onclick="closeFifthFixData()"></div>
+
+
+        <div id="fifthFix">
+            <div class="BannerDiv">
+                <div class="BannerText">픽스점 목록
                 </div>
-                <div class="firstAddData" onclick="openFifthRouteAdd();">추가</div>
-            </div>
-            <div id="fifthRouteAddOverlay" onclick="closeFifthRouteAdd(false)"></div>
-            <div id="fifthRouteAdd">
-                <div class="BannerDiv">
-                    <div class="BannerText">항로 추가
-                    </div>
-                    <div class="BannerClose" onclick="closeFifthRouteAdd(false)">
-                        close
-                    </div>
-                </div>
-                <div style="display: flex; margin:5px">
-                    <label> 항로명
-                        <input id="fifthRouteAddName">
-                    </label>
-                    <button class="darkGreyButton" onclick="fifthRouteNameCheckAdd(event)">중복확인</button>
-                    <div id="fifthRouteAddNameContext"></div>
-                </div>
-                <table>
-                    <thead>
-                    <tr>
-                        <th>픽스점</th>
-                        <th>최저고도</th>
-                        <th>최고고도</th>
-                        <th></th>
-                    </tr>
-                    </thead>
-                    <tbody id="fifthRouteAddTbody">
-                    <tr class="fifthRouteAddAddTableRow">
-                        <td class="fifthRouteAddFocusTD">
-                            <label>
-                                <input type="text" class="fifthRouteAddFix"/>
-                            </label>
-                        </td>
-                        <td>
-                            <label>
-                                <input type="number" class="fifthRouteAddLow"/>
-                            </label>
-                        </td>
-                        <td>
-                            <label>
-                                <input type="number" class="fifthRouteAddHigh"/>
-                            </label>
-                        </td>
-                        <td class="fifthRouteAddRowTD">
-                            <div style="display: flex">
-                                <div class="firstAddRowButton fifthRouteAddRowButton" tabindex="0"
-                                     onfocus="fifthRouteAddFocus()">+
-                                </div>
-                            </div>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
-                <div style="display:flex; flex-direction: row">
-                    <button class="darkGreyButton" onclick="fifthRouteAddConfirmData()">확인</button>
-                    <button class="darkGreyButton" onclick="closeFifthRouteAdd(false)">취소</button>
+                <div class="BannerClose" onclick="closeFifthFixData()">
                 </div>
             </div>
-            <div id="fifthRouteEditOverlay" onclick="closeFifthRouteEdit(false)"></div>
-            <div id="fifthRouteEdit">
-                <div class="BannerDiv">
-                    <div class="BannerText">항로 수정
-                    </div>
-                    <div class="BannerClose" onclick="closeFifthRouteEdit(false)">
-                        close
-                    </div>
+            <table class="innerTable">
+                <thead>
+                <tr>
+                    <th>이름</th>
+                    <th>위도</th>
+                    <th>경도</th>
+                    <th>수정</th>
+                    <th>삭제</th>
+                </tr>
+                </thead>
+                <tbody id="fifthFixTablebody">
+
+                </tbody>
+            </table>
+            <div class="firstAddData" onclick="openFifthFixAdd();"></div>
+        </div>
+        <div id="fifthFixAddOverlay" onclick="closeFifthFixAdd(false)"></div>
+        <div id="fifthFixAdd">
+            <div class="BannerDiv">
+                <div class="BannerText">픽스점 추가
                 </div>
-                <div style="display: flex; margin:5px">
-                    <label> 항로명
-                        <input id="fifthRouteEditName">
-                    </label>
-                    <button class="darkGreyButton" onclick="fifthRouteNameCheckEdit(event)">중복확인</button>
-                    <div id="fifthRouteEditNameContext"></div>
+                <div class="BannerClose" onclick="closeFifthFixAdd(false)">
                 </div>
-                <table>
-                    <thead>
-                    <tr>
-                        <th>픽스점</th>
-                        <th>최저고도</th>
-                        <th>최고고도</th>
-                        <th></th>
-                    </tr>
-                    </thead>
-                    <tbody id="fifthRouteEditTbody">
-                    <tr class="fifthRouteEditAddTableRow">
-                        <td class="fifthRouteEditFocusTD">
-                            <label>
-                                <input type="text" class="fifthRouteEditFix"/>
-                            </label>
-                        </td>
-                        <td>
-                            <label>
-                                <input type="number" class="fifthRouteEditLow"/>
-                            </label>
-                        </td>
-                        <td>
-                            <label>
-                                <input type="number" class="fifthRouteEditHigh"/>
-                            </label>
-                        </td>
-                        <td class="fifthRouteEditRowTD">
-                            <div style="display: flex">
-                                <div class="firstAddRowButton fifthRouteAddRowButton" tabindex="0"
-                                     onfocus="fifthRouteEditFocus()">+
-                                </div>
-                            </div>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
-                <div style="display:flex; flex-direction: row">
-                    <button class="darkGreyButton" onclick="fifthRouteEditConfirmData()">확인</button>
-                    <button class="darkGreyButton" onclick="closeFifthRouteEdit(false)">취소</button>
+            </div>
+            <label class="fifthInput">픽스점
+                <input type="text" id="fifthFixAddNameInput" placeholder="픽스점"/>
+            </label>
+            <label class="fifthInput">위도
+                <input type="number" id="fifthFixAddLatInput" placeholder="00.0000"/>
+            </label>
+            <label class="fifthInput">경도
+                <input type="number" id="fifthFixAddLngInput" placeholder="000.0000"/>
+            </label>
+
+            <div style="display:flex; flex-direction: row">
+                <button class="darkGreyButton" onclick="fifthFixAddConfirm()">확인</button>
+                <button class="darkGreyButton" onclick="closeFifthFixAdd(false)">취소</button>
+            </div>
+            <div id="fifthFixTypeRenderer" style="visibility: hidden"></div>
+        </div>
+
+        <div id="fifthFixEditOverlay" onclick="closeFifthFixEdit()"></div>
+        <div id="fifthFixEdit">
+            <div class="BannerDiv">
+                <div class="BannerText">픽스점 수정
                 </div>
+                <div class="BannerClose" onclick="closeFifthFixEdit()">
+                </div>
+            </div>
+            <label class="fifthInput">픽스점
+                <input type="text" id="fifthFixEditNameInput" placeholder="픽스점"/>
+            </label>
+            <label class="fifthInput">위도
+                <input type="number" id="fifthFixEditLatInput" placeholder="00.0000"/>
+            </label>
+            <label class="fifthInput">경도
+                <input type="number" id="fifthFixEditLngInput" placeholder="000.0000"/>
+            </label>
+            <div style="display:flex; flex-direction: row">
+                <button class="darkGreyButton" onclick="fifthFixEditConfirm()">확인</button>
+                <button class="darkGreyButton" onclick="closeFifthFixEdit()">취소</button>
+            </div>
+        </div>
+        <div id="fifthNoticeOverlay" onclick="closeFifthNotice()"></div>
+        <div id="fifthNotice">
+            <div class="BannerDiv">
+                <div class="BannerText">공지사항
+                </div>
+                <div class="BannerClose" onclick="closeFifthNotice()">
+                </div>
+            </div>
+            <table>
+                <thead>
+                <tr>
+                    <th>제목</th>
+                    <th>내용</th>
+                    <th>날짜</th>
+                    <th>타입</th>
+                    <th>버전</th>
+                    <th>삭제</th>
+                </tr>
+                </thead>
+                <tbody id="fifthNoticeTBody">
+
+                </tbody>
+            </table>
+            <div class="firstAddData" onclick="openFifthNoticeAdd();"></div>
+        </div>
+        <div id="fifthNoticeAddOverlay" onclick="closeFifthNoticeAdd(false)"></div>
+        <div id="fifthNoticeAdd">
+            <div class="BannerDiv">
+                <div class="BannerText">공지사항 등록
+                </div>
+                <div class="BannerClose" onclick="closeFifthNoticeAdd(false)">
+                </div>
+            </div>
+            <label class="fifthInput">제목
+                <input type="text" id="fifthNoticeAddTitleInput" placeholder="제목"/>
+            </label>
+            <label class="fifthInput">내용
+                <textarea id="fifthNoticeAddContextInput" placeholder="내용"></textarea>
+            </label>
+            <label class="fifthInput">타입
+                <input type="text" id="fifthNoticeAddTypeInput"/>
+            </label>
+            <label class="fifthInput">버전
+                <input type="text" id="fifthNoticeAddVersionInput"/>
+            </label>
+            <div style="text-align:center">
+                날짜는 확인버튼을 누른 날짜 기준으로 등록됩니다.
+            </div>
+            <div style="display:flex; flex-direction: row">
+                <button class="darkGreyButton" onclick="addNoticeData()">확인</button>
+                <button class="darkGreyButton" onclick="closeFifthNoticeAdd(false)">취소</button>
             </div>
 
-            <div class="fifthSettingButton" onclick="openFifthRouteData();getFifthRouteData();">항로</div>
-            <div class="fifthSettingButton" onclick="openFifthNotice();getFifthNoticeData();">공지사항</div>
+        </div>
+        <div id="fifthRouteOverlay" onclick="closeFifthRouteData()"></div>
+        <div id="fifthRoute" class="three">
+            <div class="BannerDiv">
+                <div class="BannerText">항로 목록
+                </div>
+                <div class="BannerClose" onclick="closeFifthRouteData()">
+                </div>
+            </div>
+            <div id="fifthRouteContext">
+                <div style="display:flex; flex-direction: row">
+                    <div class="select">
+                        <div class="selectTag">항로명</div>
+                        <div class="clickSelect" id="fifthRouteClickSelect" tabindex="0">
+                            <!-- id값에 따라 onclick 이벤트 리스너 할당 -->
+                            <div class="selectLabel" id="fifthRouteSelectLabel">선택</div> <!-- 얘만 css, js 추가하면 됨 -->
+                            <ul class="option-list" id="fifthRouteList">
+                            </ul>
+                        </div>
+                    </div>
+
+                    <button class="darkGreyButton offMarginButton" onclick="openFifthRouteEdit()">수정</button>
+                    <button class="deleteButton offMarginButton" onclick="fifthRouteDeleteData()">삭제</button>
+                </div>
+            </div>
+            <p style="margin-left: 18px;">지도에서 클릭하여 선택할 수 있습니다.</p>
+            <div class="firstAddData" onclick="openFifthRouteAdd();"></div>
+        </div>
+        <div id="fifthRouteAddOverlay" onclick="closeFifthRouteAdd(false)"></div>
+        <div id="fifthRouteAdd">
+            <div class="BannerDiv">
+                <div class="BannerText">항로 추가
+                </div>
+                <div class="BannerClose" onclick="closeFifthRouteAdd(false)">
+                </div>
+            </div>
+            <div style="display: flex; margin:5px">
+                <label> 항로명
+                    <input id="fifthRouteAddName">
+                </label>
+                <button class="darkGreyButton" onclick="fifthRouteNameCheckAdd(event)">중복확인</button>
+                <div id="fifthRouteAddNameContext"></div>
+            </div>
+            <table>
+                <thead>
+                <tr>
+                    <th>픽스점</th>
+                    <th>최저고도</th>
+                    <th>최고고도</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody id="fifthRouteAddTbody">
+                <tr class="fifthRouteAddAddTableRow">
+                    <td class="fifthRouteAddFocusTD">
+                        <label>
+                            <input type="text" class="fifthRouteAddFix"/>
+                        </label>
+                    </td>
+                    <td>
+                        <label>
+                            <input type="number" class="fifthRouteAddLow"/>
+                        </label>
+                    </td>
+                    <td>
+                        <label>
+                            <input type="number" class="fifthRouteAddHigh"/>
+                        </label>
+                    </td>
+                    <td class="fifthRouteAddRowTD">
+                        <div style="display: flex">
+                            <div class="firstAddRowButton fifthRouteAddRowButton" tabindex="0"
+                                 onfocus="fifthRouteAddFocus()">+
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            <div style="display:flex; flex-direction: row">
+                <button class="darkGreyButton" onclick="fifthRouteAddConfirmData()">확인</button>
+                <button class="darkGreyButton" onclick="closeFifthRouteAdd(false)">취소</button>
+            </div>
+        </div>
+        <div id="fifthRouteEditOverlay" onclick="closeFifthRouteEdit(false)"></div>
+        <div id="fifthRouteEdit">
+            <div class="BannerDiv">
+                <div class="BannerText">항로 수정
+                </div>
+                <div class="BannerClose" onclick="closeFifthRouteEdit(false)">
+                </div>
+            </div>
+            <div style="display: flex; margin:5px">
+                <label> 항로명
+                    <input id="fifthRouteEditName">
+                </label>
+                <button class="darkGreyButton" onclick="fifthRouteNameCheckEdit(event)">중복확인</button>
+                <div id="fifthRouteEditNameContext"></div>
+            </div>
+            <table>
+                <thead>
+                <tr>
+                    <th>픽스점</th>
+                    <th>최저고도</th>
+                    <th>최고고도</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody id="fifthRouteEditTbody">
+                <tr class="fifthRouteEditAddTableRow">
+                    <td class="fifthRouteEditFocusTD">
+                        <label>
+                            <input type="text" class="fifthRouteEditFix"/>
+                        </label>
+                    </td>
+                    <td>
+                        <label>
+                            <input type="number" class="fifthRouteEditLow"/>
+                        </label>
+                    </td>
+                    <td>
+                        <label>
+                            <input type="number" class="fifthRouteEditHigh"/>
+                        </label>
+                    </td>
+                    <td class="fifthRouteEditRowTD">
+                        <div style="display: flex">
+                            <div class="firstAddRowButton fifthRouteAddRowButton" tabindex="0"
+                                 onfocus="fifthRouteEditFocus()">+
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            <div style="display:flex; flex-direction: row">
+                <button class="darkGreyButton" onclick="fifthRouteEditConfirmData()">확인</button>
+                <button class="darkGreyButton" onclick="closeFifthRouteEdit(false)">취소</button>
+            </div>
+        </div>
+
+        <div class="fifthSettingButton" onclick="getFreqList();openFifthFreqData();">
+
+            <div id="frequency"></div>
+            <div class="fifthSettingButtonText">주파수</div>
+        </div>
+        <div class="fifthSettingButton" onclick="getSiteList();openFifthSiteData();">
+            <div id="site"></div>
+            <div class="fifthSettingButtonText">표지소</div>
+        </div>
+        <div class="fifthSettingButton" onclick="openFifthFixData();getFixList();">
+            <div id="fixPoint"></div>
+            <div class="fifthSettingButtonText">픽스점</div>
+        </div>
+        <div class="fifthSettingButton" onclick="getSectorList();openFifthSectorData();">
+            <div id="sector"></div>
+            <div class="fifthSettingButtonText">섹터</div>
+        </div>
+        <div class="fifthSettingButton" onclick="getTestList();displayPopup('firstPopup');">
+            <div id="result"></div>
+            <div class="fifthSettingButtonText">비행검사결과</div>
+        </div>
+        <div class="fifthSettingButton" onclick="openFifthRouteData();getFifthRouteData();">
+            <div id="route"></div>
+            <div class="fifthSettingButtonText">항로</div>
+        </div>
+        <div class="fifthSettingButton" onclick="openFifthNotice();getFifthNoticeData();">
+            <div id="notice"></div>
+            <div class="fifthSettingButtonText">공지사항</div>
+        </div>
 
 
     </div>
@@ -1017,7 +1250,7 @@
     Click <b>HERE</b> to Return
 </div>
 
-<script src="js/map/map.js"></script>
+<script src="js/map/map.js"> </script>
 <script src="js/map/sector.js" type="text/javascript"></script>
 <script src="js/map/Draw.js"></script>
 <script src="js/map/fix_point.js"></script>
@@ -1028,14 +1261,20 @@
 <script src="js/SQLAction/account.js"></script>
 <script src="js/SQLAction/settingFetch.js"></script>
 <script src="js/UI_scripts/PopUp.js"></script>
-<script src="js/UI_scripts/Icons.js"></script>
 <script src="js/UI_scripts/Select.js"></script>
+<script src="js/Util/print.js"></script>
 <script type="text/javascript">
-    window.onload = loadRoutes();
-    window.onload = loadFixPoints();
-    window.onload = loadSites();
-    window.onload = openNotice();
-    window.onload = loadSector();
+    if(document.currentScript === undefined){
+        alert('IE(인터넷 익스플로러)에서는 동작하지 않습니다.\n다른 브라우저를 사용해 접속해주세요.');
+        // IE 에서만 돌아갈 내용
+    } else {
+        document.getElementById('BrowserCheckDiv').style.visibility = 'hidden';
+        document.getElementById('BrowserCheckDiv').style.opacity = '0'
+    }
+
+    // const server_add = '192.168.97.201';
+    window.onload = onLoadProcedure();
+
 </script>
 <!--<script src="js/UI_scripts/CoordinateConvert.js"></script>-->
 <script src="js/UI_scripts/AddFlightResultModule.js"></script>

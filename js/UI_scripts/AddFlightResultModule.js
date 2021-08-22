@@ -4,12 +4,12 @@ firstAddButton = () => {
     let tr = document.createElement('tr');
     tr.className = 'firstAddTableRow styleTableRow';
     tr.innerHTML = `<td class="firstTableNumber"></td>
-                    <td>select</td>
+                    <td><input type="text" class="firstSiteInput firstAddInput1" placeholder="표지소" </td>
                     <td><input type="number" class="firstFrequncyInput firstAddInput1" step="0.025" min="100" max="400" placeholder="주파수"/></td>
-                    <td><input type="text" class="firstTXMInput firstAddInput2" step="1" min="0" max="5" placeholder="TX-Main 0~5"/></td>
-                    <td><input type="text" class="firstRXMInput firstAddInput2" step="1" min="0" max="5" placeholder="RX-Main 0~5"/></td>
-                    <td><input type="text" class="firstTXSInput firstAddInput2" step="1" min="0" max="5" placeholder="TX-Stby 0~5"/></td>
-                    <td><input type="text" class="firstRXSInput firstAddInput2" step="1" min="0" max="5" placeholder="RX-Stby 0~5"/></td>
+                    <td><input type="text" class="firstTXMInput firstAddInput2" placeholder="TX-Main 0/5" onkeyPress="checkInputForRadio(event);"/></td>
+                    <td><input type="text" class="firstRXMInput firstAddInput2" placeholder="RX-Main 0/5" onkeyPress="checkInputForRadio(event);"/></td>
+                    <td><input type="text" class="firstTXSInput firstAddInput2" placeholder="TX-Stby 0/5" onkeyPress="checkInputForRadio(event);"/></td>
+                    <td><input type="text" class="firstRXSInput firstAddInput2" placeholder="RX-Stby 0/5" onkeyPress="checkInputForRadio(event);"/></td>
                     <td><input type="number" class="firstDistance firstAddInput1" step="100" min="3000" max="50000" placeholder="거리 (ft)"/></td>
                     <td><input type="number" class="firstAngle firstAddInput1" step=".1" min="0" max="359.9" placeholder="각도"/></td>
                     <td><input type="number" class="firstHeight firstAddInput1" step="10" min="0" max="50000" placeholder="고도"/> </td>
@@ -29,11 +29,18 @@ firstAddButton = () => {
         }
     }
 
-    for (i in document.getElementsByClassName('firstFrequncyInput')) {
+    for (let i in document.getElementsByClassName('firstFrequncyInput')) {
         document.getElementsByClassName('firstTableNumber')[i].innerText = parseInt(i) + 1;
     }
 
-    document.getElementsByClassName('firstFrequncyInput')[document.getElementsByClassName('firstFrequncyInput').length - 1].focus();
+    document.getElementsByClassName('firstSiteInput')[document.getElementsByClassName('firstSiteInput').length - 1].focus();
+    if (document.getElementsByClassName('firstSiteInput').length >= 2) {
+        const minus_one = document.getElementsByClassName('firstSiteInput').length - 1;
+        const minus_two = document.getElementsByClassName('firstSiteInput').length - 2;
+        document.getElementsByClassName('firstSiteInput')[minus_one].value = document.getElementsByClassName('firstSiteInput')[minus_two].value;
+        document.getElementsByClassName('firstFrequncyInput')[minus_one].value = document.getElementsByClassName('firstFrequncyInput')[minus_two].value;
+
+    }
 };
 
 firstAddRowConfirmOnFocus = () => {
@@ -43,6 +50,9 @@ firstAddRowConfirmOnFocus = () => {
     } else if (document.getElementById('firstDateInput').value == '') {
         alert('날짜가 입력되지 않았습니다.');
         return document.getElementById('firstDateInput').focus();
+    } else if (document.getElementById('firstTypeSelectLabel').innerText == '점검타입') {
+        alert('점검 타입이 설정되지 않았습니다.');
+        return document.getElementById('firstTitleInput').focus();
     } else if (document.getElementById('firstRouteUpload').value == '') {
         if (!confirm('경로를 추가하지 않고 진행할까요?')) {
             document.getElementById('firstRouteUpload').focus();
@@ -97,7 +107,7 @@ firstDelButton = (idx) => {
             parseInt(i) + 1;
     }
 
-    document.getElementsByClassName('firstFrequncyInput')[document.getElementsByClassName('firstFrequncyInput').length - 1].focus();
+    document.getElementsByClassName('firstSiteInput')[document.getElementsByClassName('firstSiteInput').length - 1].focus();
 };
 
 confirmData = async () => {
@@ -108,6 +118,7 @@ confirmData = async () => {
         alert('날짜가 입력되지 않았습니다.');
         return;
     }
+
     if (document.getElementsByClassName('firstFrequncyInput').length !== 0) {
         for (let i in document.getElementsByClassName('firstFrequncyInput')) {
             if (
@@ -135,7 +146,7 @@ confirmData = async () => {
         testName: $('#firstTitleInput').val(),
         testDate: $('#firstDateInput').val(),
         testRoute: $('#firstRouteUpload').val(),
-        testType: $('#firstTypeInput').val(),
+        testType: $('#firstTypeSelectLabel').text(),
         data: {},
     };
 
@@ -154,7 +165,7 @@ confirmData = async () => {
             switch (j) {
                 case 1:
                     result['data'][i] = {
-                        site: document.getElementsByClassName('firstAddTableRow',)[i].children[1].textContent,
+                        site: document.getElementsByClassName('firstAddTableRow',)[i].children[1].children[0].value,
                     };
                     break;
                 case 2:
@@ -191,8 +202,7 @@ confirmData = async () => {
     //         `${$('.firstTableNumber').index(i)}` : {'h'}
     //     })
     // }
-
-    fetch('http://localhost:3000/flight/list/add', {
+    fetch(`http://${server_add}:3000/flight/list/add`, {
         method: 'post',
         headers: {
             Accept: 'application/json',
@@ -201,5 +211,43 @@ confirmData = async () => {
         body: JSON.stringify({
             result,
         }),
-    }).then((res) => console.log(res.json()));
+    }).then((res) => {
+        if (res.status != 200) {
+            throw new Error('통신에러');
+        }
+        res.json()
+            .then(_res => {
+                if (_res.errno) {
+                    alert('에러가 발생했습니다.\n관리자에게 문의하십시오.')
+                } else {
+                    alert('정상적으로 비행검사결과가 추가되었습니다.');
+                    closeFirstAddComponent(true);
+                    getTestList();
+                }
+            })
+    }).catch(err => {
+        console.log(err);
+        alert('에러가 발생했습니다.\n관리자에게 문의하십시오.')
+    });
+
 };
+
+checkInputForRadio = (e) => {
+    if (e.currentTarget.value.length > 2) {
+        e.returnValue = false;
+    }
+    if ((!isNaN(e.key) && e.key <= 5 && e.key >= 0)) {
+        console.log(e.key);
+        e.returnValue = true;
+        if(e.currentTarget.value.length == 1){
+            e.currentTarget.value += "/";
+        }
+    } else {
+        e.returnValue = false;
+    }
+
+    if (e.key == ' ') {
+        e.returnValue = false;
+    }
+}
+

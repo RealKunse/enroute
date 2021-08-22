@@ -419,7 +419,7 @@
             var label = creator(labelType, this.cls.label, entry);
             if (tree.layer) {
                 // now create the element like in _addItem
-                var checked = this._map.hasLayer(tree.layer)
+                var checked = this._map.hasLayer(tree.layer);
                 var input;
                 var radioGroup = overlay ? tree.radioGroup : 'leaflet-base-layers_' + L.Util.stamp(this);
                 if (radioGroup) {

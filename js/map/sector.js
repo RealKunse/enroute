@@ -464,14 +464,16 @@ const blueLine = {color: '#0099ff', className: 'enroute_sector', pane: 'sector'}
 let sectorBoundaryDict = {};
 let sectorList = [];
 
-loadSector = () => {
+loadSector = async () => {
 
-    fetch('http://localhost:3000/flight/sector')
+    fetch(`http://${server_add}:3000/flight/sector`)
         .then(res_ => {
             res_.json()
                 .then(res => {
                     res.map(t => {
-                        sectorList.push(t.sectorname);
+                        if (t.sectorlng != 1 || t.sectorlng == '') {
+                            sectorList.push(t.sectorname);
+                        }
                     });
 
                     for (let i in sectorList) {
@@ -482,10 +484,10 @@ loadSector = () => {
         });
 };
 
-afterOnSectorLoad = (text) => {
+afterOnSectorLoad = async (text) => {
     let result = {};
     result['sector'] = text;
-    fetch('http://localhost:3000/flight/sector/edit/open', {
+    fetch(`http://${server_add}:3000/flight/sector/edit/open`, {
         method: 'post',
         headers: {
             'Accept': 'application/json',
@@ -502,7 +504,7 @@ afterOnSectorLoad = (text) => {
                 let area;
                 res.map(t => {
                     if (text == t.sectorname)
-                        reslist.push([t.sectorlat, t.sectorlng]);
+                        reslist.push([toWGS(t.sectorlat), toWGS(t.sectorlng)]);
                     sectorName = t.sectorname;
                     area = t.sectorarea;
                 });
@@ -531,6 +533,8 @@ chooseColor = (i) => {
             return blueLine;
         case 3:
             return redLine;
+        default:
+            return '#' + Math.round(Math.random()*0xff).toString(16);
     }
 }
 

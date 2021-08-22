@@ -87,22 +87,25 @@ var storage = multer.diskStorage({ // 2
         cb(null, 'uploadFiles/');
     },
     filename(req, file, cb) {
-        cb(null, `${Date.now()}__${file.originalname}`)
+        cb(null, `${file.originalname}`)
     }
 });
 
 var uploadWithOriginalFilename = multer({storage: storage});
 
-app.post('/dat', uploadWithOriginalFilename.single('dat'), (req, res) => {
+app.post('/dat/txt', uploadWithOriginalFilename.single('dat'), (req, res) => {
     // console.log(req.file)
-    const article = fs.readFileSync("uploadFiles/" + req.file.filename);
+    const filePath = `uploadFiles/${req.body.title ? req.body.title :req.file.filename}`;
+    console.log(filePath + 'gg');
+    const article = fs.readFileSync(filePath);
     let linearray = article.toString().split('\n');
     let result = {};
     let final = {data: []};
 
+
     linearray.splice(0, 1);
 
-    for (i in linearray) {
+    for (let i in linearray) {
         linearray[i] = linearray[i].replace(/ +/g, " ");
         linearray[i] = linearray[i].split(' ');
 
@@ -126,11 +129,6 @@ app.post('/dat', uploadWithOriginalFilename.single('dat'), (req, res) => {
     }
 
     res.send(final)
-})
-
-
-app.post('/hello', (req, res) => {
-    console.log(req.body)
 });
 
 app.get('/notice', (req, res) => {
@@ -142,6 +140,7 @@ app.get('/notice', (req, res) => {
                     conn.end();
                 })
                 .catch(err => {
+                    res.status(500);
                     console.log(err);
                     conn.end();
                 })
@@ -157,6 +156,7 @@ app.get('/notice_asc', (req, res) => {
                     conn.end();
                 })
                 .catch(err => {
+                    res.status(500);
                     console.log(err);
                     conn.end();
                 })

@@ -25,19 +25,30 @@ document
 	.getElementById('fifthRouteClickSelect')
 	.addEventListener('click', onClickSelect);
 
-var optionList = document.querySelectorAll('.option');
+document.getElementById('secondLimitClickSelect')
+	.addEventListener('click', onClickSelect);
 
-for (let i = 0; i < optionList.length; i++) {
-	const option = optionList[i];
-	option.addEventListener('click', onClickOption);
-}
+document.getElementById('MinwonSiteSelect')
+	.addEventListener('click', onClickSelect);
+
+document.getElementById('MinwonFreqSelect')
+	.addEventListener('click', onClickSelect);
+
+
+
+
 
 function onClickSelect(e) {
 	const downList = [
 		'secondSiteClickSelect',
 		'firstReqSiteSelect',
 		'firstReqFreqSelect',
+		'MinwonSiteSelect',
+		'MinwonFreqSelect',
 		'firstTypeSelect',
+		'secondLimitClickSelect',
+		'firstAddReqClickSelect'
+
 	];
 	if (e.currentTarget.className.indexOf('active') !== -1) {
 		e.currentTarget.className = 'select';

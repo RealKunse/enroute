@@ -19,9 +19,14 @@ class loginModule {
     }
 }
 
+$('#loginModal').on('keydown', (key) => {
+    if(key.key == 'Enter'){
+        account_login();
+    }
+})
+
 const loginItem = new loginModule();
 // 추후에 세션으로 교체
-
 account_login = () => {
     const id = document.getElementById("fifthLoginID");
     const pw = document.getElementById("fifthLoginPW");
@@ -29,7 +34,7 @@ account_login = () => {
     result['id'] = id.value;
     result['pw'] = pw.value;
 
-    fetch('http://localhost:3000/user/login',
+    fetch(`http://${server_add}:3000/user/login`,
         {
             method: 'post',
             headers: {
@@ -65,7 +70,7 @@ create_account = (id, pw) => {
     result['id'] = id;
     result['pw'] = pw;
 
-    fetch('http://localhost:3000/user/register',
+    fetch(`http://${server_add}:3000/user/register`,
         {
             method: 'post',
             headers: {

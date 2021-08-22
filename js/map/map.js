@@ -1,5 +1,4 @@
 var map = L.map('mapId', {
-    drawControl: true,
     maxBounds: [
         [29.54, 120.9539],
         [41, 135],
@@ -61,41 +60,96 @@ var popup = L.popup();
 // map.on('click', onMapClick);
 
 
-map.on('contextmenu', (e) => {
-    const latlng = e.latlng;
-    const context = `<div>${latlng}</div><div class="contextmenu-Popup-Item" onclick="testfunction(this)">pin</div><div class="contextmenu-Popup-Item" >2</div>`
-    const popup = L.popup({closeButton: false, className: "contextmenu-Popup"});
-    if (document.getElementsByClassName("contextmenu-Popup").length == 0) {
-        popup.setLatLng(latlng)
-            .setContent(
-                context
-            )
-            .addTo(map);
+let testFunction = () => {
+    var originalOnTouch = L.Draw.Polyline.prototype._onTouch;
+    L.Draw.Polyline.prototype._onTouch = function (e) {
+        if (e.originalEvent.pointerType != 'mouse') {
+            return originalOnTouch.call(this, e);
+        }
+    }
+};
 
-        console.log(popup.isOpen())
-    } else {
-        document.getElementsByClassName("contextmenu-Popup")[0].remove()
+class RangeBearing {
+    rangeBearing = L.popup({closeButton: false, className: "contextmenu-Popup", autoPan:false});
+    rangeBearingBool = false;
+    firstLatLng;
+    lastLatLng;
+    polyLine;
+
+    deg2rad = (deg) => {
+        return deg * (Math.PI / 180);
+    };
+
+    calculate = (fl, ll) => {
+        const x = this.deg2rad(ll['lng'] - fl['lng']);
+        const y = this.deg2rad(ll['lat'] - fl['lat']);
+        // console.log((Math.atan2(y,x)) * 180 / Math.PI);
+        let degree = Math.round((Math.atan2(x, y)) * 180 / Math.PI);
+        if (degree >= 0) {
+            return {distance: ((L.CRS.Earth.distance(fl, ll) / 1000 * 0.62).toFixed(1)), angle: degree};
+        } else {
+            return {distance: ((L.CRS.Earth.distance(fl, ll) / 1000 * 0.62).toFixed(1)), angle: degree + 360};
+        }
     }
 
-    testfunction = (ev) => {
-        // console.log(ev.innerText);
-        // console.log(e.latlng);
-        map.closePopup(popup);
-        const maponclick = map.on('click', e => {
-            pl.disable();
 
-        })
-        const pl = new L.Draw.Polyline(map, drawControl.options.polyline);
+}
 
-        pl.enable();
+const rb = new RangeBearing();
 
-        pl.addVertex(e.latlng);
+map.on('contextmenu', (e) => {
+    if (!rb.rangeBearingBool) {
+        rb.firstLatLng = e.latlng;
+        const calcresult = rb.calculate(rb.firstLatLng, rb.firstLatLng);
+        const context = `<div>Distance : ${calcresult['distance']}</div><div>Angle : ${calcresult['angle']}</div>`;
+        rb.rangeBearingBool = true;
 
+        rb.rangeBearing.setLatLng(e.latlng)
+            .setContent(context)
+            .addTo(map);
 
+        console.log(rb.firstLatLng)
+
+    } else {
+        rb.rangeBearingBool = false;
+    }
+});
+
+map.on("click", (e) => {
+    if(rb.rangeBearingBool) {
+        if (confirm('해당 커서 위치에 마커를 추가할까요?')) {
+            L.marker(rb.lastLatLng).on('click', e => {
+                e.target.remove();
+            }).addTo(map);
+        }
+        rb.rangeBearingBool = false;
+        $('.leaflet-rangeBearing').remove();
+    }
+});
+
+map.on("mousemove", e => {
+    if (rb.rangeBearingBool) {
+        $('.leaflet-rangeBearing').remove();
+        rb.lastLatLng = e.latlng;
+        // rb.polyLine.remove();
+        rb.polyLine = L.polyline([rb.firstLatLng, rb.lastLatLng],
+            {pane: 'rangeBearing', className: 'leaflet-rangeBearing', color: '#e292d6'}
+        ).addTo(map);
+        const calcresult = rb.calculate(rb.firstLatLng, rb.lastLatLng);
+        const context = `<div>거리 : ${calcresult['distance']}</div><div>각도 : ${calcresult['angle']}</div>`;
+        rb.rangeBearing.setLatLng(e.latlng)
+            .setContent(context);
     }
 });
 
 
+// map.on('draw:created draw:edited draw:deleted draw:drawstart draw:drawstop draw:drawvertex ', (event) => {
+//     MarkerEventHandler(event)
+// })
+
+MarkerEventHandler = (e) => {
+    console.log(e);
+}
 // map.on('draw:created', (e) => {
 // 	console.log(e)
 // 	let linetype = e.layerType,
@@ -155,10 +209,15 @@ map.on('contextmenu', (e) => {
 
 map.createPane('sector');
 map.createPane('test_result_marker');
-map.getPane('sector').style.zIndex = 300;
+map.createPane('rangeBearing');
+map.createPane('sitePane');
+map.createPane('resultMarkerPane');
 
-
-
+map.getPane('rangeBearing').style.zIndex = '600';
+map.getPane('sector').style.zIndex = '300';
+map.getPane('tooltipPane').style.zIndex = '800';
+map.getPane('sitePane').style.zIndex = '350';
+map.getPane('resultMarkerPane').style.zIndex = '550';
 map.on("layeradd", (e) => {
     // console.log(e.layer.options.className);
     // console.log(e);
