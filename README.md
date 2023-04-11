@@ -5,6 +5,8 @@
 
 #
 ###### 프로젝트 메인 화면
+(첨부 예정)
+
 
 # 개발 목적
 <img src="https://user-images.githubusercontent.com/51011193/231080739-581f1f67-0ad2-4b51-8e4b-d85e1fc4d98e.png" width=500/>
